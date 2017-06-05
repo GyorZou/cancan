@@ -1,0 +1,6 @@
+framework module Pods_WZSDK {
+  umbrella header "Pods-WZSDK-umbrella.h"
+
+  export *
+  module * { export * }
+}
