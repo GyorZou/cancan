@@ -38,6 +38,7 @@ typedef void (^WZRealTime)(NSInteger status, NSInteger sitting);
 @property (assign, readonly, nonatomic)BOOL writeBusy;
 @property (strong, nonatomic) NSData *macAdress;
 @property (nonatomic,copy) void (^centralStateblock)(CBManagerState state);
+@property (nonatomic,copy) void (^perialConnectBlock)(CBPeripheral* ,NSError*);
 + (instancetype)shareBabyBluetooth;
 
 -(void)stopScan;

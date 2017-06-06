@@ -52,9 +52,13 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
     [self doScan];
 }
 -(void)doScan{
+    if (face.status != WZBleStatusPowerOn) {//蓝牙不可用
+        return;
+    }
     self.navigationItem.rightBarButtonItem = [self rightItem1];
     [face clearDevices];
     [face startScan];
@@ -122,6 +126,13 @@
     
     [_tableView reloadData];
 }
+
+-(void)bleDidConnectDevice:(WZBleDevice *)device
+{
+    ResultViewController * rs = [[ResultViewController alloc] init];
+    rs.curDevice = device;
+    [self.navigationController pushViewController:rs animated:YES];
+}
 -(void)bleStatusChanged:(WZBleStatus)state
 {
     if (state==WZBleStatusPowerOn) {//蓝牙可用，扫描按钮可点击
@@ -130,6 +141,11 @@
         [SVProgressHUD showInfoWithStatus:@"蓝牙关闭，请打开"];
     }else if (state==WZBleStatusUnauthorized) {//未授权，提示用户去设置
         [SVProgressHUD showInfoWithStatus:@"蓝牙未授权，请设置"];
+    }else if (state==WZBleStatusUnSupport){//不支持ble
+        [SVProgressHUD showInfoWithStatus:@"抱歉，此设备不支持ble"];
+        [self stop];
+        
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[UIView new]];//不可点
     }
 }
 #pragma mark ======tableview delegate========
@@ -174,8 +190,6 @@
     [face connectDevice:device];
     _curDev  = device;
     
-    ResultViewController * rs = [[ResultViewController alloc] init];
-    rs.curDevice = device;
-    [self.navigationController pushViewController:rs animated:YES];
+  
 }
 @end

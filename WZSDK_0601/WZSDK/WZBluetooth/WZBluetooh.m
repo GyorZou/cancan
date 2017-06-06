@@ -103,6 +103,14 @@ static NSString *const keepAliveUUID = @"FFA2";
     //[baby cancelAllPeripheralsConnection];
     baby.scanForPeripherals().stopNow();
     baby.scanForPeripherals().begin();
+    
+    
+     __weak typeof(self) weakSelf = self;
+    [baby setBlockOnCentralManagerDidUpdateState:^(CBCentralManager *central) {
+        if (weakSelf.centralStateblock) {
+            weakSelf.centralStateblock(central.state);
+        }
+    }];
 }
 
 - (void)startBluetoothServiceWithPeriphera:(WZPeripheral)peripheralBlock {
@@ -140,14 +148,7 @@ static NSString *const keepAliveUUID = @"FFA2";
     
     __weak typeof(self) weakSelf = self;
     __weak typeof(baby) weakBaby = baby;
-    [baby setBlockOnCentralManagerDidUpdateState:^(CBCentralManager *central) {
-        if (central.state == CBCentralManagerStatePoweredOn) {
-            //NSLog(@"设备打开成功，开始扫描设备");
-        }
-        if (weakSelf.centralStateblock) {
-            weakSelf.centralStateblock(central.state);
-        }
-    }];
+ 
     
     //设置扫描到设备的委托
     [baby setBlockOnDiscoverToPeripherals:^(CBCentralManager *central, CBPeripheral *peripheral, NSDictionary *advertisementData, NSNumber *RSSI) {
@@ -266,8 +267,11 @@ static NSString *const keepAliveUUID = @"FFA2";
     
     //设置设备连接成功的委托,同一个baby对象，使用不同的channel切换委托回调
     [baby setBlockOnConnectedAtChannel:channelOnPeropheralView block:^(CBCentralManager *central, CBPeripheral *peripheral) {
-        //NSLog(@"设备：%@--连接成功",peripheral.name);
+        NSLog(@"设备：%@--连接成功",peripheral.name);
         //weakSelf.writeBusy = YES;
+        if (weakSelf.perialConnectBlock) {
+            weakSelf.perialConnectBlock(peripheral,nil);
+        }
     }];
     
     //设置设备连接失败的委托
@@ -275,6 +279,9 @@ static NSString *const keepAliveUUID = @"FFA2";
         //weakSelf.writeBusy = YES;
         //NSLog(@"设备：%@--连接失败",peripheral.name);
         weakSelf.failBlock(error);
+        if (weakSelf.perialConnectBlock) {
+            weakSelf.perialConnectBlock(peripheral,error);
+        }
     }];
     
     //设置设备断开连接的委托

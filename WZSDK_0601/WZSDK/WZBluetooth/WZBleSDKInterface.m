@@ -18,6 +18,7 @@
 {
     NSMutableArray<WZBleDevice*> * _devices;
     NSMutableArray<id<WZBleSDKInterfaceListener>> * _listeners;
+    BOOL _markForScan;
 }
 
 @property (nonatomic, strong) WZBluetooh *bluetooh;
@@ -62,7 +63,12 @@
             [weakSelf clearDevices];
         }else if (state == CBManagerStateUnauthorized){
             stat = WZBleStatusUnauthorized;
+        }else if (state == CBManagerStateUnsupported){
+            stat = WZBleStatusUnSupport;
+        }else if(state == CBManagerStatePoweredOn &&_markForScan){
+            [weakSelf startScan];
         }
+        _status = stat;
         for (id<WZBleSDKInterfaceListener> li in wsli) {
             if ([li respondsToSelector:@selector(bleStatusChanged:)]) {
                 [li bleStatusChanged:stat];
@@ -72,6 +78,27 @@
         
     };
     
+    self.bluetooh.perialConnectBlock = ^(CBPeripheral * p,NSError * error){
+        
+        WZBleDevice * temp =  [weakSelf findDeviceWith:p];
+        if (error) {
+            for (id<WZBleSDKInterfaceListener> li in wsli) {
+                if ([li respondsToSelector:@selector(bleFailConnectDevice:error:)]) {
+                    [li bleFailConnectDevice:temp error:error];
+                }
+            }
+
+        }else{
+            for (id<WZBleSDKInterfaceListener> li in wsli) {
+                if ([li respondsToSelector:@selector(bleDidConnectDevice:)]) {
+                    [li bleDidConnectDevice:temp];
+                }
+            }
+
+        }
+
+        
+    };
 
     [self.bluetooh startBluetoothService];
 
@@ -100,6 +127,11 @@
 -(WZErrorCode)startScan
 {
     
+    if(_status!=WZBleStatusPowerOn){
+        _markForScan = YES;
+        return WZErrorBleNotPrepared;
+    }
+    _markForScan = NO;
     __weak typeof(self) ws = self;
     
     
