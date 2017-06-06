@@ -115,6 +115,7 @@ static NSString *const keepAliveUUID = @"FFA2";
 #pragma mark - Bluetootconfigure
 
 //蓝牙网关初始化和委托方法设置
+
 - (void)scanDeviceWithRespondStatuBlock:(WZRespondStatuBlock)respondStatuBlock
                                 synStep:(WZSynStep)respondSynStepBlock
                                 posture:(WZPosture)respondSynPostureBlock
@@ -124,6 +125,8 @@ static NSString *const keepAliveUUID = @"FFA2";
                                readRSSI:(WZReadRSSI)readRSSIBlock
                                    fail:(WZFail)failBlock
                              disconnect:(WZDisconnect)disconnectBlock {
+    baby.scanForPeripherals().stopNow();
+    baby.scanForPeripherals().begin();
     
     self.respondStatuBlock = respondStatuBlock;
     self.respondSynStepBlock = respondSynStepBlock;
@@ -139,24 +142,28 @@ static NSString *const keepAliveUUID = @"FFA2";
     __weak typeof(baby) weakBaby = baby;
     [baby setBlockOnCentralManagerDidUpdateState:^(CBCentralManager *central) {
         if (central.state == CBCentralManagerStatePoweredOn) {
-            NSLog(@"设备打开成功，开始扫描设备");
+            //NSLog(@"设备打开成功，开始扫描设备");
+        }
+        if (weakSelf.centralStateblock) {
+            weakSelf.centralStateblock(central.state);
         }
     }];
     
     //设置扫描到设备的委托
     [baby setBlockOnDiscoverToPeripherals:^(CBCentralManager *central, CBPeripheral *peripheral, NSDictionary *advertisementData, NSNumber *RSSI) {
 
-        NSLog(@"搜索到了设备:%@ advertisementData:%@",peripheral.name, advertisementData);
+        //NSLog(@"搜索到了设备:%@ advertisementData:%@",peripheral.name, advertisementData);
         
         if(!weakSelf.isUpload && weakSelf.peripheralBlock) {
             if ([peripheral.name isEqualToString:@"DfuTarg"]) {
             }
             else
             {
-                NSData *kCBAdvDataManufacturerData = [advertisementData valueForKey:@"kCBAdvDataManufacturerData"];
-                if (kCBAdvDataManufacturerData && kCBAdvDataManufacturerData.length==8){
+                //NSData *kCBAdvDataManufacturerData = [advertisementData valueForKey:@"kCBAdvDataManufacturerData"];
+              //  if (kCBAdvDataManufacturerData && kCBAdvDataManufacturerData.length==8){
                     weakSelf.peripheralBlock(peripheral, advertisementData);
-                }
+                weakSelf.readRSSIBlock(peripheral,RSSI, nil);
+                //}
             }
         }
 
@@ -181,6 +188,7 @@ static NSString *const keepAliveUUID = @"FFA2";
         if (kCBAdvDataManufacturerData && kCBAdvDataManufacturerData.length==8) {
             NSData *mac = [kCBAdvDataManufacturerData subdataWithRange:NSMakeRange(2, 6)];
             if ([mac isEqual:weakSelf.macAdress]) {
+                return;
                 [weakBaby cancelScan];
                 
                 weakSelf.centralManager = central;
@@ -191,7 +199,7 @@ static NSString *const keepAliveUUID = @"FFA2";
                 
                 weakBaby.having(weakSelf.currPeripheral).and.channel(channelOnPeropheralView).then.connectToPeripherals().discoverServices().discoverCharacteristics().readValueForCharacteristic().discoverDescriptorsForCharacteristic().readValueForDescriptors().begin();
                 
-                weakSelf.readRSSIBlock(RSSI, nil);
+                weakSelf.readRSSIBlock(peripheral,RSSI, nil);
                 //                break;
             }
         }
@@ -208,7 +216,7 @@ static NSString *const keepAliveUUID = @"FFA2";
     [baby setFilterOnDiscoverPeripherals:^BOOL(NSString *peripheralName, NSDictionary *advertisementData, NSNumber *RSSI) {
         for (int i=0; i<[advertisementData[@"kCBAdvDataServiceUUIDs"] count]; i++) {
             CBUUID *uuid = advertisementData[@"kCBAdvDataServiceUUIDs"][i];
-            NSLog(@"$$$$$$$$$$$$%@",uuid.UUIDString);
+            //NSLog(@"$$$$$$$$$$$$%@",uuid.UUIDString);
         }
         if (peripheralName.length > 0) {
             return YES;
@@ -217,11 +225,11 @@ static NSString *const keepAliveUUID = @"FFA2";
     }];
     
     [baby setBlockOnCancelAllPeripheralsConnectionBlock:^(CBCentralManager *centralManager) {
-        NSLog(@"setBlockOnCancelAllPeripheralsConnectionBlock");
+        //NSLog(@"setBlockOnCancelAllPeripheralsConnectionBlock");
     }];
     
     [baby setBlockOnCancelScanBlock:^(CBCentralManager *centralManager) {
-        NSLog(@"setBlockOnCancelScanBlock");
+        //NSLog(@"setBlockOnCancelScanBlock");
     }];
     
     
@@ -236,6 +244,130 @@ static NSString *const keepAliveUUID = @"FFA2";
 
 
 #pragma mark - 连接设备
+-(void)stopScan
+{
+    [baby cancelScan];
+
+}
+-(void)disConnectPeriperal:(CBPeripheral *)perial
+{
+    [baby cancelPeripheralConnection:perial];
+}
+-(void)connectPeriperal:(CBPeripheral *)perial
+{
+
+    self.currPeripheral = perial;
+   // baby.having(perial).connectToPeripherals().begin();
+    
+    __weak typeof (baby)weakBaby = baby;
+    __weak typeof(self)weakSelf = self;
+    BabyRhythm *rhythm = [[BabyRhythm alloc]init];
+    
+    
+    //设置设备连接成功的委托,同一个baby对象，使用不同的channel切换委托回调
+    [baby setBlockOnConnectedAtChannel:channelOnPeropheralView block:^(CBCentralManager *central, CBPeripheral *peripheral) {
+        //NSLog(@"设备：%@--连接成功",peripheral.name);
+        //weakSelf.writeBusy = YES;
+    }];
+    
+    //设置设备连接失败的委托
+    [baby setBlockOnFailToConnectAtChannel:channelOnPeropheralView block:^(CBCentralManager *central, CBPeripheral *peripheral, NSError *error) {
+        //weakSelf.writeBusy = YES;
+        //NSLog(@"设备：%@--连接失败",peripheral.name);
+        weakSelf.failBlock(error);
+    }];
+    
+    //设置设备断开连接的委托
+    [baby setBlockOnDisconnectAtChannel:channelOnPeropheralView block:^(CBCentralManager *central, CBPeripheral *peripheral, NSError *error) {
+        //weakSelf.writeBusy = YES;
+        //NSLog(@"设备：%@--断开连接",peripheral.name);
+       
+        weakSelf.disconnectBlock(error,perial);
+         weakSelf.currPeripheral = nil;
+    }];
+    
+    //设置发现设备的Services的委托
+    [baby setBlockOnDiscoverServicesAtChannel:channelOnPeropheralView block:^(CBPeripheral *peripheral, NSError *error) {
+        [rhythm beats];
+    }];
+    
+    //设置发现设service的Characteristics的委托
+    [baby setBlockOnDiscoverCharacteristicsAtChannel:channelOnPeropheralView block:^(CBPeripheral *peripheral, CBService *service, NSError *error) {
+        //NSLog(@"===service name:%@",service.UUID);
+        //插入row到tableview
+    }];
+    
+    //设置读取characteristics的委托
+    [baby setBlockOnReadValueForCharacteristicAtChannel:channelOnPeropheralView block:^(CBPeripheral *peripheral, CBCharacteristic *characteristics, NSError *error) {
+        //        //NSLog(@"characteristic name:%@ value is:%@",characteristics.UUID,characteristics.value);
+        if ([characteristics.UUID.UUIDString isEqualToString:readCharacterUUID]) { //获取读取数据的特征值
+            weakSelf.currReadCharacter = characteristics;
+            //NSLog(@"********%@",characteristics.UUID.UUIDString);
+            [weakSelf readService];
+            //            weakBaby.channel(channelOnPeropheralView).characteristicDetails(weakSelf.currPeripheral,weakSelf.currReadCharacter);
+            [weakSelf setNotifiy];
+            weakSelf.writeBusy = NO;
+            weakSelf.writeReadyBlock(YES);
+        } else
+        if ([characteristics.UUID.UUIDString isEqualToString:writeCharacterUUID]) { //获取写入数据的特征值
+            weakSelf.currWriteCharacter = characteristics;
+            weakBaby.channel(channelOnPeropheralView).characteristicDetails(weakSelf.currPeripheral,weakSelf.currWriteCharacter);
+        } else if ([characteristics.UUID.UUIDString isEqualToString:keepAliveUUID]) { //获取写入数据的特征值
+            weakSelf.currKeepCharacter = characteristics;
+            //
+            [weakSelf setKeepNotifiy];
+        }
+    }];
+    //设置发现characteristics的descriptors的委托
+    [baby setBlockOnDiscoverDescriptorsForCharacteristicAtChannel:channelOnPeropheralView block:^(CBPeripheral *peripheral, CBCharacteristic *characteristic, NSError *error) {
+        //        //NSLog(@"===characteristic name:%@",characteristic.service.UUID);
+        for (CBDescriptor *d in characteristic.descriptors) {
+            //NSLog(@"CBDescriptor name is :%@",d.UUID);
+        }
+    }];
+    //设置读取Descriptor的委托
+    [baby setBlockOnReadValueForDescriptorsAtChannel:channelOnPeropheralView block:^(CBPeripheral *peripheral, CBDescriptor *descriptor, NSError *error) {
+        //NSLog(@"Descriptor name:%@ value is:%@",descriptor.characteristic.UUID, descriptor.value);
+    }];
+    
+    //读取rssi的委托
+    [baby setBlockOnDidReadRSSI:^(NSNumber *RSSI, NSError *error) {
+        //NSLog(@"setBlockOnDidReadRSSI:RSSI:%@",RSSI);
+        weakSelf.readRSSIBlock(perial,RSSI, error);
+    }];
+    
+    //设置写数据成功的block
+    [baby setBlockOnDidWriteValueForCharacteristicAtChannel:channelOnCharacteristicView block:^(CBCharacteristic *characteristic, NSError *error) {
+        //NSLog(@"setBlockOnDidWriteValueForCharacteristicAtChannel characteristic:%@ and new value:%@",characteristic.UUID, characteristic.value);
+    }];
+    
+    //设置beats break委托
+    [rhythm setBlockOnBeatsBreak:^(BabyRhythm *bry) {
+        //NSLog(@"setBlockOnBeatsBreak call");
+        
+        //如果完成任务，即可停止beat,返回bry可以省去使用weak rhythm的麻烦
+        //        if (<#condition#>) {
+        //            [bry beatsOver];
+        //        }
+        
+    }];
+    
+    //设置beats over委托
+    [rhythm setBlockOnBeatsOver:^(BabyRhythm *bry) {
+        //NSLog(@"setBlockOnBeatsOver call");
+    }];
+    
+
+    
+
+    
+    
+    
+    
+    baby.having(perial).channel(channelOnPeropheralView).connectToPeripherals().discoverServices().discoverCharacteristics()
+    .readValueForCharacteristic().discoverDescriptorsForCharacteristic().readValueForDescriptors().begin();
+}
+
 - (void)connectDeviceWithCharacterUUID:(NSString *)readCharacterUUID
                     writeCharacterUUID:(NSString *)writeCharacterUUID
                          keepAliveUUID:(NSString *)keepAliveUUID
@@ -249,23 +381,23 @@ static NSString *const keepAliveUUID = @"FFA2";
     
     //设置设备连接成功的委托,同一个baby对象，使用不同的channel切换委托回调
     [baby setBlockOnConnectedAtChannel:channelOnPeropheralView block:^(CBCentralManager *central, CBPeripheral *peripheral) {
-        NSLog(@"设备：%@--连接成功",peripheral.name);
+        //NSLog(@"设备：%@--连接成功",peripheral.name);
         //weakSelf.writeBusy = YES;
     }];
     
     //设置设备连接失败的委托
     [baby setBlockOnFailToConnectAtChannel:channelOnPeropheralView block:^(CBCentralManager *central, CBPeripheral *peripheral, NSError *error) {
         //weakSelf.writeBusy = YES;
-        NSLog(@"设备：%@--连接失败",peripheral.name);
+        //NSLog(@"设备：%@--连接失败",peripheral.name);
         weakSelf.failBlock(error);
     }];
     
     //设置设备断开连接的委托
     [baby setBlockOnDisconnectAtChannel:channelOnPeropheralView block:^(CBCentralManager *central, CBPeripheral *peripheral, NSError *error) {
         //weakSelf.writeBusy = YES;
-        NSLog(@"设备：%@--断开连接",peripheral.name);
+        //NSLog(@"设备：%@--断开连接",peripheral.name);
         self.currPeripheral = nil;
-        weakSelf.disconnectBlock(error);
+        weakSelf.disconnectBlock(error,peripheral);
     }];
     
     //设置发现设备的Services的委托
@@ -275,16 +407,16 @@ static NSString *const keepAliveUUID = @"FFA2";
     
     //设置发现设service的Characteristics的委托
     [baby setBlockOnDiscoverCharacteristicsAtChannel:channelOnPeropheralView block:^(CBPeripheral *peripheral, CBService *service, NSError *error) {
-        NSLog(@"===service name:%@",service.UUID);
+        //NSLog(@"===service name:%@",service.UUID);
         //插入row到tableview
     }];
     
     //设置读取characteristics的委托
     [baby setBlockOnReadValueForCharacteristicAtChannel:channelOnPeropheralView block:^(CBPeripheral *peripheral, CBCharacteristic *characteristics, NSError *error) {
-//        NSLog(@"characteristic name:%@ value is:%@",characteristics.UUID,characteristics.value);
+//        //NSLog(@"characteristic name:%@ value is:%@",characteristics.UUID,characteristics.value);
         if ([characteristics.UUID.UUIDString isEqualToString:readCharacterUUID]) { //获取读取数据的特征值
             weakSelf.currReadCharacter = characteristics;
-            NSLog(@"********%@",characteristics.UUID.UUIDString);
+            //NSLog(@"********%@",characteristics.UUID.UUIDString);
             [weakSelf readService];
 //            weakBaby.channel(channelOnPeropheralView).characteristicDetails(weakSelf.currPeripheral,weakSelf.currReadCharacter);
             [weakSelf setNotifiy];
@@ -302,30 +434,30 @@ static NSString *const keepAliveUUID = @"FFA2";
     }];
     //设置发现characteristics的descriptors的委托
     [baby setBlockOnDiscoverDescriptorsForCharacteristicAtChannel:channelOnPeropheralView block:^(CBPeripheral *peripheral, CBCharacteristic *characteristic, NSError *error) {
-//        NSLog(@"===characteristic name:%@",characteristic.service.UUID);
+//        //NSLog(@"===characteristic name:%@",characteristic.service.UUID);
         for (CBDescriptor *d in characteristic.descriptors) {
-            NSLog(@"CBDescriptor name is :%@",d.UUID);
+            //NSLog(@"CBDescriptor name is :%@",d.UUID);
         }
     }];
     //设置读取Descriptor的委托
     [baby setBlockOnReadValueForDescriptorsAtChannel:channelOnPeropheralView block:^(CBPeripheral *peripheral, CBDescriptor *descriptor, NSError *error) {
-        NSLog(@"Descriptor name:%@ value is:%@",descriptor.characteristic.UUID, descriptor.value);
+        //NSLog(@"Descriptor name:%@ value is:%@",descriptor.characteristic.UUID, descriptor.value);
     }];
     
     //读取rssi的委托
     [baby setBlockOnDidReadRSSI:^(NSNumber *RSSI, NSError *error) {
-        NSLog(@"setBlockOnDidReadRSSI:RSSI:%@",RSSI);
-        weakSelf.readRSSIBlock(RSSI, error);
+        //NSLog(@"setBlockOnDidReadRSSI:RSSI:%@",RSSI);
+        weakSelf.readRSSIBlock(weakSelf.currPeripheral,RSSI, error);
     }];
     
     //设置写数据成功的block
     [baby setBlockOnDidWriteValueForCharacteristicAtChannel:channelOnCharacteristicView block:^(CBCharacteristic *characteristic, NSError *error) {
-        NSLog(@"setBlockOnDidWriteValueForCharacteristicAtChannel characteristic:%@ and new value:%@",characteristic.UUID, characteristic.value);
+        //NSLog(@"setBlockOnDidWriteValueForCharacteristicAtChannel characteristic:%@ and new value:%@",characteristic.UUID, characteristic.value);
     }];
     
     //设置beats break委托
     [rhythm setBlockOnBeatsBreak:^(BabyRhythm *bry) {
-        NSLog(@"setBlockOnBeatsBreak call");
+        //NSLog(@"setBlockOnBeatsBreak call");
         
         //如果完成任务，即可停止beat,返回bry可以省去使用weak rhythm的麻烦
         //        if (<#condition#>) {
@@ -336,7 +468,7 @@ static NSString *const keepAliveUUID = @"FFA2";
     
     //设置beats over委托
     [rhythm setBlockOnBeatsOver:^(BabyRhythm *bry) {
-        NSLog(@"setBlockOnBeatsOver call");
+        //NSLog(@"setBlockOnBeatsOver call");
     }];
     
     //扫描选项->CBCentralManagerScanOptionAllowDuplicatesKey:忽略同一个Peripheral端的多个发现事件被聚合成一个发现事件
@@ -363,34 +495,34 @@ static NSString *const keepAliveUUID = @"FFA2";
     __weak typeof(self)weakSelf = self;
     //设置读取characteristics的委托
     [baby setBlockOnReadValueForCharacteristicAtChannel:channelOnCharacteristicView block:^(CBPeripheral *peripheral, CBCharacteristic *characteristics, NSError *error) {
-        NSLog(@"CharacteristicViewController===characteristic name:%@ value is:%@",characteristics.UUID,characteristics.value);
+        //NSLog(@"CharacteristicViewController===characteristic name:%@ value is:%@",characteristics.UUID,characteristics.value);
     }];
     //设置发现characteristics的descriptors的委托
     [baby setBlockOnDiscoverDescriptorsForCharacteristicAtChannel:channelOnCharacteristicView block:^(CBPeripheral *peripheral, CBCharacteristic *characteristic, NSError *error) {
-        //        NSLog(@"CharacteristicViewController===characteristic name:%@",characteristic.service.UUID);
+        //        //NSLog(@"CharacteristicViewController===characteristic name:%@",characteristic.service.UUID);
         for (CBDescriptor *d in characteristic.descriptors) {
-            NSLog(@"CharacteristicViewController CBDescriptor name is :%@",d.UUID);
+            //NSLog(@"CharacteristicViewController CBDescriptor name is :%@",d.UUID);
         }
     }];
     //设置读取Descriptor的委托
     [baby setBlockOnReadValueForDescriptorsAtChannel:channelOnCharacteristicView block:^(CBPeripheral *peripheral, CBDescriptor *descriptor, NSError *error) {
-        NSLog(@"CharacteristicViewController Descriptor name:%@ value is:%@",descriptor.characteristic.UUID, descriptor.value);
+        //NSLog(@"CharacteristicViewController Descriptor name:%@ value is:%@",descriptor.characteristic.UUID, descriptor.value);
     }];
     
     //设置写数据成功的block
     [baby setBlockOnDidWriteValueForCharacteristicAtChannel:channelOnCharacteristicView block:^(CBCharacteristic *characteristic, NSError *error) {
-        NSLog(@"setBlockOnDidWriteValueForCharacteristicAtChannel characteristic:%@ and new value:%@",characteristic.UUID, characteristic.value);
+        //NSLog(@"setBlockOnDidWriteValueForCharacteristicAtChannel characteristic:%@ and new value:%@",characteristic.UUID, characteristic.value);
     }];
     
     //设置通知状态改变的block
     [baby setBlockOnDidUpdateNotificationStateForCharacteristicAtChannel:channelOnCharacteristicView block:^(CBCharacteristic *characteristic, NSError *error) {
-        NSLog(@"uid:%@,isNotifying:%@",characteristic.UUID,characteristic.isNotifying?@"on":@"off");
+        //NSLog(@"uid:%@,isNotifying:%@",characteristic.UUID,characteristic.isNotifying?@"on":@"off");
     }];
     
     [baby setBlockOnDisconnectAtChannel:channelOnCharacteristicView block:^(CBCentralManager *central, CBPeripheral *peripheral, NSError *error) {
         //weakSelf.writeBusy = YES;
-        NSLog(@"设备：%@--断开连接",peripheral.name);
-        weakSelf.disconnectBlock(error);
+        //NSLog(@"设备：%@--断开连接",peripheral.name);
+        weakSelf.disconnectBlock(error,peripheral);
     }];
 }
 
@@ -413,8 +545,8 @@ static NSString *const keepAliveUUID = @"FFA2";
           characteristic:self.currReadCharacter
                    block:^(CBPeripheral *peripheral, CBCharacteristic *characteristics, NSError *error) {
                        
-//                       NSLog(@"notify block");
-//                       NSLog(@"new value %@",characteristics.value);
+//                       //NSLog(@"notify block");
+//                       //NSLog(@"new value %@",characteristics.value);
                        [weakSelf analysisData:characteristics.value];
 //                       block(characteristics.value,error);
                    }];
@@ -445,10 +577,10 @@ static NSString *const keepAliveUUID = @"FFA2";
           characteristic:self.currKeepCharacter
                    block:^(CBPeripheral *peripheral, CBCharacteristic *characteristics, NSError *error) {
                        NSData *data = characteristics.value;
-//                       NSLog(@"收到的实时数据%@  %lu",data, (unsigned long)data.length);
+//                       //NSLog(@"收到的实时数据%@  %lu",data, (unsigned long)data.length);
                        Byte *ataByte = (Byte *)[data bytes];
                        if (!weakSelf.statusBlock) {
-                           NSLog(@"self.statusBlock nil");
+                           //NSLog(@"self.statusBlock nil");
                            return;
                        }
                        Byte ataByte_0;
@@ -470,7 +602,7 @@ static NSString *const keepAliveUUID = @"FFA2";
 #pragma mark - DFUServiceDelegate
 
 - (void)dfuStateDidChangeTo:(enum DFUState)state {
-//    NSLog(@"dfuStateDidChangeTo:%ld",(long)state);
+//    //NSLog(@"dfuStateDidChangeTo:%ld",(long)state);
     
     if (DFUStateCompleted == state) {
         self.isUpload = NO;
@@ -488,7 +620,7 @@ static NSString *const keepAliveUUID = @"FFA2";
 }
 
 - (void)dfuError:(enum DFUError)error didOccurWithMessage:(NSString * _Nonnull)message {
-//    NSLog(@"didOccurWithMessage:%@", message);
+//    //NSLog(@"didOccurWithMessage:%@", message);
     self.uploadCompleteBlock(NO);
 }
 
@@ -496,7 +628,7 @@ static NSString *const keepAliveUUID = @"FFA2";
 
 - (void)dfuProgressDidChangeFor:(NSInteger)part outOf:(NSInteger)totalParts to:(NSInteger)progress currentSpeedBytesPerSecond:(double)currentSpeedBytesPerSecond avgSpeedBytesPerSecond:(double)avgSpeedBytesPerSecond {
     self.uploadBlock(part, totalParts, progress, currentSpeedBytesPerSecond, avgSpeedBytesPerSecond);
-//    NSLog(@"WZ progress:%ld",(long)progress);
+//    //NSLog(@"WZ progress:%ld",(long)progress);
 }
 
 #pragma mark - private
@@ -517,7 +649,7 @@ static NSString *const keepAliveUUID = @"FFA2";
 }
 
 - (void)analysisData:(NSData *)data {
-    NSLog(@"收到的数据%@  %lu",data, (unsigned long)data.length);
+    //NSLog(@"收到的数据%@  %lu",data, (unsigned long)data.length);
     Byte *dataByte = (Byte *)[data bytes];
     
     //获取协议包头
@@ -528,7 +660,7 @@ static NSString *const keepAliveUUID = @"FFA2";
     //协议包头
     Byte getDataType[1] = {0xFE};
     if (![headerData isEqualToData:[[NSData alloc] initWithBytes:getDataType length:1]]) {
-        NSLog(@"接受包有问题");
+        //NSLog(@"接受包有问题");
         if (self.isInit == YES) {
             self.isInit = NO;
             [self respondTimeToHardware];
@@ -542,7 +674,7 @@ static NSString *const keepAliveUUID = @"FFA2";
     memcpy(&lengthTyte, &dataByte[1], 1);
     int length = (int)lengthTyte[0];
     if (length != data.length) {
-        NSLog(@"包长度不对");
+        //NSLog(@"包长度不对");
         if (self.isInit == YES) {
             self.isInit = NO;
             [self respondTimeToHardware];
@@ -576,10 +708,10 @@ static NSString *const keepAliveUUID = @"FFA2";
         
         [self respondTimeToHardware];
         if (!self.respondStatuBlock) {
-            NSLog(@"self.respondStatuBlock nil");
+            //NSLog(@"self.respondStatuBlock nil");
             return;
         }
-        self.respondStatuBlock(battary[0], motorVibration[0], versionString);
+        self.respondStatuBlock(self.currPeripheral,battary[0], motorVibration[0], versionString);
     } else if (protocolTyte[0] == 0xE2) { // 同步记忆计步数据应答
         //时间+计步数据
         NSInteger timeAndStepsCount = length - 3;
@@ -613,7 +745,7 @@ static NSString *const keepAliveUUID = @"FFA2";
         unsigned long step = (unsigned long)count;
         [self respondsynStep];
         if (!self.respondSynStepBlock) {
-            NSLog(@"self.respondSynStepBlock nil");
+            //NSLog(@"self.respondSynStepBlock nil");
             return;
         }
         self.respondSynStepBlock(time, step);
@@ -626,9 +758,9 @@ static NSString *const keepAliveUUID = @"FFA2";
         
         NSData *flashRecordData = [[NSData alloc] initWithBytes:flashRecord length:flashRecordCount];
 
-        NSLog(@"flashRecord: %s", flashRecord);
-        NSLog(@"dataByte: %s", dataByte);
-        NSLog(@"flashRecordData: %@", flashRecordData);
+        //NSLog(@"flashRecord: %s", flashRecord);
+        //NSLog(@"dataByte: %s", dataByte);
+        //NSLog(@"flashRecordData: %@", flashRecordData);
 
         [self statusMosaic:flashRecord lenght:flashRecordCount comeFrom:YES];
     } else if (protocolTyte[0] == 0x94) { // 同步记忆坐姿数据
@@ -657,14 +789,14 @@ static NSString *const keepAliveUUID = @"FFA2";
 
         [self respondsynPosture];
         if (!self.sittingBlock) {
-            NSLog(@"self.sittingBlock nil");
+            //NSLog(@"self.sittingBlock nil");
             return;
         }
         self.sittingBlock(time, sitting, forward, backward, leftLeaning, rightDeviation);
     } else if (protocolTyte[0] == 0xE4) { // 交换结束应答
         [self respondComplete];
         if (!self.replyCompleteBlock) {
-            NSLog(@"self.replyCompleteBlock nil");
+            //NSLog(@"self.replyCompleteBlock nil");
             return;
         }
         self.replyCompleteBlock(YES);
@@ -675,19 +807,19 @@ static NSString *const keepAliveUUID = @"FFA2";
         int battaryInt = (int)battary[0];
         
         if (!self.battaryBlock) {
-            NSLog(@"self.battaryBlock nil");
+            //NSLog(@"self.battaryBlock nil");
             return;
         }
         self.battaryBlock(battaryInt);
     } else if (protocolTyte[0] == 0xE6) { // 激活命令
         if (!self.activationBlock) {
-            NSLog(@"self.activationBlock nil");
+            //NSLog(@"self.activationBlock nil");
             return;
         }
         self.activationBlock(YES);
     } else if (protocolTyte[0] == 0xE7) { // 取消激活命令
         if (!self.cancelActivationBlock) {
-            NSLog(@"self.cancelActivationBlock nil");
+            //NSLog(@"self.cancelActivationBlock nil");
             return;
         }
         self.cancelActivationBlock(YES);
@@ -724,7 +856,7 @@ static NSString *const keepAliveUUID = @"FFA2";
         memcpy(&count, &num[0], 4);*/
         unsigned long step = (unsigned long)count;
         if (!self.synStepBlock) {
-            NSLog(@"self.synStepBlock nil");
+            //NSLog(@"self.synStepBlock nil");
             return;
         }
         self.synStepBlock(time, step);
@@ -735,13 +867,13 @@ static NSString *const keepAliveUUID = @"FFA2";
         memcpy(&flashRecord, &dataByte[3], flashRecordCount);
         NSData *flashRecordData = [[NSData alloc] initWithBytes:flashRecord length:flashRecordCount];
         
-        NSLog(@"flashRecord: %s", flashRecord);
-        NSLog(@"dataByte: %s", dataByte);
-        NSLog(@"flashRecordData: %@", flashRecordData);
+        //NSLog(@"flashRecord: %s", flashRecord);
+        //NSLog(@"dataByte: %s", dataByte);
+        //NSLog(@"flashRecordData: %@", flashRecordData);
         [self statusMosaic:flashRecord lenght:flashRecordCount comeFrom:NO];
     } else if (protocolTyte[0] == 0xEA) { // 设置马达震动
         if (!self.setMotorBlock) {
-            NSLog(@"self.setMotorBlock nil");
+            //NSLog(@"self.setMotorBlock nil");
             return;
         }
         self.setMotorBlock(YES);
@@ -749,49 +881,49 @@ static NSString *const keepAliveUUID = @"FFA2";
         Byte motorVibration[1];
         memcpy(&motorVibration, &dataByte[3], 1);
         if (!self.getMotorBlock) {
-            NSLog(@"self.getMotorBlock nil");
+            //NSLog(@"self.getMotorBlock nil");
             return;
         }
         self.getMotorBlock(motorVibration[0]);
     } else if (protocolTyte[0] == 0xEC) { // 效准坐姿
         if (!self.setPostureBlock){
-            NSLog(@"self.setPostureBlock nil");
+            //NSLog(@"self.setPostureBlock nil");
             return;
         }
         self.setPostureBlock(YES);
     } else if (protocolTyte[0] == 0xED) { // 取消效准坐姿
         if (!self.cancelSetPostureBlock){
-            NSLog(@"self.cancelSetPostureBlock nil");
+            //NSLog(@"self.cancelSetPostureBlock nil");
             return;
         }
         self.cancelSetPostureBlock(YES);
     }  else if (protocolTyte[0] == 0xA0) { // 设置前倾角度
         if (!self.forwardBlock){
-            NSLog(@"self.forwardBlock nil");
+            //NSLog(@"self.forwardBlock nil");
             return;
         }
         self.forwardBlock(YES);
     } else if (protocolTyte[0] == 0xA1) { // 设置后倾角度
         if (!self.backwardBlock){
-            NSLog(@"self.backwardBlock nil");
+            //NSLog(@"self.backwardBlock nil");
             return;
         }
         self.backwardBlock(YES);
     } else if (protocolTyte[0] == 0xA2) { // 设置左倾角度
         if (!self.leftLeaningBlock){
-            NSLog(@"self.leftLeaningBlock nil");
+            //NSLog(@"self.leftLeaningBlock nil");
             return;
         }
         self.leftLeaningBlock(YES);
     } else if (protocolTyte[0] == 0xA3) { // 设置右倾角度
         if (!self.rightDeviationBlock){
-            NSLog(@"self.rightDeviationBlock nil");
+            //NSLog(@"self.rightDeviationBlock nil");
             return;
         }
         self.rightDeviationBlock(YES);
     } else if (protocolTyte[0] == 0xA5) { // 清除缓存
         if (!self.clearDataBlock){
-            NSLog(@"self.clearDataBlock nil");
+            //NSLog(@"self.clearDataBlock nil");
             return;
         }
         self.clearDataBlock(YES);
@@ -807,7 +939,7 @@ static NSString *const keepAliveUUID = @"FFA2";
         }
         
         if (!self.renameBlock){
-            NSLog(@"self.renameBlock nil");
+            //NSLog(@"self.renameBlock nil");
             return;
         }
         self.renameBlock(YES, nil);
@@ -875,20 +1007,20 @@ static NSString *const keepAliveUUID = @"FFA2";
                 [status addObject:dic];
             }
         }
-//        NSLog(@"1完全拼接好后的数据%@", self.postureDic);
+//        //NSLog(@"1完全拼接好后的数据%@", self.postureDic);
         frameCount = 0;
         [self respondsynStatus];
         
         if (!comeFrom) {
             if (!self.postureBlock) {
-                NSLog(@"self.postureBlock nil");
+                //NSLog(@"self.postureBlock nil");
                 return;
             }
             self.postureBlock([self.postureDic mutableCopy]);
 
         } else {
             if (!self.respondSynPostureBlock) {
-                NSLog(@"self.respondSynPostureBlock nil");
+                //NSLog(@"self.respondSynPostureBlock nil");
                 return;
             }
             self.respondSynPostureBlock([self.postureDic mutableCopy]);
@@ -902,7 +1034,7 @@ static NSString *const keepAliveUUID = @"FFA2";
     if(self.writeBusy) {
         return;
     }
-    NSLog(@"write data: %@",data);
+    //NSLog(@"write data: %@",data);
     [self.currPeripheral writeValue:data forCharacteristic:self.currWriteCharacter type:CBCharacteristicWriteWithoutResponse];
 }
 

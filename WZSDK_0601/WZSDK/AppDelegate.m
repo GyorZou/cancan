@@ -11,9 +11,12 @@
 #import "BabyBluetooth.h"
 #import "WZViewController.h"
 
-
+#import "WZBleSDKInterface.h"
+#import "DemoViewController.h"
 @interface AppDelegate ()
-
+{
+    WZBleSDKInterface * face;
+}
 @end
 
 @implementation AppDelegate
@@ -25,10 +28,12 @@
     NSLog(@"%@",centralManagerIdentifiers);
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
-    
-    self.window.rootViewController = [[WZViewController alloc] init];
+    UINavigationController * navi = [[UINavigationController alloc] initWithRootViewController:[[DemoViewController alloc] init]];
+    self.window.rootViewController = navi;
+    //self.window.rootViewController = [[WZViewController alloc] init];
     [self.window makeKeyAndVisible];
     
+
     return YES;
 }
 

@@ -57,6 +57,7 @@
     self.bluetooh = [WZBluetooh shareBabyBluetooth];
     
     __weak typeof(self) weakSelf = self;
+
     [self.bluetooh startBluetoothServiceWithPeriphera:^(CBPeripheral *peripheral, NSDictionary *advertisementData) {
         
         for (NSDictionary *dict in weakSelf.peripheralArray) {
@@ -248,8 +249,8 @@
         NSDictionary *dict = self.peripheralArray[indexPath.row];
         NSDictionary *advertisementData = [dict valueForKey:@"advertisementData"];
         NSData *kCBAdvDataManufacturerData = [advertisementData valueForKey:@"kCBAdvDataManufacturerData"];
-        NSData *mac = [kCBAdvDataManufacturerData subdataWithRange:NSMakeRange(2, 6)];
-        
+      NSData *mac = [kCBAdvDataManufacturerData subdataWithRange:NSMakeRange(2, 6)];
+////        
         self.MacAdress = self.bluetooh.macAdress = mac;
         [SVProgressHUD showSuccessWithStatus:@"正在连接。。。。"];
         return;
@@ -557,28 +558,28 @@
 
     self.MacAdress = self.bluetooh.macAdress = nil;
     __weak typeof(self) weakSelf = self;
-    [self.bluetooh startBluetoothServiceWithPeriphera:^(CBPeripheral *peripheral, NSDictionary *advertisementData) {
-        
-        for (NSDictionary *dict in weakSelf.peripheralArray) {
-            CBPeripheral *peripheralTemp = [dict valueForKeyPath:@"peripheral"];
-            if ([peripheralTemp.name isEqualToString:peripheral.name]) {
-                return ;
-            }
-        }
-        
-        NSDictionary *dict = @{@"peripheral":peripheral, @"advertisementData":advertisementData};
-        
-        [weakSelf.peripheralArray addObject:dict];
-        [weakSelf.tablew reloadData];
-        
-        
-    }];
+//    [self.bluetooh startBluetoothServiceWithPeriphera:^(CBPeripheral *peripheral, NSDictionary *advertisementData) {
+//        
+//        for (NSDictionary *dict in weakSelf.peripheralArray) {
+//            CBPeripheral *peripheralTemp = [dict valueForKeyPath:@"peripheral"];
+//            if ([peripheralTemp.name isEqualToString:peripheral.name]) {
+//                return ;
+//            }
+//        }
+//        
+//        NSDictionary *dict = @{@"peripheral":peripheral, @"advertisementData":advertisementData};
+//        
+//        [weakSelf.peripheralArray addObject:dict];
+//        [weakSelf.tablew reloadData];
+//        
+//        
+//    }];
     [self connet];
 }
 
 - (void)connet {
     __weak typeof(self) weakSelf = self;
-    [self.bluetooh scanDeviceWithRespondStatuBlock:^(NSInteger battary, NSInteger speed, NSMutableString *versionString) {
+    [self.bluetooh scanDeviceWithRespondStatuBlock:^(CBPeripheral*pr,NSInteger battary, NSInteger speed, NSMutableString *versionString) {
         dispatch_async(dispatch_get_main_queue(), ^{
             weakSelf.statuLabel.text = [NSString stringWithFormat:@"电池电量：%ld  马达速度：%ld 版本号：%@",(long)battary, (long)speed, versionString];
             weakSelf.connectLabel.text = [NSString stringWithFormat:@"已连接设备：%@", self.MacAdress];
@@ -632,11 +633,11 @@
             weakSelf.bluReady = success;
         });
         
-    } readRSSI:^(NSNumber *RSSI, NSError *error) {
+    } readRSSI:^(CBPeripheral * p,NSNumber *RSSI, NSError *error) {
         
     } fail:^(NSError *error) {
         
-    } disconnect:^(NSError *error) {
+    } disconnect:^(NSError *error,CBPeripheral*p) {
         NSLog(@"");
     }];
 

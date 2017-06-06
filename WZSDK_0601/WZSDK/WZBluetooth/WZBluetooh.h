@@ -10,7 +10,7 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "BabyBluetooth.h"
 
-typedef void (^WZRespondStatuBlock)(NSInteger battary, NSInteger speed, NSMutableString *versionString);
+typedef void (^WZRespondStatuBlock)(CBPeripheral*,NSInteger battary, NSInteger speed, NSMutableString *versionString);
 typedef void (^WZBattaryBlock)(NSInteger battary);
 typedef void (^WZActivation)(BOOL success);
 typedef void (^WZCancelActivation)(BOOL success);
@@ -24,9 +24,9 @@ typedef void (^WZComplete)(BOOL success);
 typedef void (^WZWriteReady)(BOOL success);
 typedef void (^WZRename)(BOOL success, NSError *error);
 
-typedef void (^WZReadRSSI)(NSNumber *RSSI, NSError *error);
+typedef void (^WZReadRSSI)(CBPeripheral*,NSNumber *RSSI, NSError *error);
 typedef void (^WZFail)(NSError *error);
-typedef void (^WZDisconnect)(NSError *error);
+typedef void (^WZDisconnect)(NSError *error,CBPeripheral*);
 typedef void (^WZPeripheral)(CBPeripheral *peripheral, NSDictionary *advertisementData);
 typedef void (^WZUpload)(NSInteger part, NSInteger totalParts, NSInteger progress, NSInteger currentSpeedBytesPerSecond, NSInteger avgSpeedBytesPerSecond);
 typedef void (^WZSitting)(NSString *time, NSInteger sittingTime, NSInteger forwardTime, NSInteger backwardTime, NSInteger leftLeaningTime, NSInteger rightDeviationTime);
@@ -37,9 +37,12 @@ typedef void (^WZRealTime)(NSInteger status, NSInteger sitting);
 
 @property (assign, readonly, nonatomic)BOOL writeBusy;
 @property (strong, nonatomic) NSData *macAdress;
-
+@property (nonatomic,copy) void (^centralStateblock)(CBManagerState state);
 + (instancetype)shareBabyBluetooth;
 
+-(void)stopScan;
+-(void)connectPeriperal:(CBPeripheral*)perial;
+-(void)disConnectPeriperal:(CBPeripheral*)perial;
 - (void)startBluetoothService;
 
 - (void)startBluetoothServiceWithPeriphera:(WZPeripheral)peripheralBlock;
