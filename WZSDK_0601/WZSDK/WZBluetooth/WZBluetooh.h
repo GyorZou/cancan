@@ -14,8 +14,8 @@ typedef void (^WZRespondStatuBlock)(CBPeripheral*,NSInteger battary, NSInteger s
 typedef void (^WZBattaryBlock)(NSInteger battary);
 typedef void (^WZActivation)(BOOL success);
 typedef void (^WZCancelActivation)(BOOL success);
-typedef void (^WZSynStep)(NSString *time, unsigned long steps);
-typedef void (^WZPosture)(NSDictionary *posture);
+typedef void (^WZSynStep)(CBPeripheral*,NSString *time, unsigned long steps);
+typedef void (^WZPosture)(CBPeripheral*,NSDictionary *posture);
 typedef void (^WZSetMotor)(BOOL success);
 typedef void (^WZGetMotor)(NSInteger speed);
 typedef void (^WZSetPosture)(BOOL success);
@@ -29,7 +29,7 @@ typedef void (^WZFail)(NSError *error);
 typedef void (^WZDisconnect)(NSError *error,CBPeripheral*);
 typedef void (^WZPeripheral)(CBPeripheral *peripheral, NSDictionary *advertisementData);
 typedef void (^WZUpload)(NSInteger part, NSInteger totalParts, NSInteger progress, NSInteger currentSpeedBytesPerSecond, NSInteger avgSpeedBytesPerSecond);
-typedef void (^WZSitting)(NSString *time, NSInteger sittingTime, NSInteger forwardTime, NSInteger backwardTime, NSInteger leftLeaningTime, NSInteger rightDeviationTime);
+typedef void (^WZSitting)(CBPeripheral*,NSString *time, NSInteger sittingTime, NSInteger forwardTime, NSInteger backwardTime, NSInteger leftLeaningTime, NSInteger rightDeviationTime);
 typedef void (^WZRealTime)(NSInteger status, NSInteger sitting);
 
 

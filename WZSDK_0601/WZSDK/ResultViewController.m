@@ -9,9 +9,12 @@
 #import "ResultViewController.h"
 #import "WZBleSDKInterface.h"
 #import "SVProgressHUD.h"
+#import "InfoCell.h"
 @interface ResultViewController ()<WZBleSDKInterfaceListener,UITableViewDelegate,UITableViewDataSource>
 {
     WZBleSDKInterface * face;
+    
+    InfoCell * _curInfo;
 }
 @end
 
@@ -37,6 +40,8 @@
     tableView.dataSource = self;
 
     self.navigationItem.leftBarButtonItem = [self rightItem2];
+    
+    [tableView registerNib:[UINib nibWithNibName:@"InfoCell" bundle:nil] forCellReuseIdentifier:@"InfoCell.xib"];
 }
 -(UIBarButtonItem*)rightItem2
 {
@@ -79,6 +84,8 @@
         [face bleDevice:_curDevice sendCommandCode:WZBluetoohCommandRestartDevice extraData:nil];//修改名字后要重启
     }
 
+    
+    [self updateInfo:_curInfo];
 }
 -(NSString*)stringOfCMD:(WZBluetoohCommand)cmd
 {
@@ -163,19 +170,31 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
+    if (section==0) {
+        return 1;
+    }
     
     return WZBluetoohCommandClearData+1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section==0) {
+        return 190;
+    }
     return 40;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.section==0) {
+        InfoCell * cell = [tableView dequeueReusableCellWithIdentifier:@"InfoCell.xib"];
+        _curInfo = cell;
+        [self updateInfo:cell];
+        return cell;
+    }
     NSString *identifier = @"cellIdentifier";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (cell == nil) {
@@ -183,66 +202,7 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
 
-    
-//    switch (indexPath.row) {
-//        case 0:
-//            cell.textLabel.text = @"读取电池电量";
-//            break;
-//        case 1:
-//            cell.textLabel.text = @"激活命令";
-//            break;
-//        case 2:
-//            cell.textLabel.text = @"取消激活命令";
-//            break;
-//        case 3:
-//            cell.textLabel.text = @"链接状态下同步计数数据";
-//            break;
-//        case 4:
-//            cell.textLabel.text = @"链接状态下同步状态数据";
-//            break;
-//        case 5:
-//            cell.textLabel.text = @"设置马达震动秒数 open";
-//            break;
-//        case 6:
-//            cell.textLabel.text = @"设置马达震动 close";
-//            break;
-//        case 7:
-//            cell.textLabel.text = @"读取马达震动";
-//            break;
-//        case 8:
-//            cell.textLabel.text = @"校准坐姿";
-//            break;
-//        case 9:
-//            cell.textLabel.text = @"取消校准坐姿";
-//            break;
-//        case 10:
-//            cell.textLabel.text = @"设置前倾角度";
-//            break;
-//        case 11:
-//            cell.textLabel.text = @"设置后倾角度";
-//            break;
-//        case 12:
-//            cell.textLabel.text = @"设置左倾角度";
-//            break;
-//        case 13:
-//            cell.textLabel.text = @"设置右倾角度";
-//            break;
-//        case 14:
-//            cell.textLabel.text = @"清除缓存";
-//            break;
-//        case 15:
-//            cell.textLabel.text = @"重启";
-//            break;
-//        case 16:
-//            cell.textLabel.text = @"发送升级数据";
-//            break;
-//        case 17:
-//            cell.textLabel.text = @"修改名字";
-//            break;
-//            
-//        default:
-//            break;
-//    }
+
     
     cell.textLabel.text = [NSString stringWithFormat:@"(%ld)%@",indexPath.row, [self stringOfCMD:(WZBluetoohCommand)indexPath.row]];
     return cell;
@@ -250,6 +210,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(indexPath.section==0)return;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     switch (indexPath.row) {
         case 0:
@@ -262,10 +223,33 @@
         case 7:
         case 8:
         case 9:
-        case 10:
         case 11:
         case 18:
             [face bleDevice:_curDevice sendCommandCode:(WZBluetoohCommand)indexPath.row extraData:nil];
+            break;
+        case 10:{
+            
+            NSArray * paths = [[NSBundle mainBundle] pathsForResourcesOfType:@"zip" inDirectory:nil];
+            
+            
+            UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"选择版本" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+            
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+           
+            [alertController addAction:cancelAction];
+
+            for (NSString * path in paths) {
+                NSString * cmp = [path lastPathComponent];
+                UIAlertAction *action = [UIAlertAction actionWithTitle:cmp style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [face bleDevice:_curDevice sendCommandCode:(WZBluetoohCommand)indexPath.row extraData:cmp];
+                }];
+                [alertController addAction:action];
+            }
+            [self presentViewController:alertController animated:YES completion:nil];
+            
+            
+        }
+
             break;
             
         case 12:
@@ -304,6 +288,22 @@
             break;
     }
 
+}
+
+-(void)updateInfo:(InfoCell*)cell
+{
+    WZBleData * data = _curDevice.data;
+    
+    cell.nameLabel.text = _curDevice.name;
+    cell.batLabel.text = @(data.battery).stringValue;
+    cell.motorLabel.text = @(data.speed).stringValue;
+    cell.verLabel.text = data.version;
+
+    cell.stepLabel.text = @(data.steps).stringValue;
+    cell.posLabel.text = data.sitStatusString;
+    cell.stateLabel.text = data.postureStatusString;
+ 
+    cell.historyBtn.enabled = data.postures!=nil;
 }
 
 @end

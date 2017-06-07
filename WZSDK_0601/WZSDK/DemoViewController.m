@@ -17,6 +17,7 @@
     NSMutableArray * _devices;
     UITableView * _tableView;
     WZBleDevice * _curDev;
+    NSTimer * _timer;
 }
 @end
 
@@ -48,6 +49,7 @@
     
     _tableView = tableView;
     
+    
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -63,7 +65,8 @@
     [face clearDevices];
     [face startScan];
     [_tableView reloadData];
-    [NSTimer scheduledTimerWithTimeInterval:15 repeats:NO block:^(NSTimer * _Nonnull timer) {
+    [_timer invalidate];
+    _timer = [NSTimer scheduledTimerWithTimeInterval:15 repeats:NO block:^(NSTimer * _Nonnull timer) {
         [self stop];
     }];
 }
@@ -129,14 +132,19 @@
 
 -(void)bleDidConnectDevice:(WZBleDevice *)device
 {
+    [SVProgressHUD dismiss];
     ResultViewController * rs = [[ResultViewController alloc] init];
     rs.curDevice = device;
     [self.navigationController pushViewController:rs animated:YES];
 }
+-(void)bleFailConnectDevice:(WZBleDevice *)device error:(NSError *)err
+{
+    [SVProgressHUD dismiss];
+}
 -(void)bleStatusChanged:(WZBleStatus)state
 {
     if (state==WZBleStatusPowerOn) {//蓝牙可用，扫描按钮可点击
-        
+        [self doScan];
     }else if (state==WZBleStatusPowerOff) {//蓝牙关闭，提示用户
         [SVProgressHUD showInfoWithStatus:@"蓝牙关闭，请打开"];
     }else if (state==WZBleStatusUnauthorized) {//未授权，提示用户去设置
@@ -189,6 +197,8 @@
     [self stop];
     [face connectDevice:device];
     _curDev  = device;
+    
+    [SVProgressHUD showWithStatus:@"正在连接..."];
     
   
 }

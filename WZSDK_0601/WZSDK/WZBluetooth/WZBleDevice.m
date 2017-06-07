@@ -11,7 +11,7 @@
 @implementation WZBleDevice
 -(WZBleData *)data
 {
-    if (_data) {
+    if (_data==nil) {
         _data =[[WZBleData alloc] init];
     }
     return _data;

@@ -10,6 +10,10 @@
 #import "WZBleData.h"
 #import "WZBluetooh.h"
 #import "WZBleDevice.h"
+
+/*
+ 所有指令枚举值
+ */
 typedef enum{
     WZBluetoohCommandRestartDevice,//重启设备
     WZBluetoohCommandGetBattery,//电池

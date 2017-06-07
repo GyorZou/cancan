@@ -24,6 +24,7 @@ static NSString *const keepAliveUUID = @"FFA2";
 {
     NSMutableArray *peripheralDataArray;
     BabyBluetooth *baby;
+    BOOL _dfuing;
 }
 
 @property (strong, nonatomic) CBCentralManager *uploadCentralManager;
@@ -627,7 +628,7 @@ static NSString *const keepAliveUUID = @"FFA2";
 }
 
 - (void)dfuError:(enum DFUError)error didOccurWithMessage:(NSString * _Nonnull)message {
-//    //NSLog(@"didOccurWithMessage:%@", message);
+     NSLog(@"didOccurWithMessage:%@", message);
     self.uploadCompleteBlock(NO);
 }
 
@@ -635,7 +636,7 @@ static NSString *const keepAliveUUID = @"FFA2";
 
 - (void)dfuProgressDidChangeFor:(NSInteger)part outOf:(NSInteger)totalParts to:(NSInteger)progress currentSpeedBytesPerSecond:(double)currentSpeedBytesPerSecond avgSpeedBytesPerSecond:(double)avgSpeedBytesPerSecond {
     self.uploadBlock(part, totalParts, progress, currentSpeedBytesPerSecond, avgSpeedBytesPerSecond);
-//    //NSLog(@"WZ progress:%ld",(long)progress);
+    NSLog(@"WZ progress:%ld",(long)progress);
 }
 
 #pragma mark - private
@@ -645,6 +646,14 @@ static NSString *const keepAliveUUID = @"FFA2";
 }
 
 - (void)bluUpload{
+    if (_dfuing) {
+        return;
+    }
+    _dfuing = YES;
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(30 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        _dfuing = NO;
+    });
     NSURL *url = [NSURL fileURLWithPath:self.filePath];
     DFUFirmware *firmware = [[DFUFirmware alloc] initWithUrlToZipFile:url];
     DFUServiceInitiator *initiator = [[DFUServiceInitiator alloc] initWithCentralManager:self.uploadCentralManager target:self.uploadPeripheral];
@@ -755,7 +764,7 @@ static NSString *const keepAliveUUID = @"FFA2";
             //NSLog(@"self.respondSynStepBlock nil");
             return;
         }
-        self.respondSynStepBlock(time, step);
+        self.respondSynStepBlock(_currPeripheral,time, step);
 
     } else if (protocolTyte[0] == 0xE3) { // 同步记忆状态数据flash应答
         //同步记忆状态数据flash
@@ -799,7 +808,7 @@ static NSString *const keepAliveUUID = @"FFA2";
             //NSLog(@"self.sittingBlock nil");
             return;
         }
-        self.sittingBlock(time, sitting, forward, backward, leftLeaning, rightDeviation);
+        self.sittingBlock(_currPeripheral,time, sitting, forward, backward, leftLeaning, rightDeviation);
     } else if (protocolTyte[0] == 0xE4) { // 交换结束应答
         [self respondComplete];
         if (!self.replyCompleteBlock) {
@@ -866,7 +875,7 @@ static NSString *const keepAliveUUID = @"FFA2";
             //NSLog(@"self.synStepBlock nil");
             return;
         }
-        self.synStepBlock(time, step);
+        self.synStepBlock(_currPeripheral,time, step);
     } else if (protocolTyte[0] == 0xE9) { // 连接状态下同步状态数据
         //连接状态下同步状态数据
         NSInteger flashRecordCount = length - 3;
@@ -1023,14 +1032,14 @@ static NSString *const keepAliveUUID = @"FFA2";
                 //NSLog(@"self.postureBlock nil");
                 return;
             }
-            self.postureBlock([self.postureDic mutableCopy]);
+            self.postureBlock(_currPeripheral,[self.postureDic mutableCopy]);
 
         } else {
             if (!self.respondSynPostureBlock) {
                 //NSLog(@"self.respondSynPostureBlock nil");
                 return;
             }
-            self.respondSynPostureBlock([self.postureDic mutableCopy]);
+            self.respondSynPostureBlock(_currPeripheral,[self.postureDic mutableCopy]);
         }
     }
 }

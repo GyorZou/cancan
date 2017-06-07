@@ -8,7 +8,26 @@
 
 #import "WZBleData.h"
 
+
+@interface WZBleData()
+{
+    NSMutableArray * _historyPos;
+    NSMutableArray * _historySit;
+    NSMutableArray * _historySteps;
+}
+
+@end
+
 @implementation WZBleData
+
+-(instancetype)init
+{
+    self = [super init];
+    _historyPos = [[NSMutableArray alloc] initWithCapacity:20];
+    _historySit = [[NSMutableArray alloc] initWithCapacity:20];
+    _historySteps = [[NSMutableArray alloc] initWithCapacity:20];
+    return  self;
+}
 
 -(NSString *)postureStatusString
 {

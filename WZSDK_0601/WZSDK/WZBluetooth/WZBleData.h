@@ -12,7 +12,7 @@
 
 
 #import <Foundation/Foundation.h>
-
+#import "HistoryModel.h"
 @interface WZBleData : NSObject
 
 
@@ -34,6 +34,19 @@ STRONGPROP(NSNumber*, rssi);
 ASSIGNPROP(NSInteger,speed);
 
 STRONGPROP(NSString*, version);
+
+STRONGPROP(NSString*, synTime);
+
+ASSIGNPROP(NSInteger,sitTime);
+ASSIGNPROP(NSInteger,leftSitTime);
+
+ASSIGNPROP(NSInteger,rightSitTime);
+
+ASSIGNPROP(NSInteger,forwardSitTime);
+
+
+ASSIGNPROP(NSInteger,backwardSitTime);
+
 
 
 ASSIGNPROP(NSInteger, progress);//dfu进度:0~100

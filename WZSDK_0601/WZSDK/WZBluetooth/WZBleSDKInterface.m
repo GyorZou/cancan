@@ -147,15 +147,20 @@
         
         [self notifyDevice:tempDevice dataForCMD:WZBluetoohCommandNone];
         
-    } synStep:^(NSString *time, unsigned long steps) {
+    } synStep:^(CBPeripheral* p,NSString *time, unsigned long steps) {
+        WZBleDevice * tempDevice=[self findDeviceWith:p];
+        tempDevice.data.stepTime = time;
+        tempDevice.data.steps = steps;
+        
+        [self notifyDevice:tempDevice dataForCMD:WZBluetoohCommandSynSteps];
 
         
-    } posture:^(NSDictionary *posture) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-        });
+    } posture:^(CBPeripheral*p,NSDictionary *posture) {
+        WZBleDevice * tempDevice=[self findDeviceWith:p];
+        tempDevice.data.postures= posture;
         
-    } sitting:^(NSString *time, NSInteger sittingTime, NSInteger forwardTime, NSInteger backwardTime, NSInteger leftLeaningTime, NSInteger rightDeviationTime) {
+        [self notifyDevice:tempDevice dataForCMD:WZBluetoohCommandSynPostures];
+    } sitting:^(CBPeripheral *p,NSString *time, NSInteger sittingTime, NSInteger forwardTime, NSInteger backwardTime, NSInteger leftLeaningTime, NSInteger rightDeviationTime) {
         dispatch_async(dispatch_get_main_queue(), ^{
             NSString *settingString = [NSString stringWithFormat:@"时间 %@  正坐时间：%ld  前倾时间：%ld  后倾时间：%ld  左倾时间：%ld  右倾时间：%ld", time, (long)sittingTime, (long)forwardTime, (long)backwardTime, (long)leftLeaningTime,(long)rightDeviationTime];
             
@@ -311,7 +316,7 @@
     
     switch (command) {
         case WZBluetoohCommandSynSteps:{
-            [self.bluetooh synStep:^(NSString *time, unsigned long steps) {
+            [self.bluetooh synStep:^(CBPeripheral *p,NSString *time, unsigned long steps) {
     
                 device.data.stepTime = time;
                 device.data.steps = steps;
@@ -350,7 +355,7 @@
             
         case WZBluetoohCommandSynPostures:
         {
-            [self.bluetooh synPosture:^(NSDictionary *posture) {
+            [self.bluetooh synPosture:^(CBPeripheral *p,NSDictionary *posture) {
                
                 device.data.postures = posture;
                 [ws notifyDevice:device dataForCMD:command];
@@ -444,8 +449,10 @@
             break;
         case WZBluetoohCommandUploadDFUData:
         {
-            NSString *url = [[NSBundle mainBundle] pathForResource:@"dfuwzV1.1.3" ofType:@"zip"];
+            NSString *url = [[NSBundle mainBundle] pathForResource:data ofType:nil];
          
+            
+            
             [self.bluetooh uploadWith:url upload:^(NSInteger part, NSInteger totalParts, NSInteger progress, NSInteger currentSpeedBytesPerSecond, NSInteger avgSpeedBytesPerSecond) {
                 device.data.isSuccess = YES;
                 device.data.progress = progress;
