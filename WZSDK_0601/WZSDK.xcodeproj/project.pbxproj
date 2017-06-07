@@ -128,7 +128,6 @@
 		52B124511EE80737007EEAE1 /* WZBleDeviceTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBleDeviceTools.h; sourceTree = "<group>"; };
 		52B124521EE80737007EEAE1 /* WZBleSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBleSDK.h; sourceTree = "<group>"; };
 		52B124531EE80737007EEAE1 /* WZBleSDKBaseInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBleSDKBaseInterface.h; sourceTree = "<group>"; };
-		52B124541EE80737007EEAE1 /* WZBleSDKInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBleSDKInterface.h; sourceTree = "<group>"; };
 		52B124551EE80737007EEAE1 /* WZHistoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZHistoryModel.h; sourceTree = "<group>"; };
 		52B124571EE80737007EEAE1 /* BabyBluetooth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyBluetooth.h; sourceTree = "<group>"; };
 		52B124581EE80737007EEAE1 /* BabyBluetooth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyBluetooth.m; sourceTree = "<group>"; };
@@ -348,7 +347,6 @@
 				52B124511EE80737007EEAE1 /* WZBleDeviceTools.h */,
 				52B124521EE80737007EEAE1 /* WZBleSDK.h */,
 				52B124531EE80737007EEAE1 /* WZBleSDKBaseInterface.h */,
-				52B124541EE80737007EEAE1 /* WZBleSDKInterface.h */,
 				52B124551EE80737007EEAE1 /* WZHistoryModel.h */,
 			);
 			path = WZBleSDK;
