@@ -6,8 +6,8 @@
 //  Copyright © 2017年 生生. All rights reserved.
 //
 
-#import "HistoryModel.h"
+#import "WZHistoryModel.h"
 
-@implementation HistoryModel
+@implementation WZHistoryModel
 
 @end

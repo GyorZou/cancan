@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "WZBleSDK.h"
 @interface DemoViewController : UIViewController
 
 @end

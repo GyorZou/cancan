@@ -12,16 +12,6 @@
 		0C68A8791EAE1D43001DD601 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C68A8781EAE1D43001DD601 /* Assets.xcassets */; };
 		0C68A8871EAE1D44001DD601 /* WZSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C68A8861EAE1D44001DD601 /* WZSDKTests.m */; };
 		0C68A8921EAE1D44001DD601 /* WZSDKUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C68A8911EAE1D44001DD601 /* WZSDKUITests.m */; };
-		0C68A8BA1EAE1EEC001DD601 /* WZBluetooh.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C68A8A61EAE1EEC001DD601 /* WZBluetooh.m */; };
-		0C68A8BB1EAE1EEC001DD601 /* BabyBluetooth.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C68A8A91EAE1EEC001DD601 /* BabyBluetooth.m */; };
-		0C68A8BC1EAE1EEC001DD601 /* BabyCallback.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C68A8AB1EAE1EEC001DD601 /* BabyCallback.m */; };
-		0C68A8BD1EAE1EEC001DD601 /* BabyCentralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C68A8AD1EAE1EEC001DD601 /* BabyCentralManager.m */; };
-		0C68A8BE1EAE1EEC001DD601 /* BabyDefine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C68A8AF1EAE1EEC001DD601 /* BabyDefine.m */; };
-		0C68A8BF1EAE1EEC001DD601 /* BabyOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C68A8B11EAE1EEC001DD601 /* BabyOptions.m */; };
-		0C68A8C01EAE1EEC001DD601 /* BabyPeripheralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C68A8B31EAE1EEC001DD601 /* BabyPeripheralManager.m */; };
-		0C68A8C11EAE1EEC001DD601 /* BabyRhythm.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C68A8B51EAE1EEC001DD601 /* BabyRhythm.m */; };
-		0C68A8C21EAE1EEC001DD601 /* BabySpeaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C68A8B71EAE1EEC001DD601 /* BabySpeaker.m */; };
-		0C68A8C31EAE1EEC001DD601 /* BabyToy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C68A8B91EAE1EEC001DD601 /* BabyToy.m */; };
 		0C68A8C71EAE221E001DD601 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C68A8C51EAE221E001DD601 /* LaunchScreen.xib */; };
 		0C68A8D71EAE4C19001DD601 /* WZViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C68A8D51EAE4C19001DD601 /* WZViewController.m */; };
 		0C68A8D81EAE4C19001DD601 /* WZViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C68A8D61EAE4C19001DD601 /* WZViewController.xib */; };
@@ -33,9 +23,6 @@
 		36C9CF851EDE988E008E116A /* dfuwzV1.1.5.zip in Resources */ = {isa = PBXBuildFile; fileRef = 36C9CF841EDE988E008E116A /* dfuwzV1.1.5.zip */; };
 		36E91DE21ED6CDB400982C33 /* dfuwzV1.1.4.zip in Resources */ = {isa = PBXBuildFile; fileRef = 36E91DE11ED6CDB400982C33 /* dfuwzV1.1.4.zip */; };
 		36EF15C01EDB0028009C82B2 /* dfuwzV1.1.3.zip in Resources */ = {isa = PBXBuildFile; fileRef = 36EF15BF1EDB0028009C82B2 /* dfuwzV1.1.3.zip */; };
-		4C2AAC631EE563CC001D5B6A /* WZBleSDKInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2AAC621EE563CC001D5B6A /* WZBleSDKInterface.m */; };
-		4C2AAC661EE56418001D5B6A /* WZBleData.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2AAC651EE56418001D5B6A /* WZBleData.m */; };
-		4C2AAC691EE58ABB001D5B6A /* WZBleDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2AAC681EE58ABB001D5B6A /* WZBleDevice.m */; };
 		4C2AAC6D1EE65006001D5B6A /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2AAC6B1EE65006001D5B6A /* DemoViewController.m */; };
 		4C2AAC6E1EE65006001D5B6A /* DemoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C2AAC6C1EE65006001D5B6A /* DemoViewController.xib */; };
 		4C2AAC721EE65059001D5B6A /* DeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2AAC701EE65059001D5B6A /* DeviceCell.m */; };
@@ -46,7 +33,19 @@
 		526F43491EE78AC3005E60AE /* InfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 526F43471EE78AC3005E60AE /* InfoCell.xib */; };
 		526F43511EE7A7D3005E60AE /* HistoryInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 526F434F1EE7A7D3005E60AE /* HistoryInfoCell.m */; };
 		526F43521EE7A7D3005E60AE /* HistoryInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 526F43501EE7A7D3005E60AE /* HistoryInfoCell.xib */; };
-		526F43551EE7A9FE005E60AE /* HistoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 526F43541EE7A9FE005E60AE /* HistoryModel.m */; };
+		52B1246E1EE80737007EEAE1 /* libWZBleSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B1244C1EE80737007EEAE1 /* libWZBleSDK.a */; };
+		52B1246F1EE80737007EEAE1 /* BabyBluetooth.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B124581EE80737007EEAE1 /* BabyBluetooth.m */; };
+		52B124701EE80737007EEAE1 /* BabyCallback.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B1245A1EE80737007EEAE1 /* BabyCallback.m */; };
+		52B124711EE80737007EEAE1 /* BabyCentralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B1245C1EE80737007EEAE1 /* BabyCentralManager.m */; };
+		52B124721EE80737007EEAE1 /* BabyDefine.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B1245E1EE80737007EEAE1 /* BabyDefine.m */; };
+		52B124731EE80737007EEAE1 /* BabyOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B124601EE80737007EEAE1 /* BabyOptions.m */; };
+		52B124741EE80737007EEAE1 /* BabyPeripheralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B124621EE80737007EEAE1 /* BabyPeripheralManager.m */; };
+		52B124751EE80737007EEAE1 /* BabyRhythm.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B124641EE80737007EEAE1 /* BabyRhythm.m */; };
+		52B124761EE80737007EEAE1 /* BabySpeaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B124661EE80737007EEAE1 /* BabySpeaker.m */; };
+		52B124771EE80737007EEAE1 /* BabyToy.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B124681EE80737007EEAE1 /* BabyToy.m */; };
+		52B124781EE80737007EEAE1 /* WZBleSDKInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B1246A1EE80737007EEAE1 /* WZBleSDKInterface.m */; };
+		52B124791EE80737007EEAE1 /* WZBluetooh.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B1246C1EE80737007EEAE1 /* WZBluetooh.m */; };
+		52B1247B1EE8091B007EEAE1 /* libWZBleSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B1247A1EE8091B007EEAE1 /* libWZBleSDK.a */; };
 		BF03A3C3ADC60882D49B7C4B /* Pods_WZSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA77655478A806434093A558 /* Pods_WZSDK.framework */; };
 /* End PBXBuildFile section */
 
@@ -93,26 +92,6 @@
 		0C68A88D1EAE1D44001DD601 /* WZSDKUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WZSDKUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C68A8911EAE1D44001DD601 /* WZSDKUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WZSDKUITests.m; sourceTree = "<group>"; };
 		0C68A8931EAE1D44001DD601 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0C68A8A51EAE1EEC001DD601 /* WZBluetooh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBluetooh.h; sourceTree = "<group>"; };
-		0C68A8A61EAE1EEC001DD601 /* WZBluetooh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZBluetooh.m; sourceTree = "<group>"; };
-		0C68A8A81EAE1EEC001DD601 /* BabyBluetooth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyBluetooth.h; sourceTree = "<group>"; };
-		0C68A8A91EAE1EEC001DD601 /* BabyBluetooth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyBluetooth.m; sourceTree = "<group>"; };
-		0C68A8AA1EAE1EEC001DD601 /* BabyCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyCallback.h; sourceTree = "<group>"; };
-		0C68A8AB1EAE1EEC001DD601 /* BabyCallback.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyCallback.m; sourceTree = "<group>"; };
-		0C68A8AC1EAE1EEC001DD601 /* BabyCentralManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyCentralManager.h; sourceTree = "<group>"; };
-		0C68A8AD1EAE1EEC001DD601 /* BabyCentralManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyCentralManager.m; sourceTree = "<group>"; };
-		0C68A8AE1EAE1EEC001DD601 /* BabyDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyDefine.h; sourceTree = "<group>"; };
-		0C68A8AF1EAE1EEC001DD601 /* BabyDefine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyDefine.m; sourceTree = "<group>"; };
-		0C68A8B01EAE1EEC001DD601 /* BabyOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyOptions.h; sourceTree = "<group>"; };
-		0C68A8B11EAE1EEC001DD601 /* BabyOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyOptions.m; sourceTree = "<group>"; };
-		0C68A8B21EAE1EEC001DD601 /* BabyPeripheralManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyPeripheralManager.h; sourceTree = "<group>"; };
-		0C68A8B31EAE1EEC001DD601 /* BabyPeripheralManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyPeripheralManager.m; sourceTree = "<group>"; };
-		0C68A8B41EAE1EEC001DD601 /* BabyRhythm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyRhythm.h; sourceTree = "<group>"; };
-		0C68A8B51EAE1EEC001DD601 /* BabyRhythm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyRhythm.m; sourceTree = "<group>"; };
-		0C68A8B61EAE1EEC001DD601 /* BabySpeaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabySpeaker.h; sourceTree = "<group>"; };
-		0C68A8B71EAE1EEC001DD601 /* BabySpeaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabySpeaker.m; sourceTree = "<group>"; };
-		0C68A8B81EAE1EEC001DD601 /* BabyToy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyToy.h; sourceTree = "<group>"; };
-		0C68A8B91EAE1EEC001DD601 /* BabyToy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyToy.m; sourceTree = "<group>"; };
 		0C68A8C61EAE221E001DD601 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		0C68A8D41EAE4C19001DD601 /* WZViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZViewController.h; sourceTree = "<group>"; };
 		0C68A8D51EAE4C19001DD601 /* WZViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZViewController.m; sourceTree = "<group>"; };
@@ -128,12 +107,6 @@
 		36C9CF841EDE988E008E116A /* dfuwzV1.1.5.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = dfuwzV1.1.5.zip; sourceTree = "<group>"; };
 		36E91DE11ED6CDB400982C33 /* dfuwzV1.1.4.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = dfuwzV1.1.4.zip; sourceTree = "<group>"; };
 		36EF15BF1EDB0028009C82B2 /* dfuwzV1.1.3.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = dfuwzV1.1.3.zip; sourceTree = "<group>"; };
-		4C2AAC611EE563CC001D5B6A /* WZBleSDKInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBleSDKInterface.h; sourceTree = "<group>"; };
-		4C2AAC621EE563CC001D5B6A /* WZBleSDKInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZBleSDKInterface.m; sourceTree = "<group>"; };
-		4C2AAC641EE56418001D5B6A /* WZBleData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBleData.h; sourceTree = "<group>"; };
-		4C2AAC651EE56418001D5B6A /* WZBleData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZBleData.m; sourceTree = "<group>"; };
-		4C2AAC671EE58ABB001D5B6A /* WZBleDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBleDevice.h; sourceTree = "<group>"; };
-		4C2AAC681EE58ABB001D5B6A /* WZBleDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZBleDevice.m; sourceTree = "<group>"; };
 		4C2AAC6A1EE65006001D5B6A /* DemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoViewController.h; sourceTree = "<group>"; };
 		4C2AAC6B1EE65006001D5B6A /* DemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoViewController.m; sourceTree = "<group>"; };
 		4C2AAC6C1EE65006001D5B6A /* DemoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DemoViewController.xib; sourceTree = "<group>"; };
@@ -149,8 +122,37 @@
 		526F434E1EE7A7D3005E60AE /* HistoryInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryInfoCell.h; sourceTree = "<group>"; };
 		526F434F1EE7A7D3005E60AE /* HistoryInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryInfoCell.m; sourceTree = "<group>"; };
 		526F43501EE7A7D3005E60AE /* HistoryInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryInfoCell.xib; sourceTree = "<group>"; };
-		526F43531EE7A9FE005E60AE /* HistoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryModel.h; path = ../HistoryModel.h; sourceTree = "<group>"; };
-		526F43541EE7A9FE005E60AE /* HistoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryModel.m; path = ../HistoryModel.m; sourceTree = "<group>"; };
+		52B1244C1EE80737007EEAE1 /* libWZBleSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWZBleSDK.a; sourceTree = "<group>"; };
+		52B1244F1EE80737007EEAE1 /* WZBleData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBleData.h; sourceTree = "<group>"; };
+		52B124501EE80737007EEAE1 /* WZBleDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBleDevice.h; sourceTree = "<group>"; };
+		52B124511EE80737007EEAE1 /* WZBleDeviceTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBleDeviceTools.h; sourceTree = "<group>"; };
+		52B124521EE80737007EEAE1 /* WZBleSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBleSDK.h; sourceTree = "<group>"; };
+		52B124531EE80737007EEAE1 /* WZBleSDKBaseInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBleSDKBaseInterface.h; sourceTree = "<group>"; };
+		52B124541EE80737007EEAE1 /* WZBleSDKInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBleSDKInterface.h; sourceTree = "<group>"; };
+		52B124551EE80737007EEAE1 /* WZHistoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZHistoryModel.h; sourceTree = "<group>"; };
+		52B124571EE80737007EEAE1 /* BabyBluetooth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyBluetooth.h; sourceTree = "<group>"; };
+		52B124581EE80737007EEAE1 /* BabyBluetooth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyBluetooth.m; sourceTree = "<group>"; };
+		52B124591EE80737007EEAE1 /* BabyCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyCallback.h; sourceTree = "<group>"; };
+		52B1245A1EE80737007EEAE1 /* BabyCallback.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyCallback.m; sourceTree = "<group>"; };
+		52B1245B1EE80737007EEAE1 /* BabyCentralManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyCentralManager.h; sourceTree = "<group>"; };
+		52B1245C1EE80737007EEAE1 /* BabyCentralManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyCentralManager.m; sourceTree = "<group>"; };
+		52B1245D1EE80737007EEAE1 /* BabyDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyDefine.h; sourceTree = "<group>"; };
+		52B1245E1EE80737007EEAE1 /* BabyDefine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyDefine.m; sourceTree = "<group>"; };
+		52B1245F1EE80737007EEAE1 /* BabyOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyOptions.h; sourceTree = "<group>"; };
+		52B124601EE80737007EEAE1 /* BabyOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyOptions.m; sourceTree = "<group>"; };
+		52B124611EE80737007EEAE1 /* BabyPeripheralManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyPeripheralManager.h; sourceTree = "<group>"; };
+		52B124621EE80737007EEAE1 /* BabyPeripheralManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyPeripheralManager.m; sourceTree = "<group>"; };
+		52B124631EE80737007EEAE1 /* BabyRhythm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyRhythm.h; sourceTree = "<group>"; };
+		52B124641EE80737007EEAE1 /* BabyRhythm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyRhythm.m; sourceTree = "<group>"; };
+		52B124651EE80737007EEAE1 /* BabySpeaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabySpeaker.h; sourceTree = "<group>"; };
+		52B124661EE80737007EEAE1 /* BabySpeaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabySpeaker.m; sourceTree = "<group>"; };
+		52B124671EE80737007EEAE1 /* BabyToy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyToy.h; sourceTree = "<group>"; };
+		52B124681EE80737007EEAE1 /* BabyToy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyToy.m; sourceTree = "<group>"; };
+		52B124691EE80737007EEAE1 /* WZBleSDKInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBleSDKInterface.h; sourceTree = "<group>"; };
+		52B1246A1EE80737007EEAE1 /* WZBleSDKInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZBleSDKInterface.m; sourceTree = "<group>"; };
+		52B1246B1EE80737007EEAE1 /* WZBluetooh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBluetooh.h; sourceTree = "<group>"; };
+		52B1246C1EE80737007EEAE1 /* WZBluetooh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZBluetooh.m; sourceTree = "<group>"; };
+		52B1247A1EE8091B007EEAE1 /* libWZBleSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWZBleSDK.a; sourceTree = "<group>"; };
 		AA77655478A806434093A558 /* Pods_WZSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WZSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D132C8A258BE345D8EC011C9 /* Pods-WZSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WZSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-WZSDK/Pods-WZSDK.release.xcconfig"; sourceTree = "<group>"; };
 		F2305DA2EB3652EF6B377E9B /* Pods-WZSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WZSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WZSDK/Pods-WZSDK.debug.xcconfig"; sourceTree = "<group>"; };
@@ -162,6 +164,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF03A3C3ADC60882D49B7C4B /* Pods_WZSDK.framework in Frameworks */,
+				52B1246E1EE80737007EEAE1 /* libWZBleSDK.a in Frameworks */,
+				52B1247B1EE8091B007EEAE1 /* libWZBleSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,44 +271,9 @@
 		0C68A8A41EAE1EEC001DD601 /* WZBluetooth */ = {
 			isa = PBXGroup;
 			children = (
-				0C68A8A51EAE1EEC001DD601 /* WZBluetooh.h */,
-				0C68A8A61EAE1EEC001DD601 /* WZBluetooh.m */,
-				4C2AAC611EE563CC001D5B6A /* WZBleSDKInterface.h */,
-				4C2AAC621EE563CC001D5B6A /* WZBleSDKInterface.m */,
-				4C2AAC641EE56418001D5B6A /* WZBleData.h */,
-				4C2AAC651EE56418001D5B6A /* WZBleData.m */,
-				4C2AAC671EE58ABB001D5B6A /* WZBleDevice.h */,
-				4C2AAC681EE58ABB001D5B6A /* WZBleDevice.m */,
-				526F43531EE7A9FE005E60AE /* HistoryModel.h */,
-				526F43541EE7A9FE005E60AE /* HistoryModel.m */,
-				0C68A8A71EAE1EEC001DD601 /* WZBabyBluetooth */,
+				52B124481EE80737007EEAE1 /* BleSDK */,
 			);
 			path = WZBluetooth;
-			sourceTree = "<group>";
-		};
-		0C68A8A71EAE1EEC001DD601 /* WZBabyBluetooth */ = {
-			isa = PBXGroup;
-			children = (
-				0C68A8A81EAE1EEC001DD601 /* BabyBluetooth.h */,
-				0C68A8A91EAE1EEC001DD601 /* BabyBluetooth.m */,
-				0C68A8AA1EAE1EEC001DD601 /* BabyCallback.h */,
-				0C68A8AB1EAE1EEC001DD601 /* BabyCallback.m */,
-				0C68A8AC1EAE1EEC001DD601 /* BabyCentralManager.h */,
-				0C68A8AD1EAE1EEC001DD601 /* BabyCentralManager.m */,
-				0C68A8AE1EAE1EEC001DD601 /* BabyDefine.h */,
-				0C68A8AF1EAE1EEC001DD601 /* BabyDefine.m */,
-				0C68A8B01EAE1EEC001DD601 /* BabyOptions.h */,
-				0C68A8B11EAE1EEC001DD601 /* BabyOptions.m */,
-				0C68A8B21EAE1EEC001DD601 /* BabyPeripheralManager.h */,
-				0C68A8B31EAE1EEC001DD601 /* BabyPeripheralManager.m */,
-				0C68A8B41EAE1EEC001DD601 /* BabyRhythm.h */,
-				0C68A8B51EAE1EEC001DD601 /* BabyRhythm.m */,
-				0C68A8B61EAE1EEC001DD601 /* BabySpeaker.h */,
-				0C68A8B71EAE1EEC001DD601 /* BabySpeaker.m */,
-				0C68A8B81EAE1EEC001DD601 /* BabyToy.h */,
-				0C68A8B91EAE1EEC001DD601 /* BabyToy.m */,
-			);
-			path = WZBabyBluetooth;
 			sourceTree = "<group>";
 		};
 		0C68A8C41EAE1EF7001DD601 /* other */ = {
@@ -330,6 +299,84 @@
 				0C68A8E31EAE68A8001DD601 /* SVProgressHUD.m */,
 			);
 			path = SVProgressHUD;
+			sourceTree = "<group>";
+		};
+		52B124481EE80737007EEAE1 /* BleSDK */ = {
+			isa = PBXGroup;
+			children = (
+				52B124491EE80737007EEAE1 /* Debug-iphoneos */,
+				52B1244B1EE80737007EEAE1 /* Debug-iphonesimulator */,
+				52B1244D1EE80737007EEAE1 /* include */,
+				52B124561EE80737007EEAE1 /* WZBabyBluetooth */,
+				52B124691EE80737007EEAE1 /* WZBleSDKInterface.h */,
+				52B1246A1EE80737007EEAE1 /* WZBleSDKInterface.m */,
+				52B1246B1EE80737007EEAE1 /* WZBluetooh.h */,
+				52B1246C1EE80737007EEAE1 /* WZBluetooh.m */,
+			);
+			path = BleSDK;
+			sourceTree = "<group>";
+		};
+		52B124491EE80737007EEAE1 /* Debug-iphoneos */ = {
+			isa = PBXGroup;
+			children = (
+				52B1247A1EE8091B007EEAE1 /* libWZBleSDK.a */,
+			);
+			path = "Debug-iphoneos";
+			sourceTree = "<group>";
+		};
+		52B1244B1EE80737007EEAE1 /* Debug-iphonesimulator */ = {
+			isa = PBXGroup;
+			children = (
+				52B1244C1EE80737007EEAE1 /* libWZBleSDK.a */,
+			);
+			path = "Debug-iphonesimulator";
+			sourceTree = "<group>";
+		};
+		52B1244D1EE80737007EEAE1 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				52B1244E1EE80737007EEAE1 /* WZBleSDK */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		52B1244E1EE80737007EEAE1 /* WZBleSDK */ = {
+			isa = PBXGroup;
+			children = (
+				52B1244F1EE80737007EEAE1 /* WZBleData.h */,
+				52B124501EE80737007EEAE1 /* WZBleDevice.h */,
+				52B124511EE80737007EEAE1 /* WZBleDeviceTools.h */,
+				52B124521EE80737007EEAE1 /* WZBleSDK.h */,
+				52B124531EE80737007EEAE1 /* WZBleSDKBaseInterface.h */,
+				52B124541EE80737007EEAE1 /* WZBleSDKInterface.h */,
+				52B124551EE80737007EEAE1 /* WZHistoryModel.h */,
+			);
+			path = WZBleSDK;
+			sourceTree = "<group>";
+		};
+		52B124561EE80737007EEAE1 /* WZBabyBluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				52B124571EE80737007EEAE1 /* BabyBluetooth.h */,
+				52B124581EE80737007EEAE1 /* BabyBluetooth.m */,
+				52B124591EE80737007EEAE1 /* BabyCallback.h */,
+				52B1245A1EE80737007EEAE1 /* BabyCallback.m */,
+				52B1245B1EE80737007EEAE1 /* BabyCentralManager.h */,
+				52B1245C1EE80737007EEAE1 /* BabyCentralManager.m */,
+				52B1245D1EE80737007EEAE1 /* BabyDefine.h */,
+				52B1245E1EE80737007EEAE1 /* BabyDefine.m */,
+				52B1245F1EE80737007EEAE1 /* BabyOptions.h */,
+				52B124601EE80737007EEAE1 /* BabyOptions.m */,
+				52B124611EE80737007EEAE1 /* BabyPeripheralManager.h */,
+				52B124621EE80737007EEAE1 /* BabyPeripheralManager.m */,
+				52B124631EE80737007EEAE1 /* BabyRhythm.h */,
+				52B124641EE80737007EEAE1 /* BabyRhythm.m */,
+				52B124651EE80737007EEAE1 /* BabySpeaker.h */,
+				52B124661EE80737007EEAE1 /* BabySpeaker.m */,
+				52B124671EE80737007EEAE1 /* BabyToy.h */,
+				52B124681EE80737007EEAE1 /* BabyToy.m */,
+			);
+			path = WZBabyBluetooth;
 			sourceTree = "<group>";
 		};
 		76EAF3DDC4C5364ADD5B4124 /* Frameworks */ = {
@@ -545,30 +592,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C68A8BE1EAE1EEC001DD601 /* BabyDefine.m in Sources */,
 				0C68A8711EAE1D43001DD601 /* AppDelegate.m in Sources */,
-				0C68A8BB1EAE1EEC001DD601 /* BabyBluetooth.m in Sources */,
+				52B124781EE80737007EEAE1 /* WZBleSDKInterface.m in Sources */,
+				52B124701EE80737007EEAE1 /* BabyCallback.m in Sources */,
+				52B124731EE80737007EEAE1 /* BabyOptions.m in Sources */,
 				4C2AAC6D1EE65006001D5B6A /* DemoViewController.m in Sources */,
-				4C2AAC691EE58ABB001D5B6A /* WZBleDevice.m in Sources */,
-				4C2AAC631EE563CC001D5B6A /* WZBleSDKInterface.m in Sources */,
-				4C2AAC661EE56418001D5B6A /* WZBleData.m in Sources */,
-				0C68A8BA1EAE1EEC001DD601 /* WZBluetooh.m in Sources */,
+				52B124741EE80737007EEAE1 /* BabyPeripheralManager.m in Sources */,
 				0C68A8DC1EAE549F001DD601 /* WZFlashListViewController.m in Sources */,
 				526F43481EE78AC3005E60AE /* InfoCell.m in Sources */,
+				52B124751EE80737007EEAE1 /* BabyRhythm.m in Sources */,
+				52B124711EE80737007EEAE1 /* BabyCentralManager.m in Sources */,
+				52B124791EE80737007EEAE1 /* WZBluetooh.m in Sources */,
+				52B124721EE80737007EEAE1 /* BabyDefine.m in Sources */,
+				52B124771EE80737007EEAE1 /* BabyToy.m in Sources */,
+				52B124761EE80737007EEAE1 /* BabySpeaker.m in Sources */,
 				4C2AAC721EE65059001D5B6A /* DeviceCell.m in Sources */,
 				0C68A8E41EAE68A8001DD601 /* SVIndefiniteAnimatedView.m in Sources */,
-				0C68A8C01EAE1EEC001DD601 /* BabyPeripheralManager.m in Sources */,
-				0C68A8BC1EAE1EEC001DD601 /* BabyCallback.m in Sources */,
-				0C68A8BD1EAE1EEC001DD601 /* BabyCentralManager.m in Sources */,
+				52B1246F1EE80737007EEAE1 /* BabyBluetooth.m in Sources */,
 				0C68A8E61EAE68A8001DD601 /* SVProgressHUD.m in Sources */,
 				4CEE5DAB1EE68C74009493D6 /* ResultViewController.m in Sources */,
-				0C68A8BF1EAE1EEC001DD601 /* BabyOptions.m in Sources */,
 				526F43511EE7A7D3005E60AE /* HistoryInfoCell.m in Sources */,
 				0C68A8D71EAE4C19001DD601 /* WZViewController.m in Sources */,
-				0C68A8C21EAE1EEC001DD601 /* BabySpeaker.m in Sources */,
-				526F43551EE7A9FE005E60AE /* HistoryModel.m in Sources */,
-				0C68A8C11EAE1EEC001DD601 /* BabyRhythm.m in Sources */,
-				0C68A8C31EAE1EEC001DD601 /* BabyToy.m in Sources */,
 				0C68A86E1EAE1D43001DD601 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -725,6 +769,11 @@
 				INFOPLIST_FILE = WZSDK/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/WZSDK/WZBluetooth/BleSDK/Debug$(EFFECTIVE_PLATFORM_NAME)",
+					"$(PROJECT_DIR)/WZSDK/WZBluetooth/BleSDK/Debug-iphoneos",
+				);
 				MACH_O_TYPE = mh_execute;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
@@ -751,6 +800,11 @@
 				INFOPLIST_FILE = WZSDK/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/WZSDK/WZBluetooth/BleSDK/Debug$(EFFECTIVE_PLATFORM_NAME)",
+					"$(PROJECT_DIR)/WZSDK/WZBluetooth/BleSDK/Debug-iphoneos",
+				);
 				MACH_O_TYPE = mh_execute;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";

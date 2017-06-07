@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "WZBleData.h"
-#import "WZBluetooh.h"
 #import "WZBleDevice.h"
 
 /*
@@ -19,7 +18,7 @@ typedef enum{
     WZBluetoohCommandGetBattery,//电池
     WZBluetoohCommandSynSteps,//同步步数
     WZBluetoohCommandSynStatus,//同步设备
-     WZBluetoohCommandSynPostures,//同步历史坐姿
+    WZBluetoohCommandSynPostures,//同步历史坐姿
     WZBluetoohCommandActivateDevice,//激活设备
     WZBluetoohCommandCancelActivateDevice,//取消设备激活
     WZBluetoohCommandCloseMotor,//马达关闭
@@ -52,20 +51,25 @@ typedef enum{
 
 @protocol WZBleSDKInterfaceListener;
 
-@interface WZBleSDKInterface : NSObject
-
+@interface  WZBleSDKBaseInterface: NSObject
+{
+    NSMutableArray<WZBleDevice*> * _devices;
+    NSMutableArray<id<WZBleSDKInterfaceListener>> * _listeners;
+    BOOL _markForScan;
+    
+}
 
 @property (nonatomic,assign) WZBleStatus status;
 
 /**
  单例
-
+ 
  @return 共享单例
  */
 +(instancetype)sharedInterface;
 /**
  添加事件监听者对象
-
+ 
  @param listener 监听者
  */
 -(void)addListner:(id<WZBleSDKInterfaceListener>)listener;
@@ -73,7 +77,7 @@ typedef enum{
 
 /**
  页面关闭时，移除监听者，避免内存泄漏
-
+ 
  @param listener 监听者
  */
 -(void)removeListener:(id<WZBleSDKInterfaceListener>)listener;
@@ -82,7 +86,7 @@ typedef enum{
 
 /**
  获取扫描到的所有设备
-
+ 
  @return 所有设备
  */
 -(NSArray<WZBleDevice*>*)devices;
@@ -97,7 +101,7 @@ typedef enum{
 
 /**
  开始扫描设备
-
+ 
  @return 操作码，如果蓝牙不可用，会返回错误代码
  */
 -(WZErrorCode)startScan;
@@ -112,7 +116,7 @@ typedef enum{
 
 /**
  连接设备
-
+ 
  @param device 被连接的设备
  */
 -(void)connectDevice:(WZBleDevice*)device;
@@ -120,7 +124,7 @@ typedef enum{
 
 /**
  主动断开连接
-
+ 
  @param device 当前设备
  */
 -(void)disConnectDevice:(WZBleDevice*)device;
@@ -140,7 +144,7 @@ typedef enum{
 
 /**
  手机蓝牙状态变更，用户需要根据状态的变化做出相应的提示
-
+ 
  @param state 蓝牙硬件状态
  */
 -(void)bleStatusChanged:(WZBleStatus)state;
@@ -151,7 +155,7 @@ typedef enum{
 
 /**
  蓝牙设备的变更，可能是新增，可能是消失
-
+ 
  @param device 变化的设备，可能为nil
  */
 -(void)bleDevicesChanged:(WZBleDevice*)device;
@@ -169,7 +173,7 @@ typedef enum{
 
 /**
  手机成功连接到设备的回调，用户可在此方法后进行发相关指令
-
+ 
  @param device 设备
  */
 -(void)bleDidConnectDevice:(WZBleDevice*)device;
@@ -177,7 +181,7 @@ typedef enum{
 
 /**
  连接设备失败
-
+ 
  @param device 失败的设备
  @param err 错误原因
  */
@@ -186,7 +190,7 @@ typedef enum{
 
 /**
  设备断开连接的回调
-
+ 
  @param device 设备
  @param error 断开的原因
  */

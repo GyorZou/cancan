@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface HistoryModel : NSObject
+@interface WZHistoryModel : NSObject
 
 @property (nonatomic,strong) NSString * date;
 

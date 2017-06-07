@@ -12,23 +12,18 @@
 
 #import "WZBleSDKInterface.h"
 
-
+#import "WZBluetooh.h"
 
 @interface WZBleSDKInterface()
-{
-    NSMutableArray<WZBleDevice*> * _devices;
-    NSMutableArray<id<WZBleSDKInterfaceListener>> * _listeners;
-    BOOL _markForScan;
-}
+
+-(void)notifyDevice:(WZBleDevice*)device dataForCMD:(WZBluetoohCommand)cmd;
+-(WZBleDevice*)findDeviceWith:(CBPeripheral*)perial;
 
 @property (nonatomic, strong) WZBluetooh *bluetooh;
 @end
 
 @implementation WZBleSDKInterface
-+(instancetype)sharedInterface
-{
-    return [[[self class] alloc] init];
-}
+
 
 -(instancetype)init
 {
@@ -68,7 +63,7 @@
         }else if(state == CBManagerStatePoweredOn &&_markForScan){
             [weakSelf startScan];
         }
-        _status = stat;
+        weakSelf.status = stat;
         for (id<WZBleSDKInterfaceListener> li in wsli) {
             if ([li respondsToSelector:@selector(bleStatusChanged:)]) {
                 [li bleStatusChanged:stat];
@@ -106,19 +101,6 @@
     
 }
 
-
--(void)addListner:(id<WZBleSDKInterfaceListener>)listener
-{
-    if ([_listeners containsObject:listener]) {
-        return;
-    }
-    [_listeners addObject:listener];
-}
-
--(void)removeListener:(id<WZBleSDKInterfaceListener>)listener
-{
-    [_listeners removeObject:listener];
-}
 -(void)stopScan
 {
     [self.bluetooh stopScan];
@@ -127,7 +109,7 @@
 -(WZErrorCode)startScan
 {
     
-    if(_status!=WZBleStatusPowerOn){
+    if(self.status!=WZBleStatusPowerOn){
         _markForScan = YES;
         return WZErrorBleNotPrepared;
     }
@@ -281,17 +263,6 @@
 -(void)disConnectDevice:(WZBleDevice *)device
 {
     [self.bluetooh disConnectPeriperal:device.periral];
-}
--(WZBleDevice*)findDeviceWith:(CBPeripheral*)perial
-{
-    WZBleDevice * tempDevice;
-    for (WZBleDevice *device in _devices) {
-        if ([device.periral.identifier isEqual:perial.identifier]) {
-            tempDevice = device;
-            break;
-        }
-    }
-    return tempDevice;
 }
 -(void)connectDevice:(WZBleDevice *)device
 {
@@ -498,17 +469,5 @@
     }
   
 }
--(void)notifyDevice:(WZBleDevice*)device dataForCMD:(WZBluetoohCommand)cmd
-{
 
-    dispatch_async(dispatch_get_main_queue(), ^{
-        for (id<WZBleSDKInterfaceListener> li in _listeners) {
-            if ([li respondsToSelector:@selector(bleDevice:didRefreshData:comandCode:)]) {
-                [li bleDevice:device didRefreshData:device.data comandCode:cmd];
-            }
-        }
-    });
-
-
-}
 @end

@@ -1,0 +1,208 @@
+#WZBleSDK使用说明
+
+[TOC]
+
+
+备注：
+>因为需要用到固件升级功能，需要用到nordic芯片官方的sdk(iOSDFULibrary),此sdk用swift语言编写，因此需要以此作为依赖库，推荐使用cocoapods来导入。
+>同时，因为固件升级为zip格式，因此还需要导入zip库。
+
+##Cocoapods的使用方法
+略（请参考百度搜索）
+
+##引入sdk步骤
+###一、编辑podfile文件，写入以下代码
+
+```
+target 'ProjectName' do
+use_frameworks!
+pod 'iOSDFULibrary', '~> 3.1.0'
+pod 'Zip', '~> 0.7.0'
+end
+```
+其中，“ProjectName”需要以实际项目名称为准，如demo里为“WZSDK”；
+并将此文件拷入项目所在目录。
+###二、pod install安装依赖库
+（前提，已安装cocoapods）在终端中，cd进入项目目录，执行命令：pod install；
+###三、将BleSDK文件夹，拖入工程里
+如图：
+![](https://ws1.sinaimg.cn/large/006tNbRwly1fgcxrewmqvj31go0qiqaa.jpg)
+
+
+##sdk核心类介绍
+###1、WZBleSDKInterface类
+全局单例，用来操作sdk，具体方法参考头文件描述，
+
+###2、WZBleSDKInterfaceListener协议
+处理蓝牙交互过程的回调事件，如蓝牙状态变化、设备连接状态变化等，具体回调请查看头文件
+
+###3、WZBleDevice类
+对于当前与手机连接的蓝牙设备的封装，可通过.data属性（WZBleData）来获取该设备的所有数据。
+###4、WZBleData类
+用于封装手机与设备交互产生的数据，可通过属性的读写来修改和获取
+
+
+##sdk使用步骤
+
+
+
+主要流程图如下：
+
+![](https://ws4.sinaimg.cn/large/006tNbRwgy1fgd0buoipuj30lk11i78m.jpg)
+对应到sdk代码，步骤如下：
+
+###1、在需要使用sdk的地方，导入头文件
+
+
+```
+#import "WZBleSDK.h"
+```
+###2、创建sdk接口单例：
+
+```
+   WZBleSDKInterface* face = [[WZBleSDKInterface alloc]  init];
+   
+```	
+###3、监听事件
+
+```
+  [face addListner:self ];
+```
+只有在此处的`self`需要遵从`WZBleSDKInterfaceListener`协议,只有遵从协议才能处理相关的回调事件，根据事件结果做出对应的处理。
+
+
+###4、处理蓝牙状态回调函数
+
+```
+-(void)bleStatusChanged:(WZBleStatus)state{
+
+//通过if进行判断，并对不同state对用户进行对应的UI提醒
+
+}
+```
+只有当`state`等于`WZBleStatusPowerOn`,也即用户打开了蓝牙且已同意App使用蓝牙的状态，才能进行下一步扫描操作。
+
+
+###5、扫描设备
+
+
+```
+if (state==WZBleStatusPowerOn) {//蓝牙可用
+    [face clearDevices];
+    [face startScan]; 
+}
+```
+每次扫描，需要清空上次的扫描结果，重新扫描。
+>注：本sdk已限制只扫描本公司设备
+
+###6、处理扫描结果回调
+
+-(void)bleDevicesChanged:(WZBleDevice *)device{
+	//扫描到了device或device被移除
+	//face.devices来获取所有设备，进行列表展示或其他操作，或连接设备
+	
+	
+}
+
+
+###7、连接设备
+
+
+```
+[face connectDevice:device];
+```
+>注：因为连接设备是一个异步过程，且有一定时间，可根据需要，进行正在连接设备的UI提示
+
+###8、连接结果回调处理
+
+```
+-(void)bleDidConnectDevice:(WZBleDevice *)device
+{
+   //设备连接成功，接下来可以进行指令发送及数据接受了
+}
+-(void)bleFailConnectDevice:(WZBleDevice *)device error:(NSError *)err
+{
+//连接失败，根据err进行处理
+}
+
+```
+>注：如果在连接过程进行了UI进度提示，此处应UI隐藏提示框
+
+###9、发送指令
+
+```
+/**
+ 发送指令
+
+ @param device 指令发送目标设备
+ @param command 指令代码
+ @param data 指令附加内容
+ */
+-(void)bleDevice:(WZBleDevice*)device sendCommandCode:(WZBluetoohCommand)command extraData:(id)data;
+
+```
+用户根据实际情况进行设备支持的指令发送，目前支持的指令列表请参考`WZBluetoohCommand`枚举说明。
+>有些设置指令如，设置名称、设置马达、设置角度等命令需要带对应的值，通过`data`参数传递即可。
+>如：设置名称为“test name”：
+```
+[face bleDevice:curDevice sendCommandCode:WZBluetoohCommandSetName extraData:@"test name" ]
+```
+
+
+
+###10、接受数据回调
+
+```
+/**
+ 对应的设备，接收到某指令的回复后，更新了用户数据
+ 
+ @param device 当前连接的设备
+ @param data 数据模型
+ @param command 指令代码
+ */
+-(void)bleDevice:(WZBleDevice*)device didRefreshData:(WZBleData*)data comandCode:(WZBluetoohCommand)command
+{
+//通过if语句对command进行区分，然后根据不同指令通过data参数进行值的获取并显示
+
+}
+```
+###11、蓝牙断开回调
+当设备断电或其他异常情况与手机断开连接，需要对用户进行一些UI提示：
+
+```
+-(void)bleDevice:(WZBleDevice *)device didDisconneted:(NSError *)error
+{
+	//在这进行一些UI提示或变化
+}
+
+```
+
+##联系方式
+如对sdk使用或对demo有疑问，请加QQ：511107989（安静）进行联系。
+或者扫一扫：
+![](https://ws4.sinaimg.cn/large/006tNbRwgy1fgd08fx448j30ke0qg429.jpg)
+
+
+
+<!--```flow
+st=>start: 初始化sdk
+e=>end: 
+op=>operation: 扫描设备
+op1=>operation: 连接设备
+op2=>operation: 收发数据
+
+cond=>condition: 扫描到设备？
+cond2=>condition: 连接成功？
+st->op->cond
+cond(yes)->op1
+cond(no)->op
+op1->cond2
+cond2(yes)->op2
+cond2(no)->op
+
+```
+
+-->
+
+
+

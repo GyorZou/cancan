@@ -12,7 +12,7 @@
 
 
 #import <Foundation/Foundation.h>
-#import "HistoryModel.h"
+#import "WZHistoryModel.h"
 @interface WZBleData : NSObject
 
 
