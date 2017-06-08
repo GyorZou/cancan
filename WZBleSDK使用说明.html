@@ -356,7 +356,21 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
 </ul>
 </li>
 <li>
-<a href="#toc_23">联系方式</a>
+<a href="#toc_23">Demo说明书</a>
+<ul>
+<li>
+<a href="#toc_24">1、搜索页面 <code>DemoViewController</code></a>
+</li>
+<li>
+<a href="#toc_25">2、链接成功、指令测试页面 <code>ResultViewController</code></a>
+</li>
+<li>
+<a href="#toc_26">3、历史数据页面 <code>HistoryViewController</code></a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_27">联系方式</a>
 </li>
 </ul>
 </li>
@@ -419,7 +433,7 @@ end
 
 <p>主要流程图如下：</p>
 
-<p><img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fgd0buoipuj30lk11i78m.jpg" alt=""/><br/>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fgd0buoipuj30lk11i78m.jpg" alt="" style="width:250px;"/><br/>
 对应到sdk代码，步骤如下：</p>
 
 <h3 id="toc_12">1、在需要使用sdk的地方，导入头文件</h3>
@@ -549,11 +563,44 @@ end
 
 </code></pre>
 
-<h2 id="toc_23">联系方式</h2>
+<h2 id="toc_23">Demo说明书</h2>
+
+<p>整体如图：<br/>
+<img src="https://ww1.sinaimg.cn/large/006tNbRwgy1fgdvessesyj30gk0oetbn.jpg" alt="" style="width:200px;"/><br/>
+第一个红框为三个控制器，第二个红框控制器相关的cell。</p>
+
+<h3 id="toc_24">1、搜索页面 <code>DemoViewController</code></h3>
+
+<p>启动Demo，会自动进行蓝牙设备搜索（如果不支持，会有提示，且无搜索按钮）<br/>
+<img src="https://ww4.sinaimg.cn/large/006tNbRwgy1fgdw82673tj30ke0ygwff.jpg" alt="" style="width:200px;"/> (模拟器不支持)  <img src="https://ww2.sinaimg.cn/large/006tNbRwgy1fgdvljeraaj30nc0z6t9k.jpg" alt="" style="width:200px;"/>（真机）</p>
+
+<p>当搜索到蓝牙则出现如下界面：<br/>
+<img src="https://ww2.sinaimg.cn/large/006tNbRwgy1fgdvm96fqoj30mo0x8757.jpg" alt="" style="width:200px;"/></p>
+
+<h3 id="toc_25">2、链接成功、指令测试页面 <code>ResultViewController</code></h3>
+
+<p>如果此设备为你需要的设备，点击则进行连接，当链接成功，则会出现如下界面：<br/>
+<img src="https://ww3.sinaimg.cn/large/006tNbRwgy1fgdvmwsq3qj30m811ujuw.jpg" alt="" style="width:200px;"/></p>
+
+<p>点击任何一个指令，则会进行指令的发送，且会有对应的UI提示是否发送成功。</p>
+
+<p>三个绿色按钮分别对应三个历史数据，如果暂时无历史数据，则按钮不可点，可手动发送对应指令进行数据更新，在收到数据后，按钮则变得可点。</p>
+
+<h3 id="toc_26">3、历史数据页面 <code>HistoryViewController</code></h3>
+
+<p>点击对应的按钮，进入如下界面：<br/>
+此处只是demo大概显示，用户可根据项目需要，进行完善。<br/>
+<img src="https://ww3.sinaimg.cn/large/006tNbRwgy1fgdvp7mgstj30ny0u4dha.jpg" alt="" style="width:200px;"/></p>
+
+<blockquote>
+<p>当返回设备列表页，app设置为自动断开当前连接并重新搜索设备。</p>
+</blockquote>
+
+<h2 id="toc_27">联系方式</h2>
 
 <p>如对sdk使用或对demo有疑问，请加QQ：511107989（安静）进行联系。<br/>
 或者扫一扫：<br/>
-<img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fgd08fx448j30ke0qg429.jpg" alt=""/></p>
+<img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fgd08fx448j30ke0qg429.jpg" alt="" style="width:200px;"/></p>
 
 <!--```flow
 st=>start: 初始化sdk
