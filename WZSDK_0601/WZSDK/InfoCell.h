@@ -18,4 +18,6 @@
 @property IBOutlet UILabel * posLabel;
 @property IBOutlet UILabel * stateLabel;
 @property IBOutlet UIButton * historyBtn;
+@property IBOutlet UIButton * historyStepBtn;
+@property IBOutlet UIButton * historySitBtn;
 @end

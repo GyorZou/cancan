@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface HistoryInfoCell : UITableViewCell
+@property IBOutlet UILabel * dateLabel,*valueLabel;
 
 @end

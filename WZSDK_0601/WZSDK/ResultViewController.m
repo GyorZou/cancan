@@ -10,6 +10,7 @@
 #import "WZBleSDKInterface.h"
 #import "SVProgressHUD.h"
 #import "InfoCell.h"
+#import "HistoryViewController.h"
 @interface ResultViewController ()<WZBleSDKInterfaceListener,UITableViewDelegate,UITableViewDataSource>
 {
     WZBleSDKInterface * face;
@@ -69,7 +70,8 @@
 {
     if(device==_curDevice){
         [SVProgressHUD showInfoWithStatus:@"设备已断开连接"];
-        [self.navigationController popViewControllerAnimated:YES];
+        //[self.navigationController popViewControllerAnimated:YES];
+        [self dismiss];
     }
 }
 -(void)bleDevice:(WZBleDevice *)device didRefreshData:(WZBleData *)data comandCode:(WZBluetoohCommand)command
@@ -186,12 +188,35 @@
     }
     return 40;
 }
+-(void)hisBtnClick:(UIButton*)btn
+{
+    HistoryViewController * his = [HistoryViewController new];
+    if(btn.tag==100){//历史状态
+        his.data = _curDevice.data.historyPos;
+    }else if(btn.tag==101){//历史步数
+        his.data = _curDevice.data.historySteps;
+    }else if(btn.tag==102){//历史坐时
+        his.data = _curDevice.data.historySit;
+    }
+    his.tag = btn.tag;
+    [self.navigationController pushViewController:his animated:YES];
 
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section==0) {
         InfoCell * cell = [tableView dequeueReusableCellWithIdentifier:@"InfoCell.xib"];
         _curInfo = cell;
+        
+        [cell.historySitBtn removeTarget:self action:@selector(hisBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.historyBtn removeTarget:self action:@selector(hisBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.historyStepBtn removeTarget:self action:@selector(hisBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        
+        
+        [cell.historySitBtn addTarget:self action:@selector(hisBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.historyBtn addTarget:self action:@selector(hisBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.historyStepBtn addTarget:self action:@selector(hisBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        
         [self updateInfo:cell];
         return cell;
     }
@@ -303,7 +328,9 @@
     cell.posLabel.text = data.sitStatusString;
     cell.stateLabel.text = data.postureStatusString;
  
-    cell.historyBtn.enabled = data.postures!=nil;
+    cell.historyBtn.enabled = data.postures.count>0;
+    cell.historyStepBtn.enabled = data.historySteps.count>0;
+    cell.historySitBtn.enabled = data.historySit.count>0;
 }
 
 @end

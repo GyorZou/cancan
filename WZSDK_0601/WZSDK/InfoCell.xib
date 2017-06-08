@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -40,14 +40,14 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hn6-UF-UBS">
+                    <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hn6-UF-UBS">
                         <rect key="frame" x="8" y="150" width="98" height="30"/>
                         <color key="backgroundColor" red="0.4690054354" green="1" blue="0.66293025719999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="DV3-dN-phm"/>
                         </constraints>
                         <state key="normal" title="历史状态"/>
-                        <state key="disabled" title="历史坐姿"/>
+                        <state key="disabled" title="无历史状态"/>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123123" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jCx-zt-Mep">
                         <rect key="frame" x="72" y="17" width="142" height="21"/>
@@ -169,13 +169,13 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v4k-aZ-HOg">
+                    <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v4k-aZ-HOg">
                         <rect key="frame" x="114" y="151" width="98" height="30"/>
                         <color key="backgroundColor" red="0.4690054354" green="1" blue="0.66293025719999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <state key="normal" title="历史步数"/>
                         <state key="disabled" title="暂无步数数据"/>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H02-e8-yOw">
+                    <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H02-e8-yOw">
                         <rect key="frame" x="220" y="151" width="98" height="30"/>
                         <color key="backgroundColor" red="0.4690054354" green="1" blue="0.66293025719999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <state key="normal" title="历史坐姿"/>
@@ -227,6 +227,8 @@
             <connections>
                 <outlet property="batLabel" destination="igS-Ny-ITb" id="1D5-MO-Mih"/>
                 <outlet property="historyBtn" destination="Hn6-UF-UBS" id="K6G-rs-dx4"/>
+                <outlet property="historySitBtn" destination="H02-e8-yOw" id="fYg-Fa-79K"/>
+                <outlet property="historyStepBtn" destination="v4k-aZ-HOg" id="TLW-QF-VeM"/>
                 <outlet property="motorLabel" destination="4bd-6Z-00Y" id="dbT-qi-0II"/>
                 <outlet property="nameLabel" destination="jCx-zt-Mep" id="dQU-PC-Dfi"/>
                 <outlet property="posLabel" destination="Ltz-JH-1jo" id="h2A-LB-6im"/>
@@ -234,7 +236,7 @@
                 <outlet property="stepLabel" destination="iWj-JZ-NgD" id="Q49-GT-Xmd"/>
                 <outlet property="verLabel" destination="KiA-zT-3sW" id="V9U-MI-f2X"/>
             </connections>
-            <point key="canvasLocation" x="-5" y="108"/>
+            <point key="canvasLocation" x="-304" y="86"/>
         </tableViewCell>
     </objects>
 </document>

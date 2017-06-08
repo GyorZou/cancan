@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:WZBleSDK/WZBleSDK.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:WZSDK.xcodeproj">
    </FileRef>
    <FileRef

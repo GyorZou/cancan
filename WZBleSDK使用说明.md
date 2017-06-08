@@ -48,7 +48,7 @@ end
 
 主要流程图如下：
 
-![](https://ws4.sinaimg.cn/large/006tNbRwgy1fgd0buoipuj30lk11i78m.jpg)
+![-w250](https://ws4.sinaimg.cn/large/006tNbRwgy1fgd0buoipuj30lk11i78m.jpg)
 对应到sdk代码，步骤如下：
 
 ###1、在需要使用sdk的地方，导入头文件
@@ -177,11 +177,47 @@ if (state==WZBleStatusPowerOn) {//蓝牙可用
 
 ```
 
+##Demo说明书
+
+
+整体如图：
+![-w200](https://ww1.sinaimg.cn/large/006tNbRwgy1fgdvessesyj30gk0oetbn.jpg)
+第一个红框为三个控制器，第二个红框控制器相关的cell。
+
+###1、搜索页面 `DemoViewController`
+启动Demo，会自动进行蓝牙设备搜索（如果不支持，会有提示，且无搜索按钮）
+![-w200](https://ww4.sinaimg.cn/large/006tNbRwgy1fgdw82673tj30ke0ygwff.jpg) (模拟器不支持)  ![-w200](https://ww2.sinaimg.cn/large/006tNbRwgy1fgdvljeraaj30nc0z6t9k.jpg)（真机）
+
+
+
+当搜索到蓝牙则出现如下界面：
+![-w200](https://ww2.sinaimg.cn/large/006tNbRwgy1fgdvm96fqoj30mo0x8757.jpg)
+
+###2、链接成功、指令测试页面 `ResultViewController`
+
+如果此设备为你需要的设备，点击则进行连接，当链接成功，则会出现如下界面：
+![-w200](https://ww3.sinaimg.cn/large/006tNbRwgy1fgdvmwsq3qj30m811ujuw.jpg)
+
+点击任何一个指令，则会进行指令的发送，且会有对应的UI提示是否发送成功。
+
+
+三个绿色按钮分别对应三个历史数据，如果暂时无历史数据，则按钮不可点，可手动发送对应指令进行数据更新，在收到数据后，按钮则变得可点。
+
+
+###3、历史数据页面 `HistoryViewController`
+点击对应的按钮，进入如下界面：
+此处只是demo大概显示，用户可根据项目需要，进行完善。
+![-w200](https://ww3.sinaimg.cn/large/006tNbRwgy1fgdvp7mgstj30ny0u4dha.jpg)
+
+
+>当返回设备列表页，app设置为自动断开当前连接并重新搜索设备。
+
+
+
 ##联系方式
 如对sdk使用或对demo有疑问，请加QQ：511107989（安静）进行联系。
 或者扫一扫：
-![](https://ws4.sinaimg.cn/large/006tNbRwgy1fgd08fx448j30ke0qg429.jpg)
-
+![-w200](https://ws4.sinaimg.cn/large/006tNbRwgy1fgd08fx448j30ke0qg429.jpg)
 
 
 <!--```flow

@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "BabyBluetooth.h"
-#import "WZViewController.h"
+
 
 #import "WZBleSDKInterface.h"
 #import "DemoViewController.h"
