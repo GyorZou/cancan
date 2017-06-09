@@ -42,7 +42,11 @@
 		4C45396B1EE93F5C00641038 /* InfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4539691EE93F5C00641038 /* InfoCell.m */; };
 		4C45396C1EE93F5C00641038 /* InfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C45396A1EE93F5C00641038 /* InfoCell.xib */; };
 		4C45396F1EE93F6700641038 /* ResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C45396E1EE93F6700641038 /* ResultViewController.m */; };
-		4C9BE38F1EE954CD00CFC87A /* libWZBleSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9BE38E1EE954CD00CFC87A /* libWZBleSDK.a */; };
+		4C9BE39C1EEA871E00CFC87A /* WZBleData.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BE3921EEA871E00CFC87A /* WZBleData.m */; };
+		4C9BE39D1EEA871E00CFC87A /* WZBleDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BE3941EEA871E00CFC87A /* WZBleDevice.m */; };
+		4C9BE39E1EEA871E00CFC87A /* WZBleDeviceTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BE3961EEA871E00CFC87A /* WZBleDeviceTools.m */; };
+		4C9BE39F1EEA871E00CFC87A /* WZBleSDKBaseInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BE3991EEA871E00CFC87A /* WZBleSDKBaseInterface.m */; };
+		4C9BE3A01EEA871E00CFC87A /* WZHistoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BE39B1EEA871E00CFC87A /* WZHistoryModel.m */; };
 		BF03A3C3ADC60882D49B7C4B /* Pods_WZSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA77655478A806434093A558 /* Pods_WZSDK.framework */; };
 /* End PBXBuildFile section */
 
@@ -98,12 +102,6 @@
 		36C9CF841EDE988E008E116A /* dfuwzV1.1.5.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = dfuwzV1.1.5.zip; sourceTree = "<group>"; };
 		36E91DE11ED6CDB400982C33 /* dfuwzV1.1.4.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = dfuwzV1.1.4.zip; sourceTree = "<group>"; };
 		36EF15BF1EDB0028009C82B2 /* dfuwzV1.1.3.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = dfuwzV1.1.3.zip; sourceTree = "<group>"; };
-		4C45391D1EE93EC200641038 /* WZBleData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBleData.h; sourceTree = "<group>"; };
-		4C45391E1EE93EC200641038 /* WZBleDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBleDevice.h; sourceTree = "<group>"; };
-		4C45391F1EE93EC200641038 /* WZBleDeviceTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBleDeviceTools.h; sourceTree = "<group>"; };
-		4C4539201EE93EC200641038 /* WZBleSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBleSDK.h; sourceTree = "<group>"; };
-		4C4539211EE93EC200641038 /* WZBleSDKBaseInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBleSDKBaseInterface.h; sourceTree = "<group>"; };
-		4C4539221EE93EC200641038 /* WZHistoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZHistoryModel.h; sourceTree = "<group>"; };
 		4C4539241EE93EC200641038 /* BabyBluetooth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyBluetooth.h; sourceTree = "<group>"; };
 		4C4539251EE93EC200641038 /* BabyBluetooth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyBluetooth.m; sourceTree = "<group>"; };
 		4C4539261EE93EC200641038 /* BabyCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyCallback.h; sourceTree = "<group>"; };
@@ -144,7 +142,17 @@
 		4C45396A1EE93F5C00641038 /* InfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoCell.xib; sourceTree = "<group>"; };
 		4C45396D1EE93F6700641038 /* ResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultViewController.h; sourceTree = "<group>"; };
 		4C45396E1EE93F6700641038 /* ResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultViewController.m; sourceTree = "<group>"; };
-		4C9BE38E1EE954CD00CFC87A /* libWZBleSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWZBleSDK.a; sourceTree = "<group>"; };
+		4C9BE3911EEA871E00CFC87A /* WZBleData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBleData.h; sourceTree = "<group>"; };
+		4C9BE3921EEA871E00CFC87A /* WZBleData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZBleData.m; sourceTree = "<group>"; };
+		4C9BE3931EEA871E00CFC87A /* WZBleDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBleDevice.h; sourceTree = "<group>"; };
+		4C9BE3941EEA871E00CFC87A /* WZBleDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZBleDevice.m; sourceTree = "<group>"; };
+		4C9BE3951EEA871E00CFC87A /* WZBleDeviceTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBleDeviceTools.h; sourceTree = "<group>"; };
+		4C9BE3961EEA871E00CFC87A /* WZBleDeviceTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZBleDeviceTools.m; sourceTree = "<group>"; };
+		4C9BE3971EEA871E00CFC87A /* WZBleSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBleSDK.h; sourceTree = "<group>"; };
+		4C9BE3981EEA871E00CFC87A /* WZBleSDKBaseInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZBleSDKBaseInterface.h; sourceTree = "<group>"; };
+		4C9BE3991EEA871E00CFC87A /* WZBleSDKBaseInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZBleSDKBaseInterface.m; sourceTree = "<group>"; };
+		4C9BE39A1EEA871E00CFC87A /* WZHistoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZHistoryModel.h; sourceTree = "<group>"; };
+		4C9BE39B1EEA871E00CFC87A /* WZHistoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZHistoryModel.m; sourceTree = "<group>"; };
 		AA77655478A806434093A558 /* Pods_WZSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WZSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D132C8A258BE345D8EC011C9 /* Pods-WZSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WZSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-WZSDK/Pods-WZSDK.release.xcconfig"; sourceTree = "<group>"; };
 		F2305DA2EB3652EF6B377E9B /* Pods-WZSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WZSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WZSDK/Pods-WZSDK.debug.xcconfig"; sourceTree = "<group>"; };
@@ -156,7 +164,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF03A3C3ADC60882D49B7C4B /* Pods_WZSDK.framework in Frameworks */,
-				4C9BE38F1EE954CD00CFC87A /* libWZBleSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,8 +275,7 @@
 		4C4539161EE93EC200641038 /* BleSDK */ = {
 			isa = PBXGroup;
 			children = (
-				4C9BE38E1EE954CD00CFC87A /* libWZBleSDK.a */,
-				4C45391B1EE93EC200641038 /* include */,
+				4C9BE3901EEA871E00CFC87A /* WZBleSDK */,
 				4C4539231EE93EC200641038 /* WZBabyBluetooth */,
 				4C4539361EE93EC200641038 /* WZBleSDKInterface.h */,
 				4C4539371EE93EC200641038 /* WZBleSDKInterface.m */,
@@ -277,27 +283,6 @@
 				4C4539391EE93EC200641038 /* WZBluetooh.m */,
 			);
 			path = BleSDK;
-			sourceTree = "<group>";
-		};
-		4C45391B1EE93EC200641038 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				4C45391C1EE93EC200641038 /* WZBleSDK */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		4C45391C1EE93EC200641038 /* WZBleSDK */ = {
-			isa = PBXGroup;
-			children = (
-				4C45391D1EE93EC200641038 /* WZBleData.h */,
-				4C45391E1EE93EC200641038 /* WZBleDevice.h */,
-				4C45391F1EE93EC200641038 /* WZBleDeviceTools.h */,
-				4C4539201EE93EC200641038 /* WZBleSDK.h */,
-				4C4539211EE93EC200641038 /* WZBleSDKBaseInterface.h */,
-				4C4539221EE93EC200641038 /* WZHistoryModel.h */,
-			);
-			path = WZBleSDK;
 			sourceTree = "<group>";
 		};
 		4C4539231EE93EC200641038 /* WZBabyBluetooth */ = {
@@ -347,6 +332,24 @@
 				4C45396A1EE93F5C00641038 /* InfoCell.xib */,
 			);
 			name = NewDemo;
+			sourceTree = "<group>";
+		};
+		4C9BE3901EEA871E00CFC87A /* WZBleSDK */ = {
+			isa = PBXGroup;
+			children = (
+				4C9BE3911EEA871E00CFC87A /* WZBleData.h */,
+				4C9BE3921EEA871E00CFC87A /* WZBleData.m */,
+				4C9BE3931EEA871E00CFC87A /* WZBleDevice.h */,
+				4C9BE3941EEA871E00CFC87A /* WZBleDevice.m */,
+				4C9BE3951EEA871E00CFC87A /* WZBleDeviceTools.h */,
+				4C9BE3961EEA871E00CFC87A /* WZBleDeviceTools.m */,
+				4C9BE3971EEA871E00CFC87A /* WZBleSDK.h */,
+				4C9BE3981EEA871E00CFC87A /* WZBleSDKBaseInterface.h */,
+				4C9BE3991EEA871E00CFC87A /* WZBleSDKBaseInterface.m */,
+				4C9BE39A1EEA871E00CFC87A /* WZHistoryModel.h */,
+				4C9BE39B1EEA871E00CFC87A /* WZHistoryModel.m */,
+			);
+			path = WZBleSDK;
 			sourceTree = "<group>";
 		};
 		76EAF3DDC4C5364ADD5B4124 /* Frameworks */ = {
@@ -437,8 +440,13 @@
 				TargetAttributes = {
 					0C68A8681EAE1D43001DD601 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = Y44Q42CSN4;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = DAQY6CDAVS;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+						};
 					};
 					0C68A8811EAE1D44001DD601 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -565,21 +573,26 @@
 				4C4539461EE93EC200641038 /* WZBluetooh.m in Sources */,
 				4C45396F1EE93F6700641038 /* ResultViewController.m in Sources */,
 				4C4539641EE93F5200641038 /* DemoViewController.m in Sources */,
+				4C9BE39F1EEA871E00CFC87A /* WZBleSDKBaseInterface.m in Sources */,
 				0C68A8E41EAE68A8001DD601 /* SVIndefiniteAnimatedView.m in Sources */,
 				4C4539431EE93EC200641038 /* BabySpeaker.m in Sources */,
+				4C9BE39C1EEA871E00CFC87A /* WZBleData.m in Sources */,
 				4C4539421EE93EC200641038 /* BabyRhythm.m in Sources */,
 				4C45395A1EE93F4900641038 /* HistoryInfoCell.m in Sources */,
 				4C4539451EE93EC200641038 /* WZBleSDKInterface.m in Sources */,
+				4C9BE39E1EEA871E00CFC87A /* WZBleDeviceTools.m in Sources */,
 				4C45396B1EE93F5C00641038 /* InfoCell.m in Sources */,
 				4C4539661EE93F5200641038 /* DeviceCell.m in Sources */,
 				4C45393E1EE93EC200641038 /* BabyCentralManager.m in Sources */,
 				0C68A8E61EAE68A8001DD601 /* SVProgressHUD.m in Sources */,
 				4C45393D1EE93EC200641038 /* BabyCallback.m in Sources */,
 				4C45393F1EE93EC200641038 /* BabyDefine.m in Sources */,
+				4C9BE39D1EEA871E00CFC87A /* WZBleDevice.m in Sources */,
 				4C4539411EE93EC200641038 /* BabyPeripheralManager.m in Sources */,
 				4C4539441EE93EC200641038 /* BabyToy.m in Sources */,
 				4C45393C1EE93EC200641038 /* BabyBluetooth.m in Sources */,
 				4C45395C1EE93F4900641038 /* HistoryViewController.m in Sources */,
+				4C9BE3A01EEA871E00CFC87A /* WZHistoryModel.m in Sources */,
 				0C68A86E1EAE1D43001DD601 /* main.m in Sources */,
 				4C4539401EE93EC200641038 /* BabyOptions.m in Sources */,
 			);
@@ -728,9 +741,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Y44Q42CSN4;
-				ENABLE_BITCODE = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shenzhen All-See-Own Digital Technology Co.,Ltd";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = DAQY6CDAVS;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -745,8 +759,10 @@
 				MACH_O_TYPE = mh_execute;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = WZ.WZSDK116;
+				PRODUCT_BUNDLE_IDENTIFIER = com.blesdk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "4fddb522-cc82-45cb-84db-9a8d3ba4861f";
+				PROVISIONING_PROFILE_SPECIFIER = heihei;
 				SDKROOT = iphoneos;
 				VALID_ARCHS = arm64;
 			};
@@ -759,9 +775,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Y44Q42CSN4;
-				ENABLE_BITCODE = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shenzhen All-See-Own Digital Technology Co.,Ltd";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = DAQY6CDAVS;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -776,8 +793,10 @@
 				MACH_O_TYPE = mh_execute;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = WZ.WZSDK116;
+				PRODUCT_BUNDLE_IDENTIFIER = com.blesdk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "4fddb522-cc82-45cb-84db-9a8d3ba4861f";
+				PROVISIONING_PROFILE_SPECIFIER = heihei;
 				SDKROOT = iphoneos;
 				VALID_ARCHS = arm64;
 			};

@@ -187,7 +187,7 @@
 {
     DeviceCell * cell = [tableView dequeueReusableCellWithIdentifier:@"DeviceCell.h"];
     WZBleDevice * device = [_devices objectAtIndex:indexPath.row];
-    cell.nameLabel.text = device.name;
+    cell.nameLabel.text =[NSString stringWithFormat:@"%@--%@",device.periral.name, device.name];
     cell.serviceLabel.text = @(device.services.count).stringValue;
     return cell;
 }

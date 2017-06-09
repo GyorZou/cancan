@@ -474,6 +474,22 @@
             }];
         }
             break;
+        case WZBluetoohCommandReadMotor:
+        {
+            [self.bluetooh getMotor:^(NSInteger speed) {
+                device.data.speed = speed;
+                [ws notifyDevice:device dataForCMD:command];
+            }];
+        }
+            break;
+        case WZBluetoohCommandOpenMotor:
+        {
+            [self.bluetooh setMotor:YES shockTime:60 complete:^(BOOL success) {
+                [ws notifyDevice:device dataForCMD:command];
+            }];
+        }
+            break;
+    
         default:
             break;
     }

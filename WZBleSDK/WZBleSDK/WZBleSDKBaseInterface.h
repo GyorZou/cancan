@@ -21,6 +21,8 @@ typedef enum{
      WZBluetoohCommandSynPostures,//同步历史坐姿
     WZBluetoohCommandActivateDevice,//激活设备
     WZBluetoohCommandCancelActivateDevice,//取消设备激活
+    WZBluetoohCommandReadMotor,//读取马达
+    WZBluetoohCommandOpenMotor,//马达打开
     WZBluetoohCommandCloseMotor,//马达关闭
     WZBluetoohCommandAdjustPosture,//坐姿校正
     WZBluetoohCommandCancelAdjustPosture,//取消坐姿矫正

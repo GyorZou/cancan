@@ -100,7 +100,7 @@
             value =@"设置后倾角";
             break;
         case WZBluetoohCommandSetMotorDuration:
-            value =@"马达时长";
+            value =@"设置马达时长";
             break;
         case WZBluetoohCommandCancelAdjustPosture:
             value =@"取消矫正坐姿";
@@ -110,6 +110,7 @@
             break;
         case WZBluetoohCommandClearData:
             value = @"清除缓存";
+            break;
         case WZBluetoohCommandOpenMotor:
              value = @"打开马达";
             break;

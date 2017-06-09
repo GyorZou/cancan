@@ -15,7 +15,9 @@
 #import "WZHistoryModel.h"
 @interface WZBleData : NSObject
 
-
+/*
+ 上一条指令的状态
+ */
 ASSIGNPROP(BOOL, isSuccess);
 /*
  设备状态
@@ -26,24 +28,24 @@ ASSIGNPROP(NSInteger, status);
  */
 ASSIGNPROP(NSInteger,battery);
 
-STRONGPROP(NSNumber*, rssi);
+STRONGPROP(NSNumber*, rssi);//信号强度
 
 /*
  马达速度
  */
-ASSIGNPROP(NSInteger,speed);
+ASSIGNPROP(NSInteger,speed);//马达震动时长
 
-STRONGPROP(NSString*, version);
-
-
+STRONGPROP(NSString*, version);//固件版本号
 
 
-STRONGPROP(NSString*, synTime);
-ASSIGNPROP(NSInteger,sitTime);
-ASSIGNPROP(NSInteger,leftSitTime);
-ASSIGNPROP(NSInteger,rightSitTime);
-ASSIGNPROP(NSInteger,forwardSitTime);
-ASSIGNPROP(NSInteger,backwardSitTime);
+
+
+STRONGPROP(NSString*, synTime);//坐姿同步时间
+ASSIGNPROP(NSInteger,sitTime);//正坐时长
+ASSIGNPROP(NSInteger,leftSitTime);//左倾时长
+ASSIGNPROP(NSInteger,rightSitTime);//右倾时长
+ASSIGNPROP(NSInteger,forwardSitTime);//前倾时长
+ASSIGNPROP(NSInteger,backwardSitTime);//后倾时长
 
 
 
@@ -77,6 +79,13 @@ STRONGPROP(NSDictionary*, postures);//历史身姿
  @return model 的value值为“总-前-右-后-左”，请自行分割
  */
 -(NSArray<WZHistoryModel*>*)historySit;
+
+
+/**
+历史步数数据
+
+ @return 包含历史步数数据的数组
+ */
 -(NSArray<WZHistoryModel*>*)historySteps;
 
 
