@@ -28,7 +28,10 @@
     _historySteps = [[NSMutableArray alloc] initWithCapacity:20];
     return  self;
 }
-
+-(BOOL)isMotorOn
+{
+    return _motorFlag == 0xF5;
+}
 -(NSString *)postureStatusString
 {
     

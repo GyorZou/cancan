@@ -13,6 +13,7 @@
 @property IBOutlet UILabel * nameLabel;
 @property IBOutlet UILabel * batLabel;
 @property IBOutlet UILabel * motorLabel;
+@property IBOutlet UILabel * motorStateLabel;
 @property IBOutlet UILabel * verLabel;
 @property IBOutlet UILabel * stepLabel;
 @property IBOutlet UILabel * posLabel;

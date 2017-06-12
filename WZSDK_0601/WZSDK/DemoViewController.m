@@ -133,6 +133,7 @@
 -(void)bleDidConnectDevice:(WZBleDevice *)device
 {
     [SVProgressHUD dismiss];
+    
     ResultViewController * rs = [[ResultViewController alloc] init];
     rs.curDevice = device;
     [self.navigationController pushViewController:rs animated:YES];

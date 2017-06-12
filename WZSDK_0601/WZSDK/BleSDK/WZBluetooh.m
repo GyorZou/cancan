@@ -895,7 +895,7 @@ static NSString *const keepAliveUUID = @"FFA2";
         self.setMotorBlock(YES);
     } else if (protocolTyte[0] == 0xEB) { // 读取马达震动
         Byte motorVibration[1];
-        memcpy(&motorVibration, &dataByte[3], 1);
+        memcpy(&motorVibration, &dataByte[4], 1);
         if (!self.getMotorBlock) {
             //NSLog(@"self.getMotorBlock nil");
             return;

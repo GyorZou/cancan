@@ -123,7 +123,7 @@
         WZBleDevice * tempDevice=[self findDeviceWith:perial];
         tempDevice.data.battery = battary;
         
-        tempDevice.data.speed = speed;
+        tempDevice.data.motorFlag = speed;
         
         tempDevice.data.version = [versionString copy];
         
@@ -384,7 +384,6 @@
             [self.bluetooh setPosture:^(BOOL success) {
                 device.data.isSuccess = success;
                 [ws notifyDevice:device dataForCMD:command];
-
             }];
         }
             break;
@@ -393,7 +392,6 @@
             [self.bluetooh cancelSetPosture:^(BOOL success) {
                 device.data.isSuccess = success;
                 [ws notifyDevice:device dataForCMD:command];
-
                 
             }];
             
