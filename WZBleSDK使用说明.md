@@ -221,11 +221,11 @@ if (state==WZBleStatusPowerOn) {//蓝牙可用
 1、用来定义设备可以支持哪些指令及其枚举值`WZBluetoohCommand`，分别为：
 
 ```
-WZBluetoohCommandRestartDevice,//重启设备
+    WZBluetoohCommandRestartDevice,//重启设备
     WZBluetoohCommandGetBattery,//电池
-    WZBluetoohCommandSynSteps,//同步步数
-    WZBluetoohCommandSynStatus,//同步设备
-     WZBluetoohCommandSynPostures,//同步历史坐姿
+    WZBluetoohCommandSynSteps,//同步当前步数
+    WZBluetoohCommandSynStatus,//同步用户状态--设备主动发送，app不发指令
+     WZBluetoohCommandSynPostures,//同步当前坐姿
     WZBluetoohCommandActivateDevice,//激活设备
     WZBluetoohCommandCancelActivateDevice,//取消设备激活
     WZBluetoohCommandReadMotor,//读取马达
@@ -233,8 +233,10 @@ WZBluetoohCommandRestartDevice,//重启设备
     WZBluetoohCommandCloseMotor,//马达关闭
     WZBluetoohCommandAdjustPosture,//坐姿校正
     WZBluetoohCommandCancelAdjustPosture,//取消坐姿矫正
-    WZBluetoohCommandGetRTPosture,//刷新实时坐姿
+    WZBluetoohCommandGetRTPosture,//刷新实时坐姿--设备主动发
     WZBluetoohCommandClearData,//清除缓存
+    
+    //========上面是不带参设置或读取====下面是带参数的set指令=================//
     WZBluetoohCommandUploadDFUData,//空中升级
     WZBluetoohCommandSetName,//设置名字
     WZBluetoohCommandSetMotorDuration,//马达震动时长，单位s
@@ -242,6 +244,7 @@ WZBluetoohCommandRestartDevice,//重启设备
     WZBluetoohCommandSetRightAngel,//右
     WZBluetoohCommandSetForwardAngel,//前
     WZBluetoohCommandSetBackwardAngel,//后
+
     WZBluetoohCommandNone,//空指令
 ```
 
@@ -395,7 +398,17 @@ WZBluetoohCommandRestartDevice,//重启设备
  @return uuid列表
  */
 -(NSArray*)services;
+
+/**
+ 设备mac地址
+
+ @return mac地址
+ */
+-(NSData*)mac;
+
 ```
+
+
 
 
 ###WZBleData

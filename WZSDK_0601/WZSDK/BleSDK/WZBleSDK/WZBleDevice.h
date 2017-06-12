@@ -47,4 +47,13 @@
  @return uuid列表
  */
 -(NSArray*)services;
+
+
+
+/**
+ 设备mac地址
+
+ @return mac地址
+ */
+-(NSData*)mac;
 @end

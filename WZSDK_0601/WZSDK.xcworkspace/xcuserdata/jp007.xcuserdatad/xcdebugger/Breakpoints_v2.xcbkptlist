@@ -42,7 +42,7 @@
                   moduleName = "WZSDK"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/crv/Desktop/GitProjects/CanCan/WZSDK_0601/WZSDK/BleSDK/WZBabyBluetooth/BabyCentralManager.m"
-                  timestampString = "518930522.18806"
+                  timestampString = "518953552.913114"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "481"
@@ -57,7 +57,7 @@
                   moduleName = "WZSDK"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/crv/Desktop/GitProjects/CanCan/WZSDK_0601/WZSDK/BleSDK/WZBabyBluetooth/BabyCentralManager.m"
-                  timestampString = "518930522.189561"
+                  timestampString = "518953552.916705"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "481"
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WZSDK/BleSDK/WZBleSDKInterface.m"
-            timestampString = "518928779.924615"
+            timestampString = "518953444.563297"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "479"
-            endingLineNumber = "479"
+            startingLineNumber = "481"
+            endingLineNumber = "481"
             landmarkName = "-bleDevice:sendCommandCode:extraData:"
             landmarkType = "7">
             <Locations>
@@ -90,26 +90,26 @@
                   moduleName = "WZSDK"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/crv/Desktop/GitProjects/CanCan/WZSDK_0601/WZSDK/BleSDK/WZBleSDKInterface.m"
-                  timestampString = "518930522.193032"
+                  timestampString = "518953552.925614"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "479"
-                  endingLineNumber = "479"
-                  offsetFromSymbolStart = "5564">
+                  startingLineNumber = "481"
+                  endingLineNumber = "481"
+                  offsetFromSymbolStart = "6004">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__57-[WZBleSDKInterface bleDevice:sendCommandCode:extraData:]_block_invoke.314"
+                  symbolName = "__57-[WZBleSDKInterface bleDevice:sendCommandCode:extraData:]_block_invoke.318"
                   moduleName = "WZSDK"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/crv/Desktop/GitProjects/CanCan/WZSDK_0601/WZSDK/BleSDK/WZBleSDKInterface.m"
-                  timestampString = "518930522.194321"
+                  timestampString = "518953552.926993"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "479"
-                  endingLineNumber = "479"
+                  startingLineNumber = "481"
+                  endingLineNumber = "481"
                   offsetFromSymbolStart = "24">
                </Location>
             </Locations>

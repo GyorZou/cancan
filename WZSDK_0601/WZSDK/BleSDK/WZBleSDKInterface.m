@@ -376,14 +376,16 @@
         {
        
             [self.bluetooh setPosture:^(BOOL success) {
-             
+                device.data.isSuccess = success;
+                [ws notifyDevice:device dataForCMD:command];
             }];
         }
             break;
         case WZBluetoohCommandCancelAdjustPosture:
         {
             [self.bluetooh cancelSetPosture:^(BOOL success) {
-             
+                device.data.isSuccess = success;
+                [ws notifyDevice:device dataForCMD:command];
                 
             }];
             
