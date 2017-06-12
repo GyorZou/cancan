@@ -58,10 +58,10 @@
             break;
             
         case WZBluetoohCommandSynSteps:
-            value =@"同步步数";
+            value =@"同步当前步数";
             break;
         case WZBluetoohCommandSynStatus:
-            value =@"同步状态";
+            value =@"同步状态-设备主动发(点了也不发)";
             break;
         case WZBluetoohCommandCloseMotor:
             value =@"关闭马达";
@@ -70,10 +70,10 @@
             value =@"获取电池";
             break;
         case WZBluetoohCommandSynPostures:
-            value =@"同步历史坐姿";
+            value =@"同步当前用户状态数据";
             break;
         case WZBluetoohCommandGetRTPosture:
-            value =@"实时坐姿";
+            value =@"实时坐姿-设备主动发送(点了也不发)";
             break;
         case WZBluetoohCommandSetLeftAngel:
             value =@"设置左倾角";
@@ -100,7 +100,7 @@
             value =@"设置后倾角";
             break;
         case WZBluetoohCommandSetMotorDuration:
-            value =@"马达时长";
+            value =@"设置马达时长";
             break;
         case WZBluetoohCommandCancelAdjustPosture:
             value =@"取消矫正坐姿";
@@ -110,6 +110,7 @@
             break;
         case WZBluetoohCommandClearData:
             value = @"清除缓存";
+            break;
         case WZBluetoohCommandOpenMotor:
              value = @"打开马达";
             break;

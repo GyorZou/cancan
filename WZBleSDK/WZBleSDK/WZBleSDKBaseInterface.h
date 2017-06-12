@@ -16,9 +16,9 @@
 typedef enum{
     WZBluetoohCommandRestartDevice,//重启设备
     WZBluetoohCommandGetBattery,//电池
-    WZBluetoohCommandSynSteps,//同步步数
-    WZBluetoohCommandSynStatus,//同步设备
-     WZBluetoohCommandSynPostures,//同步历史坐姿
+    WZBluetoohCommandSynSteps,//同步当前步数
+    WZBluetoohCommandSynStatus,//同步用户状态--设备主动发送，app不发指令
+     WZBluetoohCommandSynPostures,//同步当前坐姿
     WZBluetoohCommandActivateDevice,//激活设备
     WZBluetoohCommandCancelActivateDevice,//取消设备激活
     WZBluetoohCommandReadMotor,//读取马达
@@ -26,16 +26,18 @@ typedef enum{
     WZBluetoohCommandCloseMotor,//马达关闭
     WZBluetoohCommandAdjustPosture,//坐姿校正
     WZBluetoohCommandCancelAdjustPosture,//取消坐姿矫正
-    WZBluetoohCommandUploadDFUData,//空中升级
-    WZBluetoohCommandGetRTPosture,//刷新实时坐姿
+    WZBluetoohCommandGetRTPosture,//刷新实时坐姿--设备主动发
+    WZBluetoohCommandClearData,//清除缓存
     
+    //========上面是不带参设置或读取====下面是带参数的set指令=================//
+    WZBluetoohCommandUploadDFUData,//空中升级
     WZBluetoohCommandSetName,//设置名字
     WZBluetoohCommandSetMotorDuration,//马达震动时长，单位s
     WZBluetoohCommandSetLeftAngel,//左倾角
     WZBluetoohCommandSetRightAngel,//右
     WZBluetoohCommandSetForwardAngel,//前
     WZBluetoohCommandSetBackwardAngel,//后
-    WZBluetoohCommandClearData,//清除缓存
+
     WZBluetoohCommandNone,//空指令
 } WZBluetoohCommand;
 
@@ -55,12 +57,15 @@ typedef enum{
 
 @interface  WZBleSDKBaseInterface: NSObject
 {
-    NSMutableArray<WZBleDevice*> * _devices;
-    NSMutableArray<id<WZBleSDKInterfaceListener>> * _listeners;
-    BOOL _markForScan;
+    NSMutableArray<WZBleDevice*> * _devices;//扫描的设备
+    NSMutableArray<id<WZBleSDKInterfaceListener>> * _listeners;//代理成员列表
+    BOOL _markForScan;//是否需要扫描的标记，比如当APP启动时候，蓝牙未开启，当监听到蓝牙开启后会自动扫描设备，不需要用户手动触发扫描动作
 
 }
 
+/**
+ 当前手机蓝牙的状态
+ */
 @property (nonatomic,assign) WZBleStatus status;
 
 /**
@@ -134,6 +139,13 @@ typedef enum{
 
 
 
+/**
+ 对设备发送指令
+
+ @param device 链接的设备
+ @param command 需要发送的指令枚举值
+ @param data 有些指令需要的额外数据，比如设置姓名等
+ */
 -(void)bleDevice:(WZBleDevice*)device sendCommandCode:(WZBluetoohCommand)command extraData:(id)data;
 
 @end

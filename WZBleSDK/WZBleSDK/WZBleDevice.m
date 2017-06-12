@@ -40,5 +40,8 @@
 {
 return _advertisment[@"kCBAdvDataServiceUUIDs"];
 }
-
+-(NSData *)mac
+{
+    return [_advertisment valueForKey:@"kCBAdvDataManufacturerData"];;
+}
 @end

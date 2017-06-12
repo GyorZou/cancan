@@ -19,7 +19,21 @@
 +(NSString*)descriptionOfCMD:(WZBluetoohCommand)cmd;
 
 
+
+/**
+ 根据设备传递的数字值，转化为中文描述
+
+ @param posState 设备传出来的对应姿态的数值
+ @return 这个数值的中文描述，比如设备传的0，就是状态未知
+ */
 +(NSString*)postureString:(NSInteger)posState;
 
+
+/**
+ 根据设备传递的数字值，转化为中文描述
+ 
+ @param sitState 设备传出来的对应坐姿的数值
+ @return 这个数值的中文描述，比如设备传的0，就是坐姿未知
+ */
 +(NSString*)sitStringWithStatus:(NSInteger)sitState;
 @end
