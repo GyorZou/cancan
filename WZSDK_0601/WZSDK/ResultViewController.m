@@ -221,9 +221,9 @@
         case 15:
         case 16:
         case 17:
-            case 18:
-            case 19:
-            case 20:
+        case 18:
+        case 19:
+        case 20:
         {
             NSString * s = [self stringOfCMD:(WZBluetoohCommand)indexPath.row];
             UIAlertController * alert = [UIAlertController alertControllerWithTitle:s message:@"" preferredStyle:UIAlertControllerStyleAlert];
@@ -234,6 +234,24 @@
             
             UIAlertAction * action = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                UITextField * field =  [alert.textFields firstObject];
+                
+                if (indexPath.row==15) {//名字
+                    if(field.text.length>10){
+                        [SVProgressHUD showInfoWithStatus:@"名字长度不要超过10位"];
+                        return ;
+                    }
+                }else if(indexPath.row ==16){//马达时长
+                      if(field.text.intValue>500||field.text.intValue<1){
+                [SVProgressHUD showInfoWithStatus:@"0<马达时长<500"];
+                          return;
+                      }
+                }else{
+                    if(field.text.intValue>90||field.text.intValue<1){
+                        [SVProgressHUD showInfoWithStatus:@"0<倾角<90"];
+                        return;
+                    }
+
+                }
                 
                 [face bleDevice:_curDevice sendCommandCode:(WZBluetoohCommand)indexPath.row extraData:field.text];
             }];

@@ -185,17 +185,21 @@
         [_devices removeObject:tempDevice];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            //weakSelf.bluReady = success;
-            for (id<WZBleSDKInterfaceListener> lis in _listeners) {
-                if ([lis respondsToSelector:@selector(bleDevicesChanged:)]) {
-                    [lis bleDevicesChanged:tempDevice];
+            
+            @synchronized (self) {
+                //weakSelf.bluReady = success;
+                for (id<WZBleSDKInterfaceListener> lis in _listeners) {
+                    if ([lis respondsToSelector:@selector(bleDevicesChanged:)]) {
+                        [lis bleDevicesChanged:tempDevice];
+                    }
+                }
+                for (id<WZBleSDKInterfaceListener> li in _listeners) {
+                    if ([li respondsToSelector:@selector(bleDevice:didDisconneted:)]) {
+                        [li bleDevice:tempDevice didDisconneted:error];
+                    }
                 }
             }
-            for (id<WZBleSDKInterfaceListener> li in _listeners) {
-                if ([li respondsToSelector:@selector(bleDevice:didDisconneted:)]) {
-                    [li bleDevice:tempDevice didDisconneted:error];
-                }
-            }
+
         });
         
 
@@ -233,7 +237,8 @@
         NSLog(@"this is not valid device");
         return ;
     }
-    for (WZBleDevice * device in _devices) {
+    NSArray * devs = [_devices copy];
+    for (WZBleDevice * device in devs) {
         if ([[device.periral.identifier UUIDString] isEqualToString:[perial.identifier UUIDString]]) {
             NSLog(@"find an exist device");
             return;
@@ -248,7 +253,8 @@
     [_devices addObject:device];
     
     
-    for (id<WZBleSDKInterfaceListener> lis in _listeners) {
+    NSArray * ls = [_listeners copy];
+    for (id<WZBleSDKInterfaceListener> lis in ls) {
         if ([lis respondsToSelector:@selector(bleDevicesChanged:)]) {
             [lis bleDevicesChanged:device];
         }
@@ -376,14 +382,18 @@
         {
        
             [self.bluetooh setPosture:^(BOOL success) {
-             
+                device.data.isSuccess = success;
+                [ws notifyDevice:device dataForCMD:command];
+
             }];
         }
             break;
         case WZBluetoohCommandCancelAdjustPosture:
         {
             [self.bluetooh cancelSetPosture:^(BOOL success) {
-             
+                device.data.isSuccess = success;
+                [ws notifyDevice:device dataForCMD:command];
+
                 
             }];
             
@@ -391,13 +401,14 @@
             break;
         case WZBluetoohCommandGetRTPosture:
         {
-            
-            
+           //没有这条指令，设备会主动每秒发送3次此条指令数据
+            //不需要手动触发
         }
             break;
         case WZBluetoohCommandSynStatus:
         {
-            
+            //没有这条指令，设备会主动发送至APP，sdk会自动应答
+            //不需要手动触发
             
         }
             break;

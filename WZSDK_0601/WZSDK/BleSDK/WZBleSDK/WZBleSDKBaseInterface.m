@@ -37,15 +37,21 @@
 
 -(void)addListner:(id<WZBleSDKInterfaceListener>)listener
 {
-    if ([_listeners containsObject:listener]) {
-        return;
+    @synchronized (self) {
+        if ([_listeners containsObject:listener]) {
+            return;
+        }
+        [_listeners addObject:listener];
+
     }
-    [_listeners addObject:listener];
 }
 
 -(void)removeListener:(id<WZBleSDKInterfaceListener>)listener
 {
-    [_listeners removeObject:listener];
+    @synchronized (self) {
+        [_listeners removeObject:listener];
+
+    }
 }
 -(void)stopScan
 {
@@ -120,7 +126,8 @@
 -(WZBleDevice*)findDeviceWith:(CBPeripheral*)perial
 {
     WZBleDevice * tempDevice;
-    for (WZBleDevice *device in _devices) {
+    NSArray * temp = [_devices copy];
+    for (WZBleDevice *device in temp) {
         if ([device.periral.identifier isEqual:perial.identifier]) {
             tempDevice = device;
             break;
@@ -144,11 +151,15 @@
 {
 
     dispatch_async(dispatch_get_main_queue(), ^{
-        for (id<WZBleSDKInterfaceListener> li in _listeners) {
-            if ([li respondsToSelector:@selector(bleDevice:didRefreshData:comandCode:)]) {
-                [li bleDevice:device didRefreshData:device.data comandCode:cmd];
+        
+            NSArray * ls = [_listeners copy];
+            for (id<WZBleSDKInterfaceListener> li in ls) {
+                if ([li respondsToSelector:@selector(bleDevice:didRefreshData:comandCode:)]) {
+                    [li bleDevice:device didRefreshData:device.data comandCode:cmd];
+                }
             }
-        }
+   
+        
     });
 
 
