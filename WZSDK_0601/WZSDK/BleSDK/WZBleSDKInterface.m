@@ -123,7 +123,7 @@
         WZBleDevice * tempDevice=[self findDeviceWith:perial];
         tempDevice.data.battery = battary;
         
-        tempDevice.data.speed = speed;
+        tempDevice.data.motorFlag = speed;
         
         tempDevice.data.version = [versionString copy];
         

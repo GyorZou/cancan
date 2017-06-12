@@ -2,4 +2,118 @@
 <Bucket
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WZSDK/BleSDK/WZBabyBluetooth/BabyCentralManager.m"
+            timestampString = "518693045.676722"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "431"
+            endingLineNumber = "431"
+            landmarkName = "-peripheralDidUpdateName:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WZSDK/BleSDK/WZBabyBluetooth/BabyCentralManager.m"
+            timestampString = "518693089.499525"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "481"
+            endingLineNumber = "481"
+            landmarkName = "-findConnectedPeripheral:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[BabyCentralManager findConnectedPeripheral:]"
+                  moduleName = "WZSDK"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/crv/Desktop/GitProjects/CanCan/WZSDK_0601/WZSDK/BleSDK/WZBabyBluetooth/BabyCentralManager.m"
+                  timestampString = "518930522.18806"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "481"
+                  endingLineNumber = "481"
+                  offsetFromSymbolStart = "108">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[BabyCentralManager findConnectedPeripheral:]"
+                  moduleName = "WZSDK"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/crv/Desktop/GitProjects/CanCan/WZSDK_0601/WZSDK/BleSDK/WZBabyBluetooth/BabyCentralManager.m"
+                  timestampString = "518930522.189561"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "481"
+                  endingLineNumber = "481"
+                  offsetFromSymbolStart = "128">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WZSDK/BleSDK/WZBleSDKInterface.m"
+            timestampString = "518928779.924615"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "479"
+            endingLineNumber = "479"
+            landmarkName = "-bleDevice:sendCommandCode:extraData:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[WZBleSDKInterface bleDevice:sendCommandCode:extraData:]"
+                  moduleName = "WZSDK"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/crv/Desktop/GitProjects/CanCan/WZSDK_0601/WZSDK/BleSDK/WZBleSDKInterface.m"
+                  timestampString = "518930522.193032"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "479"
+                  endingLineNumber = "479"
+                  offsetFromSymbolStart = "5564">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__57-[WZBleSDKInterface bleDevice:sendCommandCode:extraData:]_block_invoke.314"
+                  moduleName = "WZSDK"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/crv/Desktop/GitProjects/CanCan/WZSDK_0601/WZSDK/BleSDK/WZBleSDKInterface.m"
+                  timestampString = "518930522.194321"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "479"
+                  endingLineNumber = "479"
+                  offsetFromSymbolStart = "24">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

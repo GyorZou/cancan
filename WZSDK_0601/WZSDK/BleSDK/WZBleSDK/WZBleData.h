@@ -36,7 +36,8 @@ STRONGPROP(NSNumber*, rssi);//信号强度
 ASSIGNPROP(NSInteger,speed);//马达震动时长
 
 STRONGPROP(NSString*, version);//固件版本号
-
+ASSIGNPROP(NSInteger,motorFlag);//马达开关标识，F5，F0
+@property (nonatomic,assign,readonly) BOOL isMotorOn;
 
 
 

@@ -260,6 +260,7 @@
 {
     WZBleData * data = _curDevice.data;
     
+    cell.motorStateLabel.text = _curDevice.data.isMotorOn?@"开":@"关";
     cell.nameLabel.text = _curDevice.name;
     cell.batLabel.text = @(data.battery).stringValue;
     cell.motorLabel.text = @(data.speed).stringValue;

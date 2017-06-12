@@ -50,9 +50,9 @@
                         <state key="disabled" title="无历史状态"/>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123123" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jCx-zt-Mep">
-                        <rect key="frame" x="72" y="17" width="142" height="21"/>
+                        <rect key="frame" x="72" y="17" width="97" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="142" id="Bbd-68-fY0"/>
+                            <constraint firstAttribute="width" constant="97" id="Bbd-68-fY0"/>
                             <constraint firstAttribute="height" constant="21" id="jQd-RU-lbR"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -89,20 +89,20 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="马达时长(s):" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4WV-SM-aAh">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="马达时长(s):" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4WV-SM-aAh">
                         <rect key="frame" x="167" y="42" width="83" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="68" id="akD-7G-ThE"/>
+                            <constraint firstAttribute="width" constant="83" id="akD-7G-ThE"/>
                             <constraint firstAttribute="height" constant="21" id="pMg-KR-lCW"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="120" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4bd-6Z-00Y">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="120" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4bd-6Z-00Y">
                         <rect key="frame" x="258" y="42" width="61" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="83" id="8Fg-c9-e7h"/>
+                            <constraint firstAttribute="width" constant="61" id="8Fg-c9-e7h"/>
                             <constraint firstAttribute="height" constant="21" id="bjb-Om-ScZ"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -181,6 +181,26 @@
                         <state key="normal" title="历史坐姿"/>
                         <state key="disabled" title="暂无历史坐姿"/>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="马达开关:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8fa-Kc-0GC">
+                        <rect key="frame" x="167" y="17" width="66" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="66" id="67N-Og-7o8"/>
+                            <constraint firstAttribute="height" constant="21" id="ZJP-zk-LYW"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="开" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HQb-rx-QKV">
+                        <rect key="frame" x="241" y="17" width="77" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="402-k6-Q21"/>
+                            <constraint firstAttribute="width" constant="77" id="b41-mD-gSH"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Ltz-JH-1jo" firstAttribute="top" secondItem="KiA-zT-3sW" secondAttribute="bottom" constant="10" id="0DF-jJ-1iO"/>
@@ -191,7 +211,10 @@
                     <constraint firstItem="H02-e8-yOw" firstAttribute="width" secondItem="v4k-aZ-HOg" secondAttribute="width" id="4ob-3d-0Ja"/>
                     <constraint firstAttribute="bottomMargin" secondItem="Hn6-UF-UBS" secondAttribute="bottom" constant="1.5" id="64Q-9D-4vg"/>
                     <constraint firstAttribute="trailingMargin" secondItem="YII-aT-gFh" secondAttribute="trailing" constant="79" id="8hF-Xg-mn3"/>
+                    <constraint firstItem="HQb-rx-QKV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="9" id="8qh-pI-hSN"/>
+                    <constraint firstItem="HQb-rx-QKV" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="9Eq-Yd-yZ5"/>
                     <constraint firstAttribute="bottomMargin" secondItem="H02-e8-yOw" secondAttribute="bottom" constant="0.5" id="ALk-uk-LhX"/>
+                    <constraint firstItem="HQb-rx-QKV" firstAttribute="leading" secondItem="8fa-Kc-0GC" secondAttribute="trailing" constant="8" id="B1r-xs-E5c"/>
                     <constraint firstItem="iWj-JZ-NgD" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" constant="8" id="Bgz-JM-jcv"/>
                     <constraint firstItem="L1L-N3-ZDB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="C6T-Jz-vas"/>
                     <constraint firstItem="L1L-N3-ZDB" firstAttribute="top" secondItem="I52-ag-jaK" secondAttribute="bottom" constant="5" id="CeN-Ax-4OA"/>
@@ -202,13 +225,14 @@
                     <constraint firstItem="igS-Ny-ITb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="71" id="JRT-K7-8wb"/>
                     <constraint firstItem="v4k-aZ-HOg" firstAttribute="width" secondItem="Hn6-UF-UBS" secondAttribute="width" id="JgQ-3P-vZP"/>
                     <constraint firstItem="Ltz-JH-1jo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="71" id="KuQ-7w-euU"/>
+                    <constraint firstItem="8fa-Kc-0GC" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="9" id="LOK-mT-niS"/>
                     <constraint firstItem="Hn6-UF-UBS" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.3" id="Mqs-cV-UYj"/>
                     <constraint firstItem="v4k-aZ-HOg" firstAttribute="height" secondItem="Hn6-UF-UBS" secondAttribute="height" id="OzA-CF-Tew"/>
                     <constraint firstItem="b63-mP-Txy" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="9" id="Qko-SM-Ddz"/>
                     <constraint firstItem="KiA-zT-3sW" firstAttribute="top" secondItem="igS-Ny-ITb" secondAttribute="bottom" constant="9" id="RYb-e7-K1l"/>
                     <constraint firstAttribute="bottomMargin" secondItem="v4k-aZ-HOg" secondAttribute="bottom" constant="0.5" id="S2J-BL-GZy"/>
                     <constraint firstItem="H02-e8-yOw" firstAttribute="height" secondItem="v4k-aZ-HOg" secondAttribute="height" id="SSj-iY-ANi"/>
-                    <constraint firstItem="4bd-6Z-00Y" firstAttribute="leading" secondItem="4WV-SM-aAh" secondAttribute="trailing" constant="1" id="TRQ-q4-qIi"/>
+                    <constraint firstItem="4bd-6Z-00Y" firstAttribute="leading" secondItem="4WV-SM-aAh" secondAttribute="trailing" constant="8" id="TRQ-q4-qIi"/>
                     <constraint firstItem="I52-ag-jaK" firstAttribute="top" secondItem="QFN-Pk-j5n" secondAttribute="bottom" constant="4" id="U2k-RM-K9U"/>
                     <constraint firstItem="jCx-zt-Mep" firstAttribute="leading" secondItem="b63-mP-Txy" secondAttribute="trailing" constant="8" id="bb3-55-lPM"/>
                     <constraint firstAttribute="trailingMargin" secondItem="FZW-LM-h5I" secondAttribute="trailing" constant="79" id="cKg-WE-WUy"/>
@@ -230,6 +254,7 @@
                 <outlet property="historySitBtn" destination="H02-e8-yOw" id="fYg-Fa-79K"/>
                 <outlet property="historyStepBtn" destination="v4k-aZ-HOg" id="TLW-QF-VeM"/>
                 <outlet property="motorLabel" destination="4bd-6Z-00Y" id="dbT-qi-0II"/>
+                <outlet property="motorStateLabel" destination="HQb-rx-QKV" id="Uqa-6d-ga8"/>
                 <outlet property="nameLabel" destination="jCx-zt-Mep" id="dQU-PC-Dfi"/>
                 <outlet property="posLabel" destination="Ltz-JH-1jo" id="h2A-LB-6im"/>
                 <outlet property="stateLabel" destination="yC4-tm-Gcd" id="tWi-z7-8vG"/>
