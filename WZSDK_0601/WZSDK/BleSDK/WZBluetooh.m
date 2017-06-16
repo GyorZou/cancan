@@ -900,7 +900,7 @@ static NSString *const keepAliveUUID = @"FFA2";
             //NSLog(@"self.getMotorBlock nil");
             return;
         }
-        self.getMotorBlock(motorVibration[0]);
+        self.getMotorBlock(motorVibration[0],dataByte[3]);
     } else if (protocolTyte[0] == 0xEC) { // 效准坐姿
         if (!self.setPostureBlock){
             //NSLog(@"self.setPostureBlock nil");

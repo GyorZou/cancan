@@ -47,6 +47,7 @@
 		4C9BE39E1EEA871E00CFC87A /* WZBleDeviceTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BE3961EEA871E00CFC87A /* WZBleDeviceTools.m */; };
 		4C9BE39F1EEA871E00CFC87A /* WZBleSDKBaseInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BE3991EEA871E00CFC87A /* WZBleSDKBaseInterface.m */; };
 		4C9BE3A01EEA871E00CFC87A /* WZHistoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BE39B1EEA871E00CFC87A /* WZHistoryModel.m */; };
+		52A7D2DE1EF3BCB20078BF99 /* dfuwzV1.2.2.zip in Resources */ = {isa = PBXBuildFile; fileRef = 52A7D2DD1EF3BCB20078BF99 /* dfuwzV1.2.2.zip */; };
 		BF03A3C3ADC60882D49B7C4B /* Pods_WZSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA77655478A806434093A558 /* Pods_WZSDK.framework */; };
 /* End PBXBuildFile section */
 
@@ -153,6 +154,7 @@
 		4C9BE3991EEA871E00CFC87A /* WZBleSDKBaseInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZBleSDKBaseInterface.m; sourceTree = "<group>"; };
 		4C9BE39A1EEA871E00CFC87A /* WZHistoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZHistoryModel.h; sourceTree = "<group>"; };
 		4C9BE39B1EEA871E00CFC87A /* WZHistoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZHistoryModel.m; sourceTree = "<group>"; };
+		52A7D2DD1EF3BCB20078BF99 /* dfuwzV1.2.2.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = dfuwzV1.2.2.zip; sourceTree = "<group>"; };
 		AA77655478A806434093A558 /* Pods_WZSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WZSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D132C8A258BE345D8EC011C9 /* Pods-WZSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WZSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-WZSDK/Pods-WZSDK.release.xcconfig"; sourceTree = "<group>"; };
 		F2305DA2EB3652EF6B377E9B /* Pods-WZSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WZSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WZSDK/Pods-WZSDK.debug.xcconfig"; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 				36EF15BF1EDB0028009C82B2 /* dfuwzV1.1.3.zip */,
 				36E91DE11ED6CDB400982C33 /* dfuwzV1.1.4.zip */,
 				4C4539471EE93F0F00641038 /* dfuwzV1.1.6.zip */,
+				52A7D2DD1EF3BCB20078BF99 /* dfuwzV1.2.2.zip */,
 				0C68A8C41EAE1EF7001DD601 /* other */,
 				0C68A8DE1EAE68A8001DD601 /* SVProgressHUD */,
 			);
@@ -491,6 +494,7 @@
 				36EF15C01EDB0028009C82B2 /* dfuwzV1.1.3.zip in Resources */,
 				36C9CF851EDE988E008E116A /* dfuwzV1.1.5.zip in Resources */,
 				0C68A8E51EAE68A8001DD601 /* SVProgressHUD.bundle in Resources */,
+				52A7D2DE1EF3BCB20078BF99 /* dfuwzV1.2.2.zip in Resources */,
 				4C45395D1EE93F4900641038 /* HistoryViewController.xib in Resources */,
 				4C4539651EE93F5200641038 /* DemoViewController.xib in Resources */,
 				4C4539671EE93F5200641038 /* DeviceCell.xib in Resources */,

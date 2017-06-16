@@ -485,8 +485,9 @@
             break;
         case WZBluetoohCommandReadMotor:
         {
-            [self.bluetooh getMotor:^(NSInteger speed) {
+            [self.bluetooh getMotor:^(NSInteger speed,NSInteger flag) {
                 device.data.speed = speed;
+                device.data.motorFlag = flag;
                 [ws notifyDevice:device dataForCMD:command];
             }];
         }

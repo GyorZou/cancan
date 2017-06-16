@@ -17,7 +17,7 @@ typedef void (^WZCancelActivation)(BOOL success);
 typedef void (^WZSynStep)(CBPeripheral*,NSString *time, unsigned long steps);
 typedef void (^WZPosture)(CBPeripheral*,NSDictionary *posture);
 typedef void (^WZSetMotor)(BOOL success);
-typedef void (^WZGetMotor)(NSInteger speed);
+typedef void (^WZGetMotor)(NSInteger speed,NSInteger flag);
 typedef void (^WZSetPosture)(BOOL success);
 typedef void (^WZRestart)(BOOL success);
 typedef void (^WZComplete)(BOOL success);
