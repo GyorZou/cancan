@@ -223,9 +223,11 @@ if (state==WZBleStatusPowerOn) {//蓝牙可用
 ```
     WZBluetoohCommandRestartDevice,//重启设备
     WZBluetoohCommandGetBattery,//电池
-    WZBluetoohCommandSynSteps,//同步当前步数
-    WZBluetoohCommandSynStatus,//同步用户状态--设备主动发送，app不发指令
-     WZBluetoohCommandSynPostures,//同步当前坐姿
+    WZBluetoohCommandSynSteps,//同步当天步数
+    WZBluetoohCommandSynStatus,//同步用户历史状态--设备主动发送，app不发指令
+    WZBluetoohCommandSynPostures,//同步当天坐姿状态--坐躺走跑
+    WZBluetoohCommandSynSitStatus,//同步当天站、坐下各状态时长--正坐、前、右、后、左
+    
     WZBluetoohCommandActivateDevice,//激活设备
     WZBluetoohCommandCancelActivateDevice,//取消设备激活
     WZBluetoohCommandReadMotor,//读取马达
@@ -233,6 +235,7 @@ if (state==WZBleStatusPowerOn) {//蓝牙可用
     WZBluetoohCommandCloseMotor,//马达关闭
     WZBluetoohCommandAdjustPosture,//坐姿校正
     WZBluetoohCommandCancelAdjustPosture,//取消坐姿矫正
+    
     WZBluetoohCommandGetRTPosture,//刷新实时坐姿--设备主动发
     WZBluetoohCommandClearData,//清除缓存
     

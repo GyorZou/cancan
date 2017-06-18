@@ -15,6 +15,9 @@
 #import "WZBluetooh.h"
 
 @interface WZBleSDKInterface()
+{
+    NSMutableDictionary * _timers;
+}
 
 -(void)notifyDevice:(WZBleDevice*)device dataForCMD:(WZBluetoohCommand)cmd;
 -(WZBleDevice*)findDeviceWith:(CBPeripheral*)perial;
@@ -39,6 +42,8 @@
         
         _devices = [[NSMutableArray alloc] init];
         _listeners = [[NSMutableArray alloc] init];
+        
+        _timers = [[NSMutableDictionary alloc] init];
         [shareface initData];
     });
 
@@ -177,8 +182,18 @@
         NSLog(@"sss");
     } fail:^(NSError *error) {
         
+        NSLog(@"fail connect");
+        
     } disconnect:^(NSError *error,CBPeripheral*perial) {
         NSLog(@"disconneted:%@",error.localizedDescription);
+        
+        
+        NSTimer * timer = [_timers objectForKey:[perial.identifier UUIDString]];
+        if (timer) {
+            [timer invalidate];
+        }
+
+
         
         WZBleDevice * tempDevice=[self findDeviceWith:perial];
         
@@ -278,11 +293,45 @@
 }
 -(void)disConnectDevice:(WZBleDevice *)device
 {
+    
+    NSTimer * timer = [_timers objectForKey:[device.periral.identifier UUIDString]];
+    if (timer) {
+        [timer invalidate];
+    }
+                       
     [self.bluetooh disConnectPeriperal:device.periral];
 }
 -(void)connectDevice:(WZBleDevice *)device
 {
 
+    
+    
+    NSTimer * timer = [NSTimer scheduledTimerWithTimeInterval:10 repeats:NO block:^(NSTimer * _Nonnull timer) {
+        if (device.periral.state ==CBPeripheralStateConnected) {
+            
+            
+        }else{
+            
+            
+            @synchronized (self) {
+                //weakSelf.bluReady = success;
+                
+                //
+                [self.bluetooh disConnectPeriperal:device.periral];
+                
+                for (id<WZBleSDKInterfaceListener> lis in _listeners) {
+                    if ([lis respondsToSelector:@selector(bleFailConnectDevice:error:)]) {
+                        [lis bleFailConnectDevice:device error:nil];
+                    }
+                }
+                
+            }
+        }
+        
+    }];
+    
+    [_timers setObject:timer forKey:[device.periral.identifier UUIDString]];
+        
     [self.bluetooh connectPeriperal:device.periral];
     __weak typeof(self) ws =self;
     [self.bluetooh getRealTimeStatus:^(NSInteger status, NSInteger sitting) {
@@ -500,6 +549,24 @@
         }
             break;
     
+            
+        case WZBluetoohCommandSynSitStatus:
+        {
+            [self.bluetooh synSitTime:^(CBPeripheral * per, NSString *time, NSInteger sittingTime, NSInteger forwardTime, NSInteger backwardTime, NSInteger leftLeaningTime, NSInteger rightDeviationTime) {
+               
+                
+                device.data.sitTime = sittingTime;
+                device.data.leftSitTime = leftLeaningTime;
+                device.data.rightSitTime = rightDeviationTime;
+                device.data.backwardSitTime = backwardTime;
+                device.data.forwardSitTime = forwardTime;
+                
+                
+                [ws notifyDevice:device dataForCMD:command];
+                
+            }];
+        }
+            break;
         default:
             break;
     }

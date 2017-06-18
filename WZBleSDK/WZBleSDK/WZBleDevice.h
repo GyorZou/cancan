@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "WZBleData.h"
+
 @interface WZBleDevice : NSObject
 
 /**
@@ -56,4 +57,6 @@
  @return mac地址
  */
 -(NSData*)mac;
+
+
 @end

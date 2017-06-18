@@ -87,6 +87,17 @@
     }
 
     
+    if (command == WZBluetoohCommandSynSitStatus) {
+        
+    
+        _curInfo.todaySitLabel.text = [NSString stringWithFormat:@"正坐:%lds,前倾:%lds,右倾:%lds,后倾:%lds,左倾:%lds",_curDevice.data.sitTime,_curDevice.data.forwardSitTime,_curDevice.data.rightSitTime,_curDevice.data.backwardSitTime,_curDevice.data.leftSitTime];
+    }
+    
+    [UIView animateWithDuration:0 animations:^{
+        
+    } completion:^(BOOL finished) {
+        
+    }];
     [self updateInfo:_curInfo];
 }
 -(NSString*)stringOfCMD:(WZBluetoohCommand)cmd
@@ -123,7 +134,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section==0) {
-        return 190;
+        return 219;
     }
     return 40;
 }
@@ -137,7 +148,9 @@
     }else if(btn.tag==102){//历史坐时
         his.data = _curDevice.data.historySit;
     }
-    his.tag = btn.tag;
+    his.tag = (int)btn.tag;
+    
+    his.title = btn.titleLabel.text;
     [self.navigationController pushViewController:his animated:YES];
 
 }
@@ -174,8 +187,8 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section==0)return;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if(indexPath.section==0)return;
     switch (indexPath.row) {
         case 0:
         case 1:
@@ -191,9 +204,11 @@
         case 11:
         case 12:
         case 13:
+        case 14:
+
             [face bleDevice:_curDevice sendCommandCode:(WZBluetoohCommand)indexPath.row extraData:nil];
             break;
-        case 14:{
+        case 15:{
             
             NSArray * paths = [[NSBundle mainBundle] pathsForResourcesOfType:@"zip" inDirectory:nil];
             
@@ -218,12 +233,13 @@
 
             break;
             
-        case 15:
+
         case 16:
         case 17:
         case 18:
         case 19:
         case 20:
+        case 21:
         {
             NSString * s = [self stringOfCMD:(WZBluetoohCommand)indexPath.row];
             UIAlertController * alert = [UIAlertController alertControllerWithTitle:s message:@"" preferredStyle:UIAlertControllerStyleAlert];

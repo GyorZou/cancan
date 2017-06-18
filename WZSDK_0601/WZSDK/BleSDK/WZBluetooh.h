@@ -90,6 +90,9 @@ typedef void (^WZRealTime)(NSInteger status, NSInteger sitting);
 // 连接状态下同步坐姿数据
 - (void)synPosture:(WZPosture)postureBlock;
 
+// 连接状态下同步坐姿各状态数据
+- (void)synSitTime:(WZSitting)sitBlock;
+
 // 设置马达震动
 - (void)setMotor:(BOOL)open shockTime:(NSInteger)shockTime complete:(WZSetMotor)setMotorBlock;
 

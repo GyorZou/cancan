@@ -18,7 +18,15 @@
 @property IBOutlet UILabel * stepLabel;
 @property IBOutlet UILabel * posLabel;
 @property IBOutlet UILabel * stateLabel;
+
+@property IBOutlet UILabel * todaySitLabel;
+
+
+
 @property IBOutlet UIButton * historyBtn;
+
+
+
 @property IBOutlet UIButton * historyStepBtn;
 @property IBOutlet UIButton * historySitBtn;
 @end

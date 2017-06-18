@@ -67,9 +67,9 @@ STRONGPROP(NSDictionary*, postures);//历史身姿
 /**
  字典数组，
  字典只有一个key，key为日期，xx月xx日
- 字典值为historyModel数组，value为时-分-姿势
-
- @return <#return value description#>
+ 字典值为historyModel数组，value为:时-分-状态,
+ 0-4：未知 坐 躺 走 跑
+ @return s
  */
 -(NSArray<NSDictionary*>*)historyPos;
 

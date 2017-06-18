@@ -58,7 +58,7 @@
             break;
             
         case WZBluetoohCommandSynSteps:
-            value =@"同步当前步数";
+            value =@"同步当天步数";
             break;
         case WZBluetoohCommandSynStatus:
             value =@"同步状态-设备主动发(点了也不发)";
@@ -70,7 +70,7 @@
             value =@"获取电池";
             break;
         case WZBluetoohCommandSynPostures:
-            value =@"同步当前用户状态数据";
+            value =@"同步当天用户状态数据";
             break;
         case WZBluetoohCommandGetRTPosture:
             value =@"实时坐姿-设备主动发送(点了也不发)";
@@ -116,6 +116,9 @@
             break;
         case WZBluetoohCommandReadMotor:
              value = @"读取马达";
+            break;
+        case WZBluetoohCommandSynSitStatus:
+            value = @"获取当日坐姿数据";
             break;
         default:
             break;

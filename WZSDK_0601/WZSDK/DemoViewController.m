@@ -140,7 +140,9 @@
 }
 -(void)bleFailConnectDevice:(WZBleDevice *)device error:(NSError *)err
 {
-    [SVProgressHUD dismiss];
+   // [SVProgressHUD dismiss];
+    [SVProgressHUD showInfoWithStatus:@"连接失败，请重试"];
+    
 }
 -(void)bleStatusChanged:(WZBleStatus)state
 {

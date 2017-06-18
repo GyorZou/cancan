@@ -44,4 +44,6 @@ return _advertisment[@"kCBAdvDataServiceUUIDs"];
 {
     return [_advertisment valueForKey:@"kCBAdvDataManufacturerData"];;
 }
+
+
 @end

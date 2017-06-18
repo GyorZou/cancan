@@ -63,6 +63,8 @@ static NSString *const keepAliveUUID = @"FFA2";
 @property (copy, nonatomic) WZCancelActivation cancelActivationBlock;
 @property (copy, nonatomic) WZSynStep synStepBlock;
 @property (copy, nonatomic) WZPosture postureBlock;
+
+@property (copy, nonatomic) WZSitting todaySitBlock;
 @property (copy, nonatomic) WZSetMotor setMotorBlock;
 @property (copy, nonatomic) WZGetMotor getMotorBlock;
 @property (copy, nonatomic) WZSetPosture setPostureBlock;
@@ -255,6 +257,7 @@ static NSString *const keepAliveUUID = @"FFA2";
 {
     [baby cancelPeripheralConnection:perial];
 }
+
 -(void)connectPeriperal:(CBPeripheral *)perial
 {
 
@@ -963,6 +966,30 @@ static NSString *const keepAliveUUID = @"FFA2";
             
         }];
          */
+    }else if (protocolTyte[0] == 0xA7) {
+        //新增，当天坐姿数据
+        NSInteger postureCount = length - 3;
+        Byte posture[postureCount];
+        memcpy(&posture, &dataByte[3], postureCount);
+        
+        //long year1 = posture[0];
+       // long year2 = posture[1];
+        long month = posture[0];
+        long day = posture[1];
+        
+        NSString *time = [NSString stringWithFormat:@"%02ld-%02ld",  month, day];
+        
+        NSInteger sitting = posture[2] + posture[3] * 256;
+        NSInteger forward = posture[4] + posture[5] * 256;
+        NSInteger backward = posture[6] + posture[7] * 256;
+        NSInteger leftLeaning = posture[8] + posture[9] * 256;
+        NSInteger rightDeviation = posture[10] + posture[11] * 256;
+        
+        if (!self.todaySitBlock) {
+            //NSLog(@"self.sittingBlock nil");
+            return;
+        }
+        self.todaySitBlock(_currPeripheral,time, sitting, forward, backward, leftLeaning, rightDeviation);
     }
 
 
@@ -1135,6 +1162,12 @@ static NSString *const keepAliveUUID = @"FFA2";
     self.postureBlock = postureBlock;
     Byte posture[] = {0xF1, 0x03, 0xD9};
     [self writeValueWith:posture lenght:sizeof(posture)];
+}
+-(void)synSitTime:(WZSitting)sitBlock
+{
+    self.todaySitBlock = sitBlock;
+    Byte sit[] = {0xF1, 0x03, 0x97};
+    [self writeValueWith:sit lenght:sizeof(sit)];
 }
 
 // 设置马达震动
