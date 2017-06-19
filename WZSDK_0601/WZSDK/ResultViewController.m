@@ -93,11 +93,25 @@
         _curInfo.todaySitLabel.text = [NSString stringWithFormat:@"正坐:%lds,前倾:%lds,右倾:%lds,后倾:%lds,左倾:%lds",_curDevice.data.sitTime,_curDevice.data.forwardSitTime,_curDevice.data.rightSitTime,_curDevice.data.backwardSitTime,_curDevice.data.leftSitTime];
     }
     
-    [UIView animateWithDuration:0 animations:^{
-        
-    } completion:^(BOOL finished) {
-        
-    }];
+    if (command == WZBluetoohCommandSynPostures) {
+        if (data.todayPos.count>0) {
+            NSDictionary * d =  [data.todayPos lastObject];
+            NSString * day = [[d allKeys] firstObject];
+            
+            NSArray * datas = d[day];
+            
+            NSString * temp=@"";
+            NSMutableArray * arr = [NSMutableArray new];
+            for (int i = 0; i<datas.count; i++) {
+                WZHistoryModel * model = datas[i];
+                [arr addObject:model.value];
+            }
+            temp = [arr componentsJoinedByString:@";"];
+            _curInfo.todayStateLabel.text = [NSString stringWithFormat:@"%@:%@",day,temp];
+        }
+    }
+    
+
     [self updateInfo:_curInfo];
 }
 -(NSString*)stringOfCMD:(WZBluetoohCommand)cmd
@@ -134,7 +148,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section==0) {
-        return 219;
+        return 258;
     }
     return 40;
 }
@@ -251,12 +265,12 @@
             UIAlertAction * action = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                UITextField * field =  [alert.textFields firstObject];
                 
-                if (indexPath.row==15) {//名字
+                if (indexPath.row==WZBluetoohCommandSetName) {//名字
                     if(field.text.length>10){
                         [SVProgressHUD showInfoWithStatus:@"名字长度不要超过10位"];
                         return ;
                     }
-                }else if(indexPath.row ==16){//马达时长
+                }else if(indexPath.row ==WZBluetoohCommandSetMotorDuration){//马达时长
                       if(field.text.intValue>500||field.text.intValue<1){
                 [SVProgressHUD showInfoWithStatus:@"0<马达时长<500"];
                           return;
@@ -307,6 +321,11 @@
     cell.historyBtn.enabled = data.postures.count>0;
     cell.historyStepBtn.enabled = data.historySteps.count>0;
     cell.historySitBtn.enabled = data.historySit.count>0;
+    
+    
+
+    
+    
 }
 
 @end

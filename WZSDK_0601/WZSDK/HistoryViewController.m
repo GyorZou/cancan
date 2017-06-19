@@ -56,6 +56,18 @@
     return 1;
 }
 
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if (_tag==100) {
+        NSDictionary  * dataDict = [_data objectAtIndex:section];
+        
+        NSArray * keys =[dataDict allKeys];
+        
+        return  [keys firstObject];
+    }
+
+    return nil;
+}
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (_tag==100) {

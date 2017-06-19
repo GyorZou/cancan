@@ -393,7 +393,7 @@
         {
             [self.bluetooh synPosture:^(CBPeripheral *p,NSDictionary *posture) {
                
-                device.data.postures = posture;
+                device.data.__todayPostures = posture;
                 [ws notifyDevice:device dataForCMD:command];
             }];
             

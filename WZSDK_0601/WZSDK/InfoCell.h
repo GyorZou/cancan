@@ -20,7 +20,7 @@
 @property IBOutlet UILabel * stateLabel;
 
 @property IBOutlet UILabel * todaySitLabel;
-
+@property IBOutlet UILabel * todayStateLabel;
 
 
 @property IBOutlet UIButton * historyBtn;
