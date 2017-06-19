@@ -35,11 +35,11 @@
     [self.view addSubview:tableView];
     
     
-
+    
     
     tableView.delegate = self;
     tableView.dataSource = self;
-
+    
     self.navigationItem.leftBarButtonItem = [self rightItem2];
     
     [tableView registerNib:[UINib nibWithNibName:@"InfoCell" bundle:nil] forCellReuseIdentifier:@"InfoCell.xib"];
@@ -58,7 +58,7 @@
     return item;
 }
 -(void)dismiss{
-
+    
     [face removeListener:self];
     
     [face disConnectDevice:_curDevice];
@@ -79,18 +79,18 @@
     NSLog(@"finished cmd:%@",[self stringOfCMD:command]);
     if (command!= WZBluetoohCommandGetRTPosture) {
         
-       
+        
         [SVProgressHUD showInfoWithStatus:[NSString stringWithFormat:@"已完成指令：%@",[self stringOfCMD:command]]];
     }
     if (command == WZBluetoohCommandSetName) {
         [face bleDevice:_curDevice sendCommandCode:WZBluetoohCommandRestartDevice extraData:nil];//修改名字后要重启
     }
-
+    
     
     if (command == WZBluetoohCommandSynSitStatus) {
         
-    
-        _curInfo.todaySitLabel.text = [NSString stringWithFormat:@"正坐:%lds,前倾:%lds,右倾:%lds,后倾:%lds,左倾:%lds",_curDevice.data.sitTime,_curDevice.data.forwardSitTime,_curDevice.data.rightSitTime,_curDevice.data.backwardSitTime,_curDevice.data.leftSitTime];
+        
+        _curInfo.todaySitLabel.text = [NSString stringWithFormat:@"%@ 正坐:%lds,前倾:%lds,右倾:%lds,后倾:%lds,左倾:%lds",_curDevice.data.synTodayTime,_curDevice.data.sitTime,_curDevice.data.forwardSitTime,_curDevice.data.rightSitTime,_curDevice.data.backwardSitTime,_curDevice.data.leftSitTime];
     }
     
     if (command == WZBluetoohCommandSynPostures) {
@@ -104,20 +104,30 @@
             NSMutableArray * arr = [NSMutableArray new];
             for (int i = 0; i<datas.count; i++) {
                 WZHistoryModel * model = datas[i];
-                [arr addObject:model.value];
+                
+                NSString * value = model.value;
+                NSArray * t =[value componentsSeparatedByString:@"-"];
+                if (t.count==3) {
+                    
+                    NSString * s = [NSString stringWithFormat:@"%@时%@分 %@",t[0],t[1],[WZBleDeviceTools postureString:[t[2] intValue]]];
+                    [arr addObject:s];
+                }
+                
+                
+                
             }
             temp = [arr componentsJoinedByString:@";"];
             _curInfo.todayStateLabel.text = [NSString stringWithFormat:@"%@:%@",day,temp];
         }
     }
     
-
+    
     [self updateInfo:_curInfo];
 }
 -(NSString*)stringOfCMD:(WZBluetoohCommand)cmd
 {
     return [WZBleDeviceTools descriptionOfCMD:cmd];
-
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -125,14 +135,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -166,11 +176,15 @@
     
     his.title = btn.titleLabel.text;
     [self.navigationController pushViewController:his animated:YES];
-
+    
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section==0) {
+        
+        if(_curInfo){
+            return _curInfo;
+        }
         InfoCell * cell = [tableView dequeueReusableCellWithIdentifier:@"InfoCell.xib"];
         _curInfo = cell;
         
@@ -192,8 +206,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
-
-
+    
+    
     
     cell.textLabel.text = [NSString stringWithFormat:@"(%ld)%@",indexPath.row, [self stringOfCMD:(WZBluetoohCommand)indexPath.row]];
     return cell;
@@ -219,7 +233,7 @@
         case 12:
         case 13:
         case 14:
-
+            
             [face bleDevice:_curDevice sendCommandCode:(WZBluetoohCommand)indexPath.row extraData:nil];
             break;
         case 15:{
@@ -230,9 +244,9 @@
             UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"选择版本" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
             
             UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-           
+            
             [alertController addAction:cancelAction];
-
+            
             for (NSString * path in paths) {
                 NSString * cmp = [path lastPathComponent];
                 UIAlertAction *action = [UIAlertAction actionWithTitle:cmp style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -244,10 +258,10 @@
             
             
         }
-
+            
             break;
             
-
+            
         case 16:
         case 17:
         case 18:
@@ -263,7 +277,7 @@
             }];
             
             UIAlertAction * action = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-               UITextField * field =  [alert.textFields firstObject];
+                UITextField * field =  [alert.textFields firstObject];
                 
                 if (indexPath.row==WZBluetoohCommandSetName) {//名字
                     if(field.text.length>10){
@@ -271,22 +285,22 @@
                         return ;
                     }
                 }else if(indexPath.row ==WZBluetoohCommandSetMotorDuration){//马达时长
-                      if(field.text.intValue>500||field.text.intValue<1){
-                [SVProgressHUD showInfoWithStatus:@"0<马达时长<500"];
-                          return;
-                      }
+                    if(field.text.intValue>500||field.text.intValue<1){
+                        [SVProgressHUD showInfoWithStatus:@"0<马达时长<500"];
+                        return;
+                    }
                 }else{
                     if(field.text.intValue>90||field.text.intValue<1){
                         [SVProgressHUD showInfoWithStatus:@"0<倾角<90"];
                         return;
                     }
-
+                    
                 }
                 
                 [face bleDevice:_curDevice sendCommandCode:(WZBluetoohCommand)indexPath.row extraData:field.text];
             }];
             UIAlertAction * action2 = [UIAlertAction actionWithTitle:@"cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-               
+                
             }];
             
             [alert addAction:action];
@@ -296,12 +310,12 @@
         }
             
             break;
-   
+            
             
         default:
             break;
     }
-
+    
 }
 
 -(void)updateInfo:(InfoCell*)cell
@@ -313,17 +327,17 @@
     cell.batLabel.text = @(data.battery).stringValue;
     cell.motorLabel.text = @(data.speed).stringValue;
     cell.verLabel.text = data.version;
-
+    
     cell.stepLabel.text = @(data.steps).stringValue;
     cell.posLabel.text = data.sitStatusString;
     cell.stateLabel.text = data.postureStatusString;
- 
+    
     cell.historyBtn.enabled = data.postures.count>0;
     cell.historyStepBtn.enabled = data.historySteps.count>0;
     cell.historySitBtn.enabled = data.historySit.count>0;
     
     
-
+    
     
     
 }

@@ -108,7 +108,43 @@
     
     return nil;
 }
+-(NSArray<NSDictionary *> *)todayPos
+{
+    
+    NSDictionary * dict= ___todayPostures;
+    
+    NSArray * keys = [dict allKeys];
+    
 
+    NSMutableArray * tempAll = [NSMutableArray new];
+    for (NSString * key in keys) {
+        NSMutableDictionary * thisDict = [NSMutableDictionary new];
+        
+        NSMutableArray * temp =[NSMutableArray new];
+        
+        NSArray * arr = dict[key];
+        
+        for (NSDictionary * d in arr) {
+            NSNumber * h = d[@"hour"];
+            NSNumber * m = d[@"minute"];
+            NSNumber * s = d[@"status"];
+            NSString * v = [NSString stringWithFormat:@"%@-%@-%@",h.stringValue,m.stringValue,s.stringValue];
+            
+            WZHistoryModel * model = [WZHistoryModel new];
+            model.value=v;
+            [temp addObject:model];
+            
+        }
+        
+        thisDict[key] = [temp copy];
+        [tempAll addObject:thisDict];
+        
+    }
+    
+    return [tempAll copy];
+
+  
+}
 -(NSArray<WZHistoryModel *> *)historyPos{
     
     NSDictionary * dict= _postures;

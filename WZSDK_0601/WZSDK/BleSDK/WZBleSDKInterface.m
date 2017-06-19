@@ -554,7 +554,7 @@
         {
             [self.bluetooh synSitTime:^(CBPeripheral * per, NSString *time, NSInteger sittingTime, NSInteger forwardTime, NSInteger backwardTime, NSInteger leftLeaningTime, NSInteger rightDeviationTime) {
                
-                
+                device.data.synTodayTime = time;
                 device.data.sitTime = sittingTime;
                 device.data.leftSitTime = leftLeaningTime;
                 device.data.rightSitTime = rightDeviationTime;

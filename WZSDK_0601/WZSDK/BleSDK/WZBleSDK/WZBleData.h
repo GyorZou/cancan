@@ -42,6 +42,7 @@ ASSIGNPROP(NSInteger,motorFlag);//马达开关标识，F5，F0
 
 
 STRONGPROP(NSString*, synTime);//坐姿同步时间
+STRONGPROP(NSString*, synTodayTime);//坐姿同步时间
 ASSIGNPROP(NSInteger,sitTime);//正坐时长
 ASSIGNPROP(NSInteger,leftSitTime);//左倾时长
 ASSIGNPROP(NSInteger,rightSitTime);//右倾时长

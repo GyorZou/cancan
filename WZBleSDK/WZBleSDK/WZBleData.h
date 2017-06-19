@@ -60,8 +60,21 @@ ASSIGNPROP(NSUInteger, steps);//步数
 
 STRONGPROP(NSDictionary*, postures);//历史身姿
 
+
+STRONGPROP(NSDictionary*, __todayPostures);//当日身姿
+
 -(NSString*)postureStatusString;
 -(NSString*)sitStatusString;
+
+
+/**
+ 字典数组，
+ 字典只有一个key，key为日期，xx年xx月xx日
+ 字典值为historyModel数组，value为:时-分-状态,
+ 0-4：未知 坐 躺 走 跑
+ @return s
+ */
+-(NSArray<NSDictionary*>*)historyPos;
 
 
 /**
@@ -71,8 +84,7 @@ STRONGPROP(NSDictionary*, postures);//历史身姿
  0-4：未知 坐 躺 走 跑
  @return s
  */
--(NSArray<NSDictionary*>*)historyPos;
-
+-(NSArray<NSDictionary*>*)todayPos;
 
 /**
  历史坐姿时间数据
