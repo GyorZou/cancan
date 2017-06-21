@@ -60,6 +60,8 @@
 
 //扫描Peripherals
 - (void)scanPeripherals {
+    NSArray * ar =[currChannel babyOptions].scanForPeripheralsWithServices;
+    NSDictionary * d =[currChannel babyOptions].scanForPeripheralsWithOptions;
     [centralManager scanForPeripheralsWithServices:[currChannel babyOptions].scanForPeripheralsWithServices options:[currChannel babyOptions].scanForPeripheralsWithOptions];
 }
 

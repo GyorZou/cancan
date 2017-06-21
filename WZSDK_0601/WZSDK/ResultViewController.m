@@ -16,6 +16,8 @@
     WZBleSDKInterface * face;
     
     InfoCell * _curInfo;
+
+    NSMutableArray * _todaySitArr;
 }
 @end
 
@@ -27,7 +29,8 @@
     face = [WZBleSDKInterface sharedInterface];
     [face addListner:self];
     
-    
+
+    _todaySitArr = [NSMutableArray new];
     self.title = _curDevice.name;
     UITableView * tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     
@@ -89,8 +92,33 @@
     
     if (command == WZBluetoohCommandSynSitStatus) {
         
+       NSString * s = [NSString stringWithFormat:@"正坐:%lds,前倾:%lds,右倾:%lds,后倾:%lds,左倾:%lds",_curDevice.data.sitTime,_curDevice.data.forwardSitTime,_curDevice.data.rightSitTime,_curDevice.data.backwardSitTime,_curDevice.data.leftSitTime];
+        if (_curDevice.data.synTodayTime) {
+            BOOL isOld = NO;
+            for (NSMutableDictionary* d in _todaySitArr) {
+                NSString * dayKey = [[d allKeys] firstObject];
+                if (dayKey == _curDevice.data.synTodayTime) {
+                    NSArray * cur = d[dayKey];
+                    
+                    NSMutableArray * temp = [NSMutableArray arrayWithArray:cur];
+                    [temp addObject:s];
+                    
+                    d[dayKey] = [temp copy];//保存
+                    
+                    isOld = YES;
+                }
+            }
+            
+            if (isOld == NO) {//新建并保存
+                NSMutableDictionary *d = [NSMutableDictionary new];
+                NSMutableArray * temp = [NSMutableArray arrayWithObject:s];
+                d[_curDevice.data.synTodayTime] = temp;
+                [_todaySitArr addObject:d];
+            }
+            
+        }
         
-        _curInfo.todaySitLabel.text = [NSString stringWithFormat:@"%@ 正坐:%lds,前倾:%lds,右倾:%lds,后倾:%lds,左倾:%lds",_curDevice.data.synTodayTime,_curDevice.data.sitTime,_curDevice.data.forwardSitTime,_curDevice.data.rightSitTime,_curDevice.data.backwardSitTime,_curDevice.data.leftSitTime];
+        _curInfo.todaySitLabel.text = s ;
     }
     
     if (command == WZBluetoohCommandSynPostures) {
@@ -171,6 +199,10 @@
         his.data = _curDevice.data.historySteps;
     }else if(btn.tag==102){//历史坐时
         his.data = _curDevice.data.historySit;
+    }else if(btn.tag==103){//jinri姿势
+        his.data = _curDevice.data.todayPos;
+    }else if(btn.tag==104){//jinri坐时
+        his.data = [_todaySitArr copy];
     }
     his.tag = (int)btn.tag;
     
@@ -191,11 +223,15 @@
         [cell.historySitBtn removeTarget:self action:@selector(hisBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [cell.historyBtn removeTarget:self action:@selector(hisBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [cell.historyStepBtn removeTarget:self action:@selector(hisBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.todayPosBtn removeTarget:self action:@selector(hisBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.todaySitBtn removeTarget:self action:@selector(hisBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         
         
         [cell.historySitBtn addTarget:self action:@selector(hisBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [cell.historyBtn addTarget:self action:@selector(hisBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [cell.historyStepBtn addTarget:self action:@selector(hisBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.todayPosBtn addTarget:self action:@selector(hisBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.todaySitBtn addTarget:self action:@selector(hisBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         
         [self updateInfo:cell];
         return cell;

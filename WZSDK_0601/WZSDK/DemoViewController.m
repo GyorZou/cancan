@@ -168,7 +168,7 @@
         if(data.progress == 100){
             [SVProgressHUD dismiss];
             [SVProgressHUD showInfoWithStatus:@"升级成功"];
-            [self doScan];//重新扫描
+          //  [self doScan];//重新扫描
             return;
         }
         [SVProgressHUD showProgress:f status:@"正在升级"];

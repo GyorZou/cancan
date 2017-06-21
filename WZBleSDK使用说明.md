@@ -24,9 +24,20 @@ end
 并将此文件拷入项目所在目录。
 ###二、pod install安装依赖库
 （前提，已安装cocoapods）在终端中，cd进入项目目录，执行命令：pod install；
+
+
+注意：
+>如果使用已经编译好的zip.framework和iOSDFULibrary.framework，可以跳过上面两步，直接将framework拖入项目里，同时按下图配置：
+>![](https://ww4.sinaimg.cn/large/006tKfTcgy1fgsp08jr74j317q0o2djl.jpg)
+>因为zip.framework和iOSDFULibrary.framework基于swift语言开发，因此需要加载swift标准库，在build settings 中，将always embed swift standard libraries设置为Yes，配置如下图
+>![](https://ww2.sinaimg.cn/large/006tKfTcgy1fgsw12dm6tj317o0jiq6p.jpg)
+
+
 ###三、将BleSDK文件夹，拖入工程里
 如图：
-![](https://ws1.sinaimg.cn/large/006tNbRwly1fgcxrewmqvj31go0qiqaa.jpg)
+![](https://ww1.sinaimg.cn/large/006tKfTcgy1fgsp3jqlrmj30fu0qiq5b.jpg)
+
+
 
 
 ##sdk核心类介绍
@@ -439,7 +450,6 @@ ASSIGNPROP(BOOL, isSuccess);
  设备状态
  */
 ASSIGNPROP(NSInteger, status);
-
 /*
  电池电量
  */
@@ -447,9 +457,19 @@ ASSIGNPROP(NSInteger,battery);
 
 STRONGPROP(NSNumber*, rssi);//信号强度
 
+/*
+ 马达速度
+ */
 ASSIGNPROP(NSInteger,speed);//马达震动时长
+
 STRONGPROP(NSString*, version);//固件版本号
+ASSIGNPROP(NSInteger,motorFlag);//马达开关标识，F5，F0
+@property (nonatomic,assign,readonly) BOOL isMotorOn;
+
+
+
 STRONGPROP(NSString*, synTime);//坐姿同步时间
+STRONGPROP(NSString*, synTodayTime);//坐姿同步时间
 ASSIGNPROP(NSInteger,sitTime);//正坐时长
 ASSIGNPROP(NSInteger,leftSitTime);//左倾时长
 ASSIGNPROP(NSInteger,rightSitTime);//右倾时长
@@ -468,19 +488,31 @@ ASSIGNPROP(NSUInteger, steps);//步数
 
 STRONGPROP(NSDictionary*, postures);//历史身姿
 
+
+STRONGPROP(NSDictionary*, __todayPostures);//当日身姿
+
 -(NSString*)postureStatusString;
 -(NSString*)sitStatusString;
 
 
 /**
  字典数组，
- 字典只有一个key，key为日期，xx月xx日
- 字典值为historyModel数组，value为时-分-姿势
-
- @return <#return value description#>
+ 字典只有一个key，key为日期，xx年xx月xx日
+ 字典值为historyModel数组，value为:时-分-状态,
+ 0-4：未知 坐 躺 走 跑
+ @return s
  */
 -(NSArray<NSDictionary*>*)historyPos;
 
+
+/**
+ 字典数组，
+ 字典只有一个key，key为日期，xx月xx日
+ 字典值为historyModel数组，value为:时-分-状态,
+ 0-4：未知 坐 躺 走 跑
+ @return s
+ */
+-(NSArray<NSDictionary*>*)todayPos;
 
 /**
  历史坐姿时间数据
@@ -496,6 +528,7 @@ STRONGPROP(NSDictionary*, postures);//历史身姿
  @return 包含历史步数数据的数组
  */
 -(NSArray<WZHistoryModel*>*)historySteps;
+
 
 ```
 
