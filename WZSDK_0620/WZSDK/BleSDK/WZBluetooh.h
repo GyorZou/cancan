@@ -20,7 +20,7 @@ typedef void (^WZSetMotor)(BOOL success);
 typedef void (^WZGetMotor)(NSInteger speed,NSInteger flag);
 typedef void (^WZSetPosture)(BOOL success);
 typedef void (^WZRestart)(BOOL success);
-typedef void (^WZComplete)(BOOL success);
+typedef void (^WZComplete)(BOOL success,NSString * msg);
 typedef void (^WZWriteReady)(BOOL success);
 typedef void (^WZRename)(BOOL success, NSError *error);
 

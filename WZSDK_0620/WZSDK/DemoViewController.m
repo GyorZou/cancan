@@ -165,9 +165,11 @@
     if (command == WZBluetoohCommandUploadDFUData) {
         float f = data.progress/100.;
     
-        if(data.progress == 100){
-            [SVProgressHUD dismiss];
-            [SVProgressHUD showInfoWithStatus:@"升级成功"];
+        if( data.progress == 100){
+            
+            if (data.isSuccess ==NO) {//升级完成，但是失败
+               [SVProgressHUD showInfoWithStatus: [NSString stringWithFormat:@"升级失败:%@",data.errorMsg]];
+            }else  [SVProgressHUD showInfoWithStatus:@"升级成功"];
             [self doScan];//重新扫描
             return;
         }

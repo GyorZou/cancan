@@ -224,6 +224,8 @@ static NSString *const keepAliveUUID = @"FFA2";
         if (peripheralName.length > 0) {
             return YES;
         }
+  
+        
         return NO;
     }];
     
@@ -306,6 +308,11 @@ static NSString *const keepAliveUUID = @"FFA2";
     [baby setBlockOnDiscoverCharacteristicsAtChannel:channelOnPeropheralView block:^(CBPeripheral *peripheral, CBService *service, NSError *error) {
         //NSLog(@"===service name:%@",service.UUID);
         //插入row到tableview
+        for (CBCharacteristic *characteristics in service.characteristics) {
+            if ([characteristics.UUID.UUIDString isEqualToString:writeCharacterUUID]) { //获取写入数据的特征值
+                weakSelf.currWriteCharacter = characteristics;
+            }
+        }
     }];
     
     //设置读取characteristics的委托
@@ -613,11 +620,17 @@ static NSString *const keepAliveUUID = @"FFA2";
 #pragma mark - DFUServiceDelegate
 
 - (void)dfuStateDidChangeTo:(enum DFUState)state {
-//    //NSLog(@"dfuStateDidChangeTo:%ld",(long)state);
+
     
+    NSLog(@"dfuStateDidChangeTo:%ld",(long)state);
+    
+    if (state < DFUStateUploading) {
+        self.uploadBlock(0, 0, 0, 0, 0);
+    }
     if (DFUStateCompleted == state) {
         self.isUpload = NO;
-        self.uploadCompleteBlock(YES);
+        self.uploadCompleteBlock(YES,nil);
+        
         //延时两秒，再扫描
 //        double delayInSeconds = 5.0;
 //        __weak typeof(self) weakSelf = self;
@@ -632,7 +645,8 @@ static NSString *const keepAliveUUID = @"FFA2";
 
 - (void)dfuError:(enum DFUError)error didOccurWithMessage:(NSString * _Nonnull)message {
      NSLog(@"didOccurWithMessage:%@", message);
-    self.uploadCompleteBlock(NO);
+    self.uploadCompleteBlock(NO,message);
+    _isUpload = NO;
 }
 
 #pragma mark - DFUProgressDelegate
@@ -818,7 +832,7 @@ static NSString *const keepAliveUUID = @"FFA2";
             //NSLog(@"self.replyCompleteBlock nil");
             return;
         }
-        self.replyCompleteBlock(YES);
+        self.replyCompleteBlock(YES,nil);
     } else if (protocolTyte[0] == 0xE5) { // 读取电池电量
         //获取电量
         Byte battary[1];
@@ -921,31 +935,31 @@ static NSString *const keepAliveUUID = @"FFA2";
             //NSLog(@"self.forwardBlock nil");
             return;
         }
-        self.forwardBlock(YES);
+        self.forwardBlock(YES,nil);
     } else if (protocolTyte[0] == 0xA1) { // 设置后倾角度
         if (!self.backwardBlock){
             //NSLog(@"self.backwardBlock nil");
             return;
         }
-        self.backwardBlock(YES);
+        self.backwardBlock(YES,nil);
     } else if (protocolTyte[0] == 0xA2) { // 设置左倾角度
         if (!self.leftLeaningBlock){
             //NSLog(@"self.leftLeaningBlock nil");
             return;
         }
-        self.leftLeaningBlock(YES);
+        self.leftLeaningBlock(YES,nil);
     } else if (protocolTyte[0] == 0xA3) { // 设置右倾角度
         if (!self.rightDeviationBlock){
             //NSLog(@"self.rightDeviationBlock nil");
             return;
         }
-        self.rightDeviationBlock(YES);
+        self.rightDeviationBlock(YES,nil);
     } else if (protocolTyte[0] == 0xA5) { // 清除缓存
         if (!self.clearDataBlock){
             //NSLog(@"self.clearDataBlock nil");
             return;
         }
-        self.clearDataBlock(YES);
+        self.clearDataBlock(YES,nil);
     } else if (protocolTyte[0] == 0xA6) { // 修改名字
         //获取是否成功
         Byte rename[1];
@@ -1078,7 +1092,10 @@ static NSString *const keepAliveUUID = @"FFA2";
         return;
     }
     //NSLog(@"write data: %@",data);
-    [self.currPeripheral writeValue:data forCharacteristic:self.currWriteCharacter type:CBCharacteristicWriteWithoutResponse];
+    if (self.currWriteCharacter) {
+            [self.currPeripheral writeValue:data forCharacteristic:self.currWriteCharacter type:CBCharacteristicWriteWithoutResponse];
+    }
+
 }
 
 // 同步时间应答

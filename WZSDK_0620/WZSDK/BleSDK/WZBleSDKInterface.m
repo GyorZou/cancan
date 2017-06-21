@@ -165,7 +165,7 @@
  
         
         
-    } replyComplete:^(BOOL success) {
+    } replyComplete:^(BOOL success,NSString * msg) {
         dispatch_async(dispatch_get_main_queue(), ^{
 
         });
@@ -203,12 +203,14 @@
             
             @synchronized (self) {
                 //weakSelf.bluReady = success;
-                for (id<WZBleSDKInterfaceListener> lis in _listeners) {
+                NSArray * ls = [_listeners copy];
+                for (id<WZBleSDKInterfaceListener> lis in ls) {
                     if ([lis respondsToSelector:@selector(bleDevicesChanged:)]) {
                         [lis bleDevicesChanged:tempDevice];
                     }
                 }
-                for (id<WZBleSDKInterfaceListener> li in _listeners) {
+                
+                for (id<WZBleSDKInterfaceListener> li in ls) {
                     if ([li respondsToSelector:@selector(bleDevice:didDisconneted:)]) {
                         [li bleDevice:tempDevice didDisconneted:error];
                     }
@@ -461,7 +463,7 @@
             break;
         case WZBluetoohCommandSetLeftAngel:
         {
-            [self.bluetooh setAngle:[data intValue] leftLeaning:^(BOOL success) {
+            [self.bluetooh setAngle:[data intValue] leftLeaning:^(BOOL success,NSString * msg) {
                 device.data.isSuccess = success;
                 [ws notifyDevice:device dataForCMD:command];
             }];
@@ -479,7 +481,7 @@
             break;
         case WZBluetoohCommandSetRightAngel:
         {
-            [self.bluetooh setAngle:[data intValue] rightDeviation:^(BOOL success) {
+            [self.bluetooh setAngle:[data intValue] rightDeviation:^(BOOL success,NSString * msg) {
                 device.data.isSuccess = success;
                 [ws notifyDevice:device dataForCMD:command];
             }];
@@ -497,12 +499,11 @@
                 device.data.progress = progress;
                 [ws notifyDevice:device dataForCMD:command];
                 
-            } complete:^(BOOL success) {
+            } complete:^(BOOL success,NSString * msg) {
+                
                 device.data.isSuccess = success;
                 device.data.progress = 100;
-                
-                
-                
+                device.data.errorMsg =msg;
                 
                 [ws notifyDevice:device dataForCMD:command];
                 [ws.bluetooh startBluetoothService];
@@ -512,7 +513,7 @@
             break;
         case WZBluetoohCommandSetForwardAngel:
         {
-            [self.bluetooh setAngle:[data intValue] forward:^(BOOL success) {
+            [self.bluetooh setAngle:[data intValue] forward:^(BOOL success,NSString * msg) {
                 device.data.isSuccess = success;
                 [ws notifyDevice:device dataForCMD:command];
             }];
@@ -521,7 +522,7 @@
             break;
         case WZBluetoohCommandSetBackwardAngel:
         {
-            [self.bluetooh setAngle:[data intValue] backward:^(BOOL success) {
+            [self.bluetooh setAngle:[data intValue] backward:^(BOOL success,NSString * msg) {
                 device.data.isSuccess = success;
                 [ws notifyDevice:device dataForCMD:command];
             }];
@@ -530,7 +531,7 @@
             break;
         case WZBluetoohCommandClearData:
         {
-            [self.bluetooh clearData:^(BOOL success) {
+            [self.bluetooh clearData:^(BOOL success,NSString * msg) {
                 device.data.isSuccess = success;
                 [ws notifyDevice:device dataForCMD:command];
             }];
