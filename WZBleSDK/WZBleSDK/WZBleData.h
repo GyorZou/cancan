@@ -52,7 +52,7 @@ ASSIGNPROP(NSInteger,backwardSitTime);//后倾时长
 
 
 ASSIGNPROP(NSInteger, progress);//dfu进度:0~100
-
+STRONGPROP(NSString*, errorMsg);//错误消息
 ASSIGNPROP(NSUInteger, postureStatus);//身姿：未知、坐、躺、走、跑
 ASSIGNPROP(NSUInteger, sitStatus);//坐姿：未知、正、左、右、前、后
 

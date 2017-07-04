@@ -89,6 +89,9 @@
         [face bleDevice:_curDevice sendCommandCode:WZBluetoohCommandRestartDevice extraData:nil];//修改名字后要重启
     }
     
+    if (command==WZBluetoohCommandCloseMotor||command == WZBluetoohCommandOpenMotor) {//开或者关 需要重新读取马达
+        [face bleDevice:_curDevice sendCommandCode:WZBluetoohCommandReadMotor extraData:nil];
+    }
     
     if (command == WZBluetoohCommandSynSitStatus) {
         
@@ -315,29 +318,32 @@
                         return ;
                     }
                     [SVProgressHUD showWithStatus:@"下载中"];
-                    dispatch_sync(dispatch_get_global_queue(0, 0), ^{
+                    dispatch_async(dispatch_get_global_queue(0, 0), ^{
                         //下载固件
                         //NSData * data =
-                        [SVProgressHUD dismiss];
+                      
                         
                         NSData *data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:field.text]];
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            if (data.length>10) {
+                                //保存到本地
+                                
+                                NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                                NSString *docDir = [paths objectAtIndex:0];
+                                NSString * filePath  =[NSString stringWithFormat:@"%@/temp.zip",docDir];
+                                [data writeToFile:filePath atomically:YES];
+                                
+                                
+                                [face bleDevice:_curDevice sendCommandCode:(WZBluetoohCommand)indexPath.row extraData:filePath];
+                                
+                            }else{
+                                [SVProgressHUD showInfoWithStatus:@"下载失败"];
+                                
+                                
+                            }
+                        });
                         
-                        if (data.length>10) {
-                            //保存到本地
-                            
-                            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-                            NSString *docDir = [paths objectAtIndex:0];
-                            NSString * filePath  =[NSString stringWithFormat:@"%@/temp.zip",docDir];
-                            [data writeToFile:filePath atomically:YES];
-                            
-                            
-                            [face bleDevice:_curDevice sendCommandCode:(WZBluetoohCommand)indexPath.row extraData:filePath];
-                            
-                        }else{
-                             [SVProgressHUD showInfoWithStatus:@"下载失败"];
-                           
-                            
-                        }
+
                         
                     });
                     

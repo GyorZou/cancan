@@ -54,4 +54,17 @@ return _advertisment[@"kCBAdvDataServiceUUIDs"];
     
     return [super isEqual:object];
 }
+
+-(NSOperationQueue *)workQueue
+{
+    static NSOperationQueue * queue;
+    //static dispatch_once_t token;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        queue = [[NSOperationQueue alloc] init];
+        [queue setSuspended:YES];
+        queue.maxConcurrentOperationCount = 1;
+    });
+    return queue;
+}
 @end

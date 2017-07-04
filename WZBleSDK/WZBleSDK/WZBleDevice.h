@@ -59,4 +59,6 @@
 -(NSData*)mac;
 
 
+-(NSOperationQueue*)workQueue;
+
 @end

@@ -283,11 +283,16 @@
     //如果需要更新Characteristic的值
     if (needReadValueForCharacteristic) {
         for (CBCharacteristic *characteristic in service.characteristics) {
-            [peripheral readValueForCharacteristic:characteristic];
+           
             //判断读写权限
             //            if (characteristic.properties & CBCharacteristicPropertyRead ) {
             //                [peripheral readValueForCharacteristic:characteristic];
             //            }
+            if([[characteristic.UUID UUIDString] isEqualToString:@"00001531-1212-EFDE-1523-785FEABCD123"]||[[characteristic.UUID UUIDString] isEqualToString:@"00001532-1212-EFDE-1523-785FEABCD123"]){
+                NSLog(@"writing");
+            }else{
+                [peripheral readValueForCharacteristic:characteristic];
+            }
         }
     }
     

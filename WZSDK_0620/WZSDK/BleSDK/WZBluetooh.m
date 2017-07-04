@@ -310,6 +310,7 @@ static NSString *const keepAliveUUID = @"FFA2";
         //插入row到tableview
         for (CBCharacteristic *characteristics in service.characteristics) {
             if ([characteristics.UUID.UUIDString isEqualToString:writeCharacterUUID]) { //获取写入数据的特征值
+                
                 weakSelf.currWriteCharacter = characteristics;
             }
         }
@@ -630,7 +631,7 @@ static NSString *const keepAliveUUID = @"FFA2";
     if (DFUStateCompleted == state) {
         self.isUpload = NO;
         self.uploadCompleteBlock(YES,nil);
-        
+        _dfuing = NO;
         //延时两秒，再扫描
 //        double delayInSeconds = 5.0;
 //        __weak typeof(self) weakSelf = self;
@@ -647,6 +648,7 @@ static NSString *const keepAliveUUID = @"FFA2";
      NSLog(@"didOccurWithMessage:%@", message);
     self.uploadCompleteBlock(NO,message);
     _isUpload = NO;
+    _dfuing = NO;
 }
 
 #pragma mark - DFUProgressDelegate
