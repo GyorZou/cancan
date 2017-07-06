@@ -365,8 +365,8 @@
 				TargetAttributes = {
 					0C68A8681EAE1D43001DD601 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = Y44Q42CSN4;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = DAQY6CDAVS;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
@@ -562,8 +562,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Shenzhen All-See-Own Digital Technology Co.,Ltd";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Y44Q42CSN4;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = DAQY6CDAVS;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -582,8 +582,8 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.blesdk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "5770aa6b-cc19-4bf1-8ff5-5c547d80a1c1";
+				PROVISIONING_PROFILE_SPECIFIER = blesdk;
 				SDKROOT = iphoneos;
 				VALID_ARCHS = arm64;
 			};
@@ -596,8 +596,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Shenzhen All-See-Own Digital Technology Co.,Ltd";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Y44Q42CSN4;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = DAQY6CDAVS;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -616,8 +616,8 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.blesdk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "5770aa6b-cc19-4bf1-8ff5-5c547d80a1c1";
+				PROVISIONING_PROFILE_SPECIFIER = blesdk;
 				SDKROOT = iphoneos;
 				VALID_ARCHS = arm64;
 			};

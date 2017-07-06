@@ -35,7 +35,12 @@
         
         CBCharacteristic * chara =   [self.bluetooh valueForKey:@"currWriteCharacter"];
         if (chara) {
-            [[dev workQueue] setSuspended:NO];
+            if ([[dev workQueue] isSuspended] == YES) {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [[dev workQueue] setSuspended:NO];
+                });
+            }
+            
         }
 
     }
@@ -367,230 +372,234 @@
     [[device workQueue] addOperationWithBlock:^{
         __weak typeof(self) ws =self;
         
-        switch (command) {
-            case WZBluetoohCommandSynSteps:{
-                [self.bluetooh synStep:^(CBPeripheral *p,NSString *time, unsigned long steps) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            switch (command) {
+                case WZBluetoohCommandSynSteps:{
+                    [self.bluetooh synStep:^(CBPeripheral *p,NSString *time, unsigned long steps) {
+                        
+                        device.data.stepTime = time;
+                        device.data.steps = steps;
+                        [ws notifyDevice:device dataForCMD:command];
+                    }];
+                }
+                    break;
+                case WZBluetoohCommandGetBattery:
+                {
+                    [self.bluetooh  getBattary:^(NSInteger battary) {
+                        NSLog(@"bater =%ld",battary);
+                        device.data.battery = battary;
+                        [ws notifyDevice:device dataForCMD:command];
+                    }];
+                }
+                    break;
                     
-                    device.data.stepTime = time;
-                    device.data.steps = steps;
-                    [ws notifyDevice:device dataForCMD:command];
-                }];
-            }
-                break;
-            case WZBluetoohCommandGetBattery:
-            {
-                [self.bluetooh  getBattary:^(NSInteger battary) {
-                    NSLog(@"bater =%ld",battary);
-                    device.data.battery = battary;
-                    [ws notifyDevice:device dataForCMD:command];
-                }];
-            }
-                break;
-                
-            case WZBluetoohCommandActivateDevice:
-            {
-                [self.bluetooh activation:^(BOOL success) {
-                    device.data.isSuccess = success;
-                    [ws notifyDevice:device dataForCMD:command];
-                }];
-                
-            }
-                break;
-                
-            case WZBluetoohCommandCancelActivateDevice:
-            {
-                [self.bluetooh cancelActivation:^(BOOL success) {
-                    device.data.isSuccess = success;
-                    [ws notifyDevice:device dataForCMD:command];
-                }];
-            }
-                break;
-                
-            case WZBluetoohCommandSynPostures:
-            {
-                [self.bluetooh synPosture:^(CBPeripheral *p,NSDictionary *posture) {
+                case WZBluetoohCommandActivateDevice:
+                {
+                    [self.bluetooh activation:^(BOOL success) {
+                        device.data.isSuccess = success;
+                        [ws notifyDevice:device dataForCMD:command];
+                    }];
                     
-                    device.data.__todayPostures = posture;
-                    [ws notifyDevice:device dataForCMD:command];
-                }];
-                
-                
-            }
-                break;
-            case WZBluetoohCommandSetName:
-            {
-                [self.bluetooh renameWithName:data complete:^(BOOL success, NSError *error) {
-                    device.data.isSuccess = error==nil;
-                    [ws notifyDevice:device dataForCMD:command];
-                }];
-                
-            }
-                break;
-            case WZBluetoohCommandCloseMotor:
-            {
-                [self.bluetooh setMotor:NO shockTime:0 complete:^(BOOL success) {
-                    device.data.isSuccess = success;
-                    [ws notifyDevice:device dataForCMD:command];
-                }];
-            }
-                break;
-            case WZBluetoohCommandSetMotorDuration:
-            {
-                [self.bluetooh setMotor:YES shockTime:[data intValue] complete:^(BOOL success) {
-                    device.data.isSuccess = success;
-                    [ws notifyDevice:device dataForCMD:command];
-                }];
-                
-            }
-                break;
-                
-            case WZBluetoohCommandAdjustPosture:
-            {
-                
-                [self.bluetooh setPosture:^(BOOL success) {
-                    device.data.isSuccess = success;
-                    [ws notifyDevice:device dataForCMD:command];
-                }];
-            }
-                break;
-            case WZBluetoohCommandCancelAdjustPosture:
-            {
-                [self.bluetooh cancelSetPosture:^(BOOL success) {
-                    device.data.isSuccess = success;
-                    [ws notifyDevice:device dataForCMD:command];
+                }
+                    break;
                     
-                }];
-                
-            }
-                break;
-            case WZBluetoohCommandGetRTPosture:
-            {
-                //没有这条指令，设备会主动每秒发送3次此条指令数据
-                //不需要手动触发
-            }
-                break;
-            case WZBluetoohCommandSynStatus:
-            {
-                //没有这条指令，设备会主动发送至APP，sdk会自动应答
-                //不需要手动触发
-                
-            }
-                break;
-            case WZBluetoohCommandSetLeftAngel:
-            {
-                [self.bluetooh setAngle:[data intValue] leftLeaning:^(BOOL success,NSString * msg) {
-                    device.data.isSuccess = success;
-                    [ws notifyDevice:device dataForCMD:command];
-                }];
-                
-            }
-                break;
-            case WZBluetoohCommandRestartDevice:
-            {
-                [self.bluetooh restart:^(BOOL success) {
-                    device.data.isSuccess = success;
-                    [ws notifyDevice:device dataForCMD:command];
-                }];
-                
-            }
-                break;
-            case WZBluetoohCommandSetRightAngel:
-            {
-                [self.bluetooh setAngle:[data intValue] rightDeviation:^(BOOL success,NSString * msg) {
-                    device.data.isSuccess = success;
-                    [ws notifyDevice:device dataForCMD:command];
-                }];
-                
-            }
-                break;
-            case WZBluetoohCommandUploadDFUData:
-            {
-                NSString *url = data;
-                
-                NSData * dfuData = [[NSData alloc] initWithContentsOfFile:url];
-                NSLog(@"dfudata=%@",dfuData);
-                [WZBleSDKInterface setDfuingDevice:device];
-                [self.bluetooh uploadWith:url upload:^(NSInteger part, NSInteger totalParts, NSInteger progress, NSInteger currentSpeedBytesPerSecond, NSInteger avgSpeedBytesPerSecond) {
-                    device.data.isSuccess = YES;
-                    device.data.progress = progress;
-                    [ws notifyDevice:device dataForCMD:command];
+                case WZBluetoohCommandCancelActivateDevice:
+                {
+                    [self.bluetooh cancelActivation:^(BOOL success) {
+                        device.data.isSuccess = success;
+                        [ws notifyDevice:device dataForCMD:command];
+                    }];
+                }
+                    break;
                     
-                } complete:^(BOOL success,NSString * msg) {
-                    
-                    device.data.isSuccess = success;
-                    device.data.progress = 100;
-                    device.data.errorMsg =msg;
-                    
-                    [ws notifyDevice:device dataForCMD:command];
-                    [ws.bluetooh startBluetoothService];
-                }];
-                
-            }
-                break;
-            case WZBluetoohCommandSetForwardAngel:
-            {
-                [self.bluetooh setAngle:[data intValue] forward:^(BOOL success,NSString * msg) {
-                    device.data.isSuccess = success;
-                    [ws notifyDevice:device dataForCMD:command];
-                }];
-                
-            }
-                break;
-            case WZBluetoohCommandSetBackwardAngel:
-            {
-                [self.bluetooh setAngle:[data intValue] backward:^(BOOL success,NSString * msg) {
-                    device.data.isSuccess = success;
-                    [ws notifyDevice:device dataForCMD:command];
-                }];
-                
-            }
-                break;
-            case WZBluetoohCommandClearData:
-            {
-                [self.bluetooh clearData:^(BOOL success,NSString * msg) {
-                    device.data.isSuccess = success;
-                    [ws notifyDevice:device dataForCMD:command];
-                }];
-            }
-                break;
-            case WZBluetoohCommandReadMotor:
-            {
-                [self.bluetooh getMotor:^(NSInteger speed,NSInteger flag) {
-                    device.data.speed = speed;
-                    device.data.motorFlag = flag;
-                    [ws notifyDevice:device dataForCMD:command];
-                }];
-            }
-                break;
-            case WZBluetoohCommandOpenMotor:
-            {
-                [self.bluetooh setMotor:YES shockTime:60 complete:^(BOOL success) {
-                    [ws notifyDevice:device dataForCMD:command];
-                }];
-            }
-                break;
-                
-                
-            case WZBluetoohCommandSynSitStatus:
-            {
-                [self.bluetooh synSitTime:^(CBPeripheral * per, NSString *time, NSInteger sittingTime, NSInteger forwardTime, NSInteger backwardTime, NSInteger leftLeaningTime, NSInteger rightDeviationTime) {
-                    
-                    device.data.synTodayTime = time;
-                    device.data.sitTime = sittingTime;
-                    device.data.leftSitTime = leftLeaningTime;
-                    device.data.rightSitTime = rightDeviationTime;
-                    device.data.backwardSitTime = backwardTime;
-                    device.data.forwardSitTime = forwardTime;
+                case WZBluetoohCommandSynPostures:
+                {
+                    [self.bluetooh synPosture:^(CBPeripheral *p,NSDictionary *posture) {
+                        
+                        device.data.__todayPostures = posture;
+                        [ws notifyDevice:device dataForCMD:command];
+                    }];
                     
                     
-                    [ws notifyDevice:device dataForCMD:command];
+                }
+                    break;
+                case WZBluetoohCommandSetName:
+                {
+                    [self.bluetooh renameWithName:data complete:^(BOOL success, NSError *error) {
+                        device.data.isSuccess = error==nil;
+                        [ws notifyDevice:device dataForCMD:command];
+                    }];
                     
-                }];
+                }
+                    break;
+                case WZBluetoohCommandCloseMotor:
+                {
+                    [self.bluetooh setMotor:NO shockTime:0 complete:^(BOOL success) {
+                        device.data.isSuccess = success;
+                        [ws notifyDevice:device dataForCMD:command];
+                    }];
+                }
+                    break;
+                case WZBluetoohCommandSetMotorDuration:
+                {
+                    [self.bluetooh setMotor:YES shockTime:[data intValue] complete:^(BOOL success) {
+                        device.data.isSuccess = success;
+                        [ws notifyDevice:device dataForCMD:command];
+                    }];
+                    
+                }
+                    break;
+                    
+                case WZBluetoohCommandAdjustPosture:
+                {
+                    
+                    [self.bluetooh setPosture:^(BOOL success) {
+                        device.data.isSuccess = success;
+                        [ws notifyDevice:device dataForCMD:command];
+                    }];
+                }
+                    break;
+                case WZBluetoohCommandCancelAdjustPosture:
+                {
+                    [self.bluetooh cancelSetPosture:^(BOOL success) {
+                        device.data.isSuccess = success;
+                        [ws notifyDevice:device dataForCMD:command];
+                        
+                    }];
+                    
+                }
+                    break;
+                case WZBluetoohCommandGetRTPosture:
+                {
+                    //没有这条指令，设备会主动每秒发送3次此条指令数据
+                    //不需要手动触发
+                }
+                    break;
+                case WZBluetoohCommandSynStatus:
+                {
+                    //没有这条指令，设备会主动发送至APP，sdk会自动应答
+                    //不需要手动触发
+                    
+                }
+                    break;
+                case WZBluetoohCommandSetLeftAngel:
+                {
+                    [self.bluetooh setAngle:[data intValue] leftLeaning:^(BOOL success,NSString * msg) {
+                        device.data.isSuccess = success;
+                        [ws notifyDevice:device dataForCMD:command];
+                    }];
+                    
+                }
+                    break;
+                case WZBluetoohCommandRestartDevice:
+                {
+                    [self.bluetooh restart:^(BOOL success) {
+                        device.data.isSuccess = success;
+                        [ws notifyDevice:device dataForCMD:command];
+                    }];
+                    
+                }
+                    break;
+                case WZBluetoohCommandSetRightAngel:
+                {
+                    [self.bluetooh setAngle:[data intValue] rightDeviation:^(BOOL success,NSString * msg) {
+                        device.data.isSuccess = success;
+                        [ws notifyDevice:device dataForCMD:command];
+                    }];
+                    
+                }
+                    break;
+                case WZBluetoohCommandUploadDFUData:
+                {
+                    NSString *url = data;
+                    
+                    NSData * dfuData = [[NSData alloc] initWithContentsOfFile:url];
+                    NSLog(@"dfudata=%@",dfuData);
+                    [WZBleSDKInterface setDfuingDevice:device];
+                    [self.bluetooh uploadWith:url upload:^(NSInteger part, NSInteger totalParts, NSInteger progress, NSInteger currentSpeedBytesPerSecond, NSInteger avgSpeedBytesPerSecond) {
+                        device.data.isSuccess = YES;
+                        device.data.progress = progress;
+                        [ws notifyDevice:device dataForCMD:command];
+                        
+                    } complete:^(BOOL success,NSString * msg) {
+                        
+                        device.data.isSuccess = success;
+                        device.data.progress = 100;
+                        device.data.errorMsg =msg;
+                        
+                        [ws notifyDevice:device dataForCMD:command];
+                        [ws.bluetooh startBluetoothService];
+                    }];
+                    
+                }
+                    break;
+                case WZBluetoohCommandSetForwardAngel:
+                {
+                    [self.bluetooh setAngle:[data intValue] forward:^(BOOL success,NSString * msg) {
+                        device.data.isSuccess = success;
+                        [ws notifyDevice:device dataForCMD:command];
+                    }];
+                    
+                }
+                    break;
+                case WZBluetoohCommandSetBackwardAngel:
+                {
+                    [self.bluetooh setAngle:[data intValue] backward:^(BOOL success,NSString * msg) {
+                        device.data.isSuccess = success;
+                        [ws notifyDevice:device dataForCMD:command];
+                    }];
+                    
+                }
+                    break;
+                case WZBluetoohCommandClearData:
+                {
+                    [self.bluetooh clearData:^(BOOL success,NSString * msg) {
+                        device.data.isSuccess = success;
+                        [ws notifyDevice:device dataForCMD:command];
+                    }];
+                }
+                    break;
+                case WZBluetoohCommandReadMotor:
+                {
+                    [self.bluetooh getMotor:^(NSInteger speed,NSInteger flag) {
+                        device.data.speed = speed;
+                        device.data.motorFlag = flag;
+                        [ws notifyDevice:device dataForCMD:command];
+                    }];
+                }
+                    break;
+                case WZBluetoohCommandOpenMotor:
+                {
+                    [self.bluetooh setMotor:YES shockTime:60 complete:^(BOOL success) {
+                        [ws notifyDevice:device dataForCMD:command];
+                    }];
+                }
+                    break;
+                    
+                    
+                case WZBluetoohCommandSynSitStatus:
+                {
+                    [self.bluetooh synSitTime:^(CBPeripheral * per, NSString *time, NSInteger sittingTime, NSInteger forwardTime, NSInteger backwardTime, NSInteger leftLeaningTime, NSInteger rightDeviationTime) {
+                        
+                        device.data.synTodayTime = time;
+                        device.data.sitTime = sittingTime;
+                        device.data.leftSitTime = leftLeaningTime;
+                        device.data.rightSitTime = rightDeviationTime;
+                        device.data.backwardSitTime = backwardTime;
+                        device.data.forwardSitTime = forwardTime;
+                        
+                        
+                        [ws notifyDevice:device dataForCMD:command];
+                        
+                    }];
+                }
+                    break;
+                default:
+                    break;
             }
-                break;
-            default:
-                break;
-        }
+        });
+ 
 
     }];
   
