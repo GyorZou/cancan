@@ -41,7 +41,7 @@ typedef enum{
     WZBluetoohCommandSetForwardAngel,//前
     WZBluetoohCommandSetBackwardAngel,//后
 
-    WZBluetoohCommandNone,//空指令
+    WZBluetoohCommandNone,//空指令    
 } WZBluetoohCommand;
 
 typedef enum{

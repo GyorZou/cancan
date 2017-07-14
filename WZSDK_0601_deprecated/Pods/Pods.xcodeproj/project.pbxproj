@@ -663,6 +663,7 @@
 				MACH_O_TYPE = mh_dylib;
 				MODULEMAP_FILE = "Target Support Files/iOSDFULibrary/iOSDFULibrary.modulemap";
 				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = iOSDFULibrary;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -778,6 +779,7 @@
 				MACH_O_TYPE = mh_dylib;
 				MODULEMAP_FILE = "Target Support Files/Zip/Zip.modulemap";
 				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = Zip;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;

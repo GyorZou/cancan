@@ -25,6 +25,7 @@ static NSString *const keepAliveUUID = @"FFA2";
     NSMutableArray *peripheralDataArray;
     BabyBluetooth *baby;
     BOOL _dfuing;
+    BOOL _syned;
 }
 
 @property (strong, nonatomic) CBCentralManager *uploadCentralManager;
@@ -833,6 +834,10 @@ static NSString *const keepAliveUUID = @"FFA2";
         if (!self.replyCompleteBlock) {
             //NSLog(@"self.replyCompleteBlock nil");
             return;
+        }
+        _syned = YES;
+        if(self.currWriteCharacter){
+            
         }
         self.replyCompleteBlock(YES,nil);
     } else if (protocolTyte[0] == 0xE5) { // 读取电池电量

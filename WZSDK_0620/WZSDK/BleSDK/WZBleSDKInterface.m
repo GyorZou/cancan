@@ -17,6 +17,7 @@
 @interface WZBleSDKInterface()
 {
     NSMutableDictionary * _timers;
+    BOOL _syned;
 }
 
 -(void)notifyDevice:(WZBleDevice*)device dataForCMD:(WZBluetoohCommand)cmd;
@@ -34,7 +35,7 @@
         WZBleDevice * dev = [self findDeviceWith:per];
         
         CBCharacteristic * chara =   [self.bluetooh valueForKey:@"currWriteCharacter"];
-        if (chara) {
+        if (chara&&_syned) {
             if ([[dev workQueue] isSuspended] == YES) {
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [[dev workQueue] setSuspended:NO];
@@ -184,7 +185,20 @@
         
     } replyComplete:^(BOOL success,NSString * msg) {
         dispatch_async(dispatch_get_main_queue(), ^{
-
+            
+            _syned = YES;
+            CBPeripheral * per =  [self.bluetooh valueForKey:@"currPeripheral"];
+            WZBleDevice * dev = [self findDeviceWith:per];
+            
+            CBCharacteristic * chara =   [self.bluetooh valueForKey:@"currWriteCharacter"];
+            if (chara) {
+                if ([[dev workQueue] isSuspended] == YES) {
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [[dev workQueue] setSuspended:NO];
+                    });
+                }
+                
+            }
         });
         
         
